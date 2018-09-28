@@ -11,25 +11,25 @@
             <div class="col-md-2">
                 <select class="form-control" v-model="filtre_marque" @change="chercheTypes(filtre_marque)">
                     <option value="marque">Sélectionne une Marque</option>
-                    <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
+                    <option :value="marque.id" v-for="marque in marques" v-if="marque !== null">{{ marque.nom }}</option>
                 </select>
             </div>
             <div class="col-md-2">
                 <select class="form-control" v-model="filtre_type" @change="chercheMoteurs()">
                     <option value="type">Sélectionne un Type</option>
-                    <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
+                    <option :value="type.id" v-for="type in types" v-if="type !== null">{{ type.nom }}</option>
                 </select>
             </div>
             <div class="col-md-2">
                 <select class="form-control" v-model="filtre_moteur">
                     <option value="moteur">Sélectionne un Moteur</option>
-                    <option :value="moteur.id" v-for="moteur in this.filtered_moteurs">{{ moteur.nom }}</option>
+                    <option :value="moteur.id" v-for="moteur in this.filtered_moteurs" v-if="moteur !== null">{{ moteur.nom }}</option>
                 </select>
             </div>
             <div class="col-md-2">
                 <select class="form-control" v-model="filtre_modele">
                     <option value="modèle">Sélectionne un Modèle</option>
-                    <option :value="modèle.id" v-for="modèle in this.modèles">{{ modèle.nom }}</option>
+                    <option :value="modèle.id" v-for="modèle in this.modèles" v-if="modèle !== null">{{ modèle.nom }}</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -42,13 +42,13 @@
                     <h4 class="text-center">Fiche de Renseignement</h4>
                 </div>
                 <div class="card-body" >
-                    <p><strong>Marque:</strong> {{ fiche.marque.nom }}</p>
-                    <p><strong>Type:</strong> {{ fiche.type.nom }}</p>
-                    <p><strong>Année:</strong> {{ fiche.année }}</p>
-                    <p><strong>Modèle:</strong> {{ fiche.modèle.nom }}</p>
-                    <p><strong>Moteur:</strong> {{ fiche.moteur.nom }}</p>
-                    <p><strong>Autre details:</strong> {{ fiche.détails }}</p>
-                    <p><strong>Articles Recherchés:</strong></p>
+                    <p><strong>Marque:</strong> <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span></p>
+                    <p ><strong>Type:</strong> <span v-if="fiche.type !== null">{{ fiche.type.nom }}</span></p>
+                    <p ><strong>Année:</strong> <span v-if="fiche.année !== null">{{ fiche.année }}</span></p>
+                    <p><strong>Modèle:</strong> <span  v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span></p>
+                    <p><strong>Moteur:</strong> <span v-if="fiche.moteur !== null">{{ fiche.moteur.nom }}</span></p>
+                    <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">{{ fiche.détails }}</span></p>
+                    <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles">{{ article.nom }}</li>
                     </ul>

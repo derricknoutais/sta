@@ -49513,9 +49513,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(_vm.marques, function(marque) {
-              return _c("option", { domProps: { value: marque.id } }, [
-                _vm._v(_vm._s(marque.nom))
-              ])
+              return marque !== null
+                ? _c("option", { domProps: { value: marque.id } }, [
+                    _vm._v(_vm._s(marque.nom))
+                  ])
+                : _vm._e()
             })
           ],
           2
@@ -49562,9 +49564,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(_vm.types, function(type) {
-              return _c("option", { domProps: { value: type.id } }, [
-                _vm._v(_vm._s(type.nom))
-              ])
+              return type !== null
+                ? _c("option", { domProps: { value: type.id } }, [
+                    _vm._v(_vm._s(type.nom))
+                  ])
+                : _vm._e()
             })
           ],
           2
@@ -49606,9 +49610,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(this.filtered_moteurs, function(moteur) {
-              return _c("option", { domProps: { value: moteur.id } }, [
-                _vm._v(_vm._s(moteur.nom))
-              ])
+              return moteur !== null
+                ? _c("option", { domProps: { value: moteur.id } }, [
+                    _vm._v(_vm._s(moteur.nom))
+                  ])
+                : _vm._e()
             })
           ],
           2
@@ -49650,9 +49656,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(this.modèles, function(modèle) {
-              return _c("option", { domProps: { value: modèle.id } }, [
-                _vm._v(_vm._s(modèle.nom))
-              ])
+              return modèle !== null
+                ? _c("option", { domProps: { value: modèle.id } }, [
+                    _vm._v(_vm._s(modèle.nom))
+                  ])
+                : _vm._e()
             })
           ],
           2
@@ -49685,35 +49693,57 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c("p", [
               _c("strong", [_vm._v("Marque:")]),
-              _vm._v(" " + _vm._s(fiche.marque.nom))
+              _vm._v(" "),
+              fiche.marque !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.marque.nom))])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("p", [
               _c("strong", [_vm._v("Type:")]),
-              _vm._v(" " + _vm._s(fiche.type.nom))
+              _vm._v(" "),
+              fiche.type !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.type.nom))])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("p", [
               _c("strong", [_vm._v("Année:")]),
-              _vm._v(" " + _vm._s(fiche.année))
+              _vm._v(" "),
+              fiche.année !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.année))])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("p", [
               _c("strong", [_vm._v("Modèle:")]),
-              _vm._v(" " + _vm._s(fiche.modèle.nom))
+              _vm._v(" "),
+              fiche.modèle !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.modèle.nom))])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("p", [
               _c("strong", [_vm._v("Moteur:")]),
-              _vm._v(" " + _vm._s(fiche.moteur.nom))
+              _vm._v(" "),
+              fiche.moteur !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.moteur.nom))])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("p", [
               _c("strong", [_vm._v("Autre details:")]),
-              _vm._v(" " + _vm._s(fiche.détails))
+              _vm._v(" "),
+              fiche.détails !== null
+                ? _c("span", [_vm._v(_vm._s(fiche.détails))])
+                : _vm._e()
             ]),
             _vm._v(" "),
-            _vm._m(2, true),
+            _c("p", [
+              fiche.détails !== null
+                ? _c("strong", [_vm._v("Articles Recherchés:")])
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c(
               "ul",
@@ -49759,12 +49789,6 @@ var staticRenderFns = [
         _vm._v("Fiche de Renseignement")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [_c("strong", [_vm._v("Articles Recherchés:")])])
   }
 ]
 render._withStripped = true
