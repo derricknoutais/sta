@@ -1,7 +1,23 @@
 <template>
     <div class="container-fluid">
+        <h1 class="text-center">Fiche de Renseignement</h1>
+        <div class="row my-3">
+            <div class="col-md-4 offset-md-4 col-12">
+                <div class="input-group">
+                    <select class="custom-select" id="inputGroupSelect04" @change="displayModal(modal.ajouter)" v-model="modal.ajouter">
+                        <option selected>Ajouter...</option>
+                        <option value="#marque">Ajouter Marque</option>
+                        <option value="#type">Ajouter Type</option>
+                        <option value="#modèle">Ajouter Modèle</option>
+                        <option value="#moteur">Ajouter Moteur</option>
+                        <option value="#moteur_type">Attribuer un Moteur à un Type</option>
+                        <option value="#modèle_type">Attribuer un Modèle à un Type</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-4 offset-md-1 border p-3 bg-primary">
+            <div class="col-md-4 offset-md-4 border p-3 bg-primary col-10 offset-1">
                 <h1 class="text-center mt-5">Fiche de Renseignement</h1>
                 <div class="form-group">
                     <label>Marque</label>
@@ -56,91 +72,165 @@
                     <button class="btn btn-success" @click="enregistreLaFiche()">Enregistrer</button>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="border p-3 bg-success">
-                    <h3 class="text-center mt-3">Ajouter Marque</h3>
-                    <div class="form-group">
-                        <input class="form-control" type="text" v-model="formulaire_marque.marque"/>
+        </div>
+
+
+
+        <div class="modal fade" id="marque" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter Marque</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-warning" @click="enregistreUneMarque()">Enregistrer</button>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="formulaire_marque.marque"/>
+                        </div>
                     </div>
-                </div>
-                <div class="border p-3 bg-warning" >
-                    <h3 class="text-center mt-3">Ajouter Type</h3>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_type.marque" @change="chercheType(formulaire_type.marque)">
-                            <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" v-model="formulaire_type.type"/>
-                    </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-success" @click="enregistreUnType()">Enregistrer</button>
-                    </div>
-                </div>
-                <div class="border p-3 bg-danger">
-                    <h3 class="text-center mt-3">Ajouter Moteur</h3>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_moteur.marque" @change="chercheType(formulaire_moteur.marque)">
-                            <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" v-model="formulaire_moteur.moteur" />
-                    </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-primary" @click="enregistreUnMoteur()">Enregistrer</button>
-                    </div>
-                </div>
-                <div class="border p-3 bg-secondary">
-                    <h3 class="text-center mt-3">Moteur Type</h3>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_type_moteur.type">
-                            <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
-                        </select>
-                        
-                    </div>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_type_moteur.moteur">
-                            <option :value="moteur.id" v-for="moteur in moteurs">{{ moteur.nom }}</option>
-                        </select>
-                    </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-primary" @click="enregistreUnTypeAUnMoteur()">Enregistrer</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUneMarque()">Save changes</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="border p-3 bg-info" >
-                    <h3 class="text-center mt-3">Ajouter Modèle</h3>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_modèle.marque">
-                            <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
-                        </select>
+        </div>
+        
+        <div class="modal fade" id="type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <input class="form-control" type="text" v-model="formulaire_modèle.modèle"/>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_type.marque" @change="chercheType(formulaire_type.marque)">
+                                <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="formulaire_type.type"/>
+                        </div>
                     </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-success" @click="enregistreUnModèle()">Enregistrer</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUnType()">Save changes</button>
                     </div>
                 </div>
-                <div class="border p-3 bg-dark">
-                    <h3 class="text-center mt-3">Modèle Type</h3>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_modèle_type.type">
-                            <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
-                        </select>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modèle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter Modèle</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <select type="text" class="form-control" v-model="formulaire_modèle_type.modèle">
-                            <option :value="modèle.id" v-for="modèle in modèles">{{ modèle.nom }}</option>
-                        </select>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_modèle.marque">
+                                <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="formulaire_modèle.modèle"/>
+                        </div>
                     </div>
-                    <div class="row justify-content-center mt-3">
-                        <button class="btn btn-primary" @click="enregistreUnTypeAUnModèle()">Enregistrer</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUnModèle()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="moteur" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter Moteur</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_moteur.marque" @change="chercheType(formulaire_moteur.marque)">
+                                <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="formulaire_moteur.moteur" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUnMoteur()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="moteur_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Attribuer un Moteur à un Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_type_moteur.type">
+                                <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_type_moteur.moteur">
+                                <option :value="moteur.id" v-for="moteur in moteurs">{{ moteur.nom }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUnTypeAUnMoteur()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modèle_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Attribuer un Modèle à un Type</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_modèle_type.type">
+                                <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select type="text" class="form-control" v-model="formulaire_modèle_type.modèle">
+                                <option :value="modèle.id" v-for="modèle in modèles">{{ modèle.nom }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary"  @click="enregistreUnTypeAUnModèle()">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -189,7 +279,11 @@ export default {
             marques: [],
             types: [],
             moteurs: [],
-            modèles: []
+            modèles: [],
+            modal:{
+                ajouter: '',
+                attribuer: ''
+            }
         }
     },
     methods: {
@@ -278,6 +372,9 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
+        },
+        displayModal(value){
+            $(value).modal('show')
         }
     },
     mounted(){
