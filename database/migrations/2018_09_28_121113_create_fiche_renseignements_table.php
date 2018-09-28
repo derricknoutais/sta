@@ -15,13 +15,13 @@ class CreateFicheRenseignementsTable extends Migration
     {
         Schema::create('fiche_renseignements', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('marque_id');
-            $table->unsignedInteger('type_id');
-            $table->unsignedInteger('moteur_id');
-            $table->year('année');
+            $table->unsignedInteger('marque_id')->nullable();
+            $table->unsignedInteger('type_id')->nullable();
+            $table->unsignedInteger('moteur_id')->nullable();
+            $table->year('année')->nullable();
             $table->string('chassis')->nullable();
             $table->text('détails')->nullable();
-            $table->unsignedInteger('modèle_id');
+            $table->unsignedInteger('modèle_id')->nullable();
             $table->foreign('modèle_id')->references('id')->on('modèles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('marque_id')->references('id')->on('marques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade')->onUpdate('cascade');

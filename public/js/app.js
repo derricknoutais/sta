@@ -47703,6 +47703,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47885,6 +47887,8 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row my-3" }, [
       _c("div", { staticClass: "col-md-4 offset-md-4 col-12" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Ajoute des véhicules")]),
+        _vm._v(" "),
         _c("div", { staticClass: "input-group" }, [
           _c(
             "select",

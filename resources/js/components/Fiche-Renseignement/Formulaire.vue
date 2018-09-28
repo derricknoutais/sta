@@ -3,7 +3,9 @@
         <h1 class="text-center">Fiche de Renseignement</h1>
         <div class="row my-3">
             <div class="col-md-4 offset-md-4 col-12">
+                <label for="">Ajoute des véhicules</label>
                 <div class="input-group">
+                    
                     <select class="custom-select" id="inputGroupSelect04" @change="displayModal(modal.ajouter)" v-model="modal.ajouter">
                         <option selected>Ajouter...</option>
                         <option value="#marque">Ajouter Marque</option>
