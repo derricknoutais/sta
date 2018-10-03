@@ -12,6 +12,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Modèle extends Resource
 {
+    
+
     /**
      * The model the resource corresponds to.
      *
@@ -39,7 +41,7 @@ class Modèle extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'nom'
     ];
 
     /**
@@ -51,8 +53,7 @@ class Modèle extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            Text::make('Nom'),
+            Text::make('Nom')->sortable(),
             BelongsTo::make('marque'),
             BelongsToMany::make('types')
         ];
@@ -77,7 +78,9 @@ class Modèle extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\ParMarque
+        ];
     }
 
     /**

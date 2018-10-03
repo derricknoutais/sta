@@ -17,7 +17,9 @@ class CreateMoteursTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('marque_id');
             $table->string('nom')->unique();
+            $table->unique(['nom', 'marque_id']);
             $table->foreign('marque_id')->references('id')->on('marques')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 

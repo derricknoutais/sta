@@ -23,7 +23,7 @@ class Type extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'nom';
 
     /**
      * The columns that should be searched.
@@ -43,10 +43,11 @@ class Type extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
+            Text::make('Nom')->sortable(),
             BelongsTo::make('marque'),
             BelongsToMany::make('modèles'),
-            Text::make('Nom')
+            BelongsToMany::make('moteurs')
+            
         ];
     }
 
@@ -69,7 +70,9 @@ class Type extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\ParMarque
+        ];
     }
 
     /**

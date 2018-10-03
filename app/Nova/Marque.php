@@ -6,6 +6,8 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Http\Request;
+use Sta\CarteMarque\CarteMarque;
+
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Marque extends Resource
@@ -42,8 +44,7 @@ class Marque extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            Text::make('nom'),
+            Text::make('nom')->sortable()->creationRules('unique:marques'),
             HasMany::make('types'),
             HasMany::make('modèles'),
             HasMany::make('moteurs'),
@@ -59,7 +60,9 @@ class Marque extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new CarteMarque
+        ];
     }
 
     /**
@@ -70,7 +73,8 @@ class Marque extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 
     /**

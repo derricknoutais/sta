@@ -19,6 +19,8 @@ class CreateModèleTypeTable extends Migration
             $table->unsignedInteger('type_id');
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('modèle_id')->references('id')->on('modèles')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->timestamps();
         });
     }
 

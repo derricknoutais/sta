@@ -17,8 +17,10 @@ class TypeMoteur extends Migration
             $table->increments('id');
             $table->unsignedInteger('type_id');
             $table->unsignedInteger('moteur_id');
+            $table->unique(['type_id', 'moteur_id']);
             $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('moteur_id')->references('id')->on('moteurs')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 

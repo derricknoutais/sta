@@ -24,7 +24,7 @@ class Moteur extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'nom';
 
     /**
      * The columns that should be searched.
@@ -44,8 +44,7 @@ class Moteur extends Resource
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-            Text::make('Nom'),
+            Text::make('Nom')->sortable(),
             BelongsTo::make('marque'),
             BelongsToMany::make('type'),
             
@@ -71,7 +70,9 @@ class Moteur extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Filters\ParMarque
+        ];
     }
 
     /**

@@ -17,9 +17,9 @@ class CreateModèlesTable extends Migration
             $table->increments('id');
             $table->string('nom');
             $table->unsignedInteger('marque_id');
-            
+            $table->unique(['nom', 'marque_id']);
             $table->foreign('marque_id')->references('id')->on('marques')->onDelete('cascade')->onUpdate('cascade');
-            
+            $table->timestamps();
         });
     }
 
