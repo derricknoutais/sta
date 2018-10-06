@@ -10,7 +10,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('/fiche-renseignement')->group(function(){
-
+        Route::get('reporting', 'FicheRenseignementController@reporting'); 
         Route::get('/', 'FicheRenseignementController@répertoire');
         Route::view('/renseigner', 'fiche-renseignement.renseigner');
         Route::prefix('/api')->group(function(){

@@ -15,6 +15,8 @@ class DemandeAchat extends Model
     {
         return $this->belongsToMany('App\Produit', 'demande_achat_produits', 'demande_achat_id', 'produit_id')->withPivot('coût', 'checked', 'id');
     }
+
+
     public function fournisseur()
     {
         return $this->belongsTo('App\Fournisseur');

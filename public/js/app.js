@@ -14013,6 +14013,7 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('example-component', __webpack_require__(40));
+Vue.component('reporting-renseignement', __webpack_require__(54));
 Vue.component('fiche-renseignement', __webpack_require__(43));
 Vue.component('fiches-de-renseignement', __webpack_require__(46));
 
@@ -49805,6 +49806,201 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(55)
+/* template */
+var __vue_template__ = __webpack_require__(56)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Fiche-Renseignement/Reporting.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5e6eed58", Component.options)
+  } else {
+    hotAPI.reload("data-v-5e6eed58", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['data_moteur', 'data_marque', 'data_type'],
+    data: function data() {
+        return {
+            rang_moteur: '',
+            rang_marque: '',
+            rang_type: ''
+        };
+    },
+
+    methods: {},
+    mounted: function mounted() {
+        this.rang_moteur = this.data_moteur;
+        this.rang_marque = this.data_marque;
+        this.rang_type = this.data_type;
+    }
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-3" }, [
+        _c(
+          "ol",
+          { staticClass: "list-group" },
+          _vm._l(_vm.rang_marque, function(marque) {
+            return _c("li", { staticClass: "list-group-item" }, [
+              marque.marque !== null
+                ? _c("span", [_vm._v(_vm._s(marque.marque.nom))])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "badge badge-pill badge-primary float-right" },
+                [_vm._v(_vm._s(marque.marque_count))]
+              )
+            ])
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("select", {
+          staticClass: "form-control",
+          attrs: { name: "", id: "" }
+        }),
+        _vm._v(" "),
+        _c(
+          "ol",
+          { staticClass: "list-group" },
+          _vm._l(_vm.rang_type, function(type) {
+            return _c("li", { staticClass: "list-group-item" }, [
+              type.type !== null
+                ? _c("span", [_vm._v(_vm._s(type.type.nom))])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "badge badge-pill badge-primary float-right" },
+                [_vm._v(_vm._s(type.type_count))]
+              )
+            ])
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c(
+          "ol",
+          { staticClass: "list-group" },
+          _vm._l(_vm.rang_moteur, function(moteur) {
+            return _c("li", { staticClass: "list-group-item" }, [
+              moteur.moteur !== null
+                ? _c("span", [_vm._v(_vm._s(moteur.moteur.nom))])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "span",
+                { staticClass: "badge badge-pill badge-primary float-right" },
+                [_vm._v(_vm._s(moteur.moteur_count))]
+              )
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5e6eed58", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

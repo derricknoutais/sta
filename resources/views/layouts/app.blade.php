@@ -33,7 +33,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a href="/fiche-renseignement" class="nav-link">Fiche Renseignement</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Fiche Renseignement <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/fiche-renseignement">Liste</a>
+                                <a class="dropdown-item" href="/fiche-renseignement/reporting">Reporting</a>
+                            </div>
+                        </li>
+                        
+
+
+                        
                     </ul>
 
                     <!-- Right Side Of Navbar -->
