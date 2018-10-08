@@ -8,7 +8,7 @@ use App\Type;
 class MoteurController extends Controller
 {
     public function all(){
-        return Moteur::all();
+        return Moteur::orderBy('nom')->get();
     }
     public function chercheMoteurs($type){
         return Type::where('id', $type)->with('moteurs')->first();

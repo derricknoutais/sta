@@ -7,10 +7,10 @@ use App\Type;
 class TypeController extends Controller
 {
     public function all(){
-        return Type::all();
+        return Type::orderBy('nom')->get();
     }
     public function chercheModèle($marque){
-        return Type::where('marque_id', $marque)->get();
+        return Type::where('marque_id', $marque)->orderBy('nom')->get();
     }
     public function enregistrer(Request $request){
         Type::create([

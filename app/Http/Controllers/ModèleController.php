@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ModèleController extends Controller
 {
     public function all(){
-        return Modèle::all();
+        return Modèle::orderBy('nom')->get();
     }
     public function chercheModèle($type){
         return Type::where('id', $type)->with('modèles')->first();
