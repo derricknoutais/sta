@@ -16,6 +16,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('/api')->group(function(){
             Route::get('all', 'FicheRenseignementController@all');
             Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
+            Route::post('/articles/commander/{article}', 'ArticleController@modifier');
+
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');
@@ -56,9 +58,13 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::post('/enregistrer', 'ModèleTypeController@enregistrer');
             });
         });
+    });
 
-
-
+    Route::prefix('/demande-achat')->group(function(){
+        Route::prefix('/api')->group(function(){
+            Route::get('all', 'DemandeAchatController@all');
+            Route::post('commander', 'DemandeAchatController@commander');
+        });
     });
 });
 

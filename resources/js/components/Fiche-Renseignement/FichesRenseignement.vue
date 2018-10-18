@@ -37,6 +37,37 @@
             </div>
         </div>
         <div class="row mt-5">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+              Creer demande
+            </button>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sélectionne Demande</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4" v-for="demande in demandes">
+                                <input type="checkbox" @click="selectionneDemande(demande)">
+                                <label>{{ demande.numéro }}</label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="commander()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
             <div class="card col-md-3 m-1" v-for="fiche in filtered">
                 <div class="card-header">
                     <h4 class="text-center">Fiche de Renseignement</h4>
@@ -50,7 +81,10 @@
                     <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">{{ fiche.détails }}</span></p>
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="article in fiche.articles">{{ article.nom }}</li>
+                        <li class="list-group-item" v-for="article in fiche.articles" >
+                            <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé">
+                            {{ article.nom }}
+                        </li>
                     </ul>
                 </div> 
             </div>
@@ -78,7 +112,10 @@ export default {
             },
             filtered: [],
             filtered_moteurs: [],
-            modèles: []
+            modèles: [],
+            selectionArticles: [],
+            demandes: [],
+            selectionDemandes: []
 
         }
     },
@@ -115,6 +152,19 @@ export default {
             this.filtre_moteur = 'moteur'
             this.filtre_modele = 'modèle'
             this.filtered_moteurs = this.moteurs.moteurs
+        },
+        selectionneArticle(article){
+            this.selectionArticles.push(article)
+        },
+        selectionneDemande(demande){
+            this.selectionDemandes.push(demande)
+        },
+        commander(){
+            axios.post('demande-achat/api/commander', {demandes: this.selectionDemandes, articles: this.selectionArticles} ).then(response => {
+                console.log(response.data);
+            }).catch(error => {
+                console.log(error);
+            });
         }
     },
     watch: {
@@ -155,26 +205,24 @@ export default {
     },
     mounted(){
         axios.get('fiche-renseignement/api/all').then(response => {
-            console.log(response.data);
-            this.fiches = this.filtered = response.data
-            
+            this.fiches = this.filtered = response.data   
         });
         axios.get('fiche-renseignement/marque/api/all').then(response => {
-            console.log(response.data);
             this.marques = response.data;
         });
         axios.get('fiche-renseignement/type/api/all').then(response => {
-            console.log(response.data);
             this.types = response.data;
         });
         axios.get('fiche-renseignement/moteur/api/all').then(response => {
-            console.log(response.data);
             this.filtered_moteurs = this.moteurs.moteurs = response.data;
         });
         axios.get('fiche-renseignement/modèle/api/all').then(response => {
-            console.log(response.data);
             this.modèles = response.data;
         });
+        axios.get('demande-achat/api/all').then(response => {
+            this.demandes = response.data;
+        });
+
     }
 }
 </script>

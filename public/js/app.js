@@ -49517,6 +49517,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49538,7 +49572,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             },
             filtered: [],
             filtered_moteurs: [],
-            modèles: []
+            modèles: [],
+            selectionArticles: [],
+            demandes: [],
+            selectionDemandes: []
 
         };
     },
@@ -49582,6 +49619,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.filtre_moteur = 'moteur';
             this.filtre_modele = 'modèle';
             this.filtered_moteurs = this.moteurs.moteurs;
+        },
+        selectionneArticle: function selectionneArticle(article) {
+            this.selectionArticles.push(article);
+        },
+        selectionneDemande: function selectionneDemande(demande) {
+            this.selectionDemandes.push(demande);
+        },
+        commander: function commander() {
+            axios.post('demande-achat/api/commander', { demandes: this.selectionDemandes, articles: this.selectionArticles }).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     },
     watch: {
@@ -49631,24 +49681,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this8 = this;
 
         axios.get('fiche-renseignement/api/all').then(function (response) {
-            console.log(response.data);
             _this8.fiches = _this8.filtered = response.data;
         });
         axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-            console.log(response.data);
             _this8.marques = response.data;
         });
         axios.get('fiche-renseignement/type/api/all').then(function (response) {
-            console.log(response.data);
             _this8.types = response.data;
         });
         axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-            console.log(response.data);
             _this8.filtered_moteurs = _this8.moteurs.moteurs = response.data;
         });
         axios.get('fiche-renseignement/modèle/api/all').then(function (response) {
-            console.log(response.data);
             _this8.modèles = response.data;
+        });
+        axios.get('demande-achat/api/all').then(function (response) {
+            _this8.demandes = response.data;
         });
     }
 });
@@ -49875,12 +49923,85 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.demandes, function(demande) {
+                    return _c("div", { staticClass: "col-md-4" }, [
+                      _c("input", {
+                        attrs: { type: "checkbox" },
+                        on: {
+                          click: function($event) {
+                            _vm.selectionneDemande(demande)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", [_vm._v(_vm._s(demande.numéro))])
+                    ])
+                  })
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.commander()
+                      }
+                    }
+                  },
+                  [_vm._v("Save changes")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "row mt-5" },
       _vm._l(_vm.filtered, function(fiche) {
         return _c("div", { staticClass: "card col-md-3 m-1" }, [
-          _vm._m(1, true),
+          _vm._m(3, true),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("p", [
@@ -49942,7 +50063,21 @@ var render = function() {
               { staticClass: "list-group list-group-flush" },
               _vm._l(fiche.articles, function(article) {
                 return _c("li", { staticClass: "list-group-item" }, [
-                  _vm._v(_vm._s(article.nom))
+                  !article.commandé
+                    ? _c("input", {
+                        attrs: { type: "checkbox" },
+                        on: {
+                          click: function($event) {
+                            _vm.selectionneArticle(article)
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(article.nom) +
+                      "\n                    "
+                  )
                 ])
               })
             )
@@ -49970,6 +50105,50 @@ var staticRenderFns = [
           )
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-5" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#exampleModal"
+          }
+        },
+        [_vm._v("\n          Creer demande\n        ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Sélectionne Demande")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   },
   function() {

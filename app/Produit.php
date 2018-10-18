@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produit extends Model
 {
+    protected $guarded = [];
+    
     public function demandeAchat()
     {
         return $this->belongsToMany('App\DemandeAchat', 'demande_achat_produits', 'produit_id', 'demande_achat_id')->withPivot('coût');
