@@ -17,6 +17,7 @@ class CreateBonCommandesTable extends Migration
             $table->increments('id');
             $table->string('numéro');
             $table->unsignedInteger('demande_achat_id');
+            $table->unsignedInteger('commande_id');
             $table->unsignedInteger('fournisseur_id');
             $table->timestamps();
         });

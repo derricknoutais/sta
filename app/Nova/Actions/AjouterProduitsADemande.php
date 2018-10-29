@@ -4,6 +4,8 @@ namespace App\Nova\Actions;
 
 use App\DemandeAchat;
 use App\DemandeAchatProduit;
+use App\Commande;
+use App\ProduitCommande;
 use Laravel\Nova\Fields\Select;
 use Silvanite\NovaFieldCheckboxes\Checkboxes;
 use Illuminate\Bus\Queueable;
@@ -28,9 +30,9 @@ class AjouterProduitsADemande extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $produit){
-            foreach($fields->demande as $demande){
-                DemandeAchatProduit::create([
-                    'demande_achat_id' => $demande,
+            foreach($fields->commande as $commande){
+                ProduitCommande::create([
+                    'commande_id' => $commande,
                     'produit_id' => $produit->id
                 ]);
             }
@@ -44,11 +46,11 @@ class AjouterProduitsADemande extends Action
      */
     public function fields()
     {
-        $demandes = DemandeAchat::pluck('numéro', 'id')->toArray();
-
+        // $demandes = DemandeAchat::pluck('numéro', 'id')->toArray();
+        $commandes = Commande::pluck('nom', 'id')->toArray();
         return [
             // Select::make('demande')->options($demandes)
-            Checkboxes::make('demande')->options($demandes)
+            Checkboxes::make('commande')->options($commandes)
         ];
     }
 }

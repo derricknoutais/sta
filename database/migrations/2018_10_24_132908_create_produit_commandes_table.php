@@ -1,10 +1,11 @@
+
 <?php
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDemandeAchatsTable extends Migration
+class CreateProduitCommandesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +14,12 @@ class CreateDemandeAchatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('demande_achats', function (Blueprint $table) {
+        Schema::create('produit_commandes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('numéro');
-            $table->unsignedInteger('fournisseur_id');
+            $table->string('produit_id');
             $table->unsignedInteger('commande_id');
-            $table->boolean('quantités_enregistrées');
-            $table->boolean('coûts_enregistrées');
+            // $table->foreign('produit_id')->references('vend_id')->on('produits')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateDemandeAchatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('demande_achats');
+        Schema::dropIfExists('produit_commandes');
     }
 }

@@ -52,16 +52,16 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-4" v-for="demande in demandes">
+                            <div class="col-md-6" v-for="demande in demandes">
                                 <input type="checkbox" @click="selectionneDemande(demande)">
-                                <label>{{ demande.numéro }}</label>
+                                <label>{{ demande.numéro + '( ' + demande.fournisseur.nom + ' )'}}</label>
                             </div>
                         </div>
                         
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="commander()">Save changes</button>
+                        <button type="button" class="btn btn-primary" @click="commander()">Ajouter à Demande</button>
                     </div>
                 </div>
             </div>

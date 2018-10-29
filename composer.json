@@ -30,6 +30,7 @@
         "laravel/framework": "5.7.*",
         "laravel/nova": "*",
         "laravel/tinker": "^1.0",
+        "maatwebsite/excel": "^3.1",
         "silvanite/novafieldcheckboxes": "^1.0",
         "sta/marque": "*"
     },

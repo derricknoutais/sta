@@ -32,13 +32,18 @@ class CreeLesBons extends Action
         for($i=0; $i<sizeof($models); $i++)
         {
             $models->load('produits');
+            // Pour chaque produit de la demande
             foreach( $models[$i]['produits'] as $produit ){
+
                 $models->load('produits');
+                //Vérifie que le produit n'est pas encore checké
                 if( $produit['pivot']['checked'] == 0){
+                    // Retiens produit
                     $bcp = $produit;
                     $moinsCher = $produit['pivot']['coût'];
                     $fournisseur_id = $models[$i]['fournisseur_id'];
                     $model_id = $models[$i]['id'];
+
                     for($j=0; $j<sizeof($models); $j++){
                         if($j != $i){
                             foreach($models[$j]['produits'] as $autreproduit){
@@ -64,10 +69,11 @@ class CreeLesBons extends Action
                         ]);
                     } else {
                         $bc = BonCommande::create([
-                            'numéro' => 'aaa',
+                            'numéro' => '',
                             'fournisseur_id' => $fournisseur_id ,
                             'demande_achat_id' => $model_id,
-                            'fournisseur_id' => $fournisseur_id
+                            'fournisseur_id' => $fournisseur_id,
+                            'commande_id' => $models[$i]['commande_id']
                         ]);
                         BonCommandeProduit::create([
                             'bon_commande_id' => $bc->id,

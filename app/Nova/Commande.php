@@ -1,37 +1,27 @@
 <?php
 
 namespace App\Nova;
-
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\BelongsTo;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class DemandeAchat extends Resource
+class Commande extends Resource
 {
-    /**
-     * The relationships that should be eager loaded on index queries.
-     *
-     * @var array
-     */
-    public static $with = [];
-    
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\DemandeAchat';
+    public static $model = 'App\Commande';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'numéro';
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -39,7 +29,7 @@ class DemandeAchat extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'numéro'
+        'id', 'nom'
     ];
 
     /**
@@ -52,14 +42,8 @@ class DemandeAchat extends Resource
     {
         return [
             ID::make()->sortable(),
-            BelongsToMany::make('Produits')
-                ->fields(function(){
-                    return [
-                        Text::make('coût')
-                    ];
-                }),
-            Text::make('numéro'),
-            BelongsTo::make('fournisseur')
+            Text::make('nom'),
+            BelongsToMany::make('Produits'),
         ];
     }
 
@@ -82,7 +66,8 @@ class DemandeAchat extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 
     /**
@@ -104,8 +89,6 @@ class DemandeAchat extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            new Actions\CreeLesBons
-        ];
+        return [];
     }
 }

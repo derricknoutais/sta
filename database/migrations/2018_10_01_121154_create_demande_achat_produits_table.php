@@ -17,7 +17,9 @@ class CreateDemandeAchatProduitsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('demande_achat_id');
             $table->unsignedInteger('produit_id');
+            $table->integer('quantité')->nullable();
             $table->double('coût')->nullable();
+            $table->double('total')->nullable();
             $table->boolean('checked')->default(0);
             $table->timestamps();
         });
