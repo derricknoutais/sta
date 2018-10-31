@@ -49603,7 +49603,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             modèles: [],
             selectionArticles: [],
             demandes: [],
-            selectionDemandes: []
+            selectionDemandes: [],
+            commandes: []
 
         };
     },
@@ -49725,6 +49726,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         axios.get('demande-achat/api/all').then(function (response) {
             _this8.demandes = response.data;
+        });
+        axios.get('commande/api/all').then(function (response) {
+            _this8.commandes = response.data;
         });
     }
 });
@@ -49977,7 +49981,7 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "row" },
-                  _vm._l(_vm.demandes, function(demande) {
+                  _vm._l(_vm.commandes, function(demande) {
                     return _c("div", { staticClass: "col-md-6" }, [
                       _c("input", {
                         attrs: { type: "checkbox" },
@@ -49988,16 +49992,7 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("label", [
-                        _vm._v(
-                          _vm._s(
-                            demande.numéro +
-                              "( " +
-                              demande.fournisseur.nom +
-                              " )"
-                          )
-                        )
-                      ])
+                      _c("label", [_vm._v(_vm._s(demande.nom))])
                     ])
                   })
                 )

@@ -30,8 +30,8 @@ class AjouterProduitsADemande extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach($models as $produit){
-            foreach($fields->commande as $commande){
-                ProduitCommande::create([
+            foreach($fields->demande as $commande){
+                DemandeAchatProduit::create([
                     'commande_id' => $commande,
                     'produit_id' => $produit->id
                 ]);
@@ -46,11 +46,11 @@ class AjouterProduitsADemande extends Action
      */
     public function fields()
     {
-        // $demandes = DemandeAchat::pluck('numéro', 'id')->toArray();
-        $commandes = Commande::pluck('nom', 'id')->toArray();
+        $demandes = DemandeAchat::pluck('numéro', 'id')->toArray();
+        // $commandes = Commande::pluck('nom', 'id')->toArray();
         return [
             // Select::make('demande')->options($demandes)
-            Checkboxes::make('commande')->options($commandes)
+            Checkboxes::make('demande')->options($demandes)
         ];
     }
 }

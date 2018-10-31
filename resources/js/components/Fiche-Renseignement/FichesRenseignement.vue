@@ -52,9 +52,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6" v-for="demande in demandes">
+                            <div class="col-md-6" v-for="demande in commandes">
                                 <input type="checkbox" @click="selectionneDemande(demande)">
-                                <label>{{ demande.numéro + '( ' + demande.fournisseur.nom + ' )'}}</label>
+                                <label>{{ demande.nom }}</label>
                             </div>
                         </div>
                         
@@ -115,7 +115,8 @@ export default {
             modèles: [],
             selectionArticles: [],
             demandes: [],
-            selectionDemandes: []
+            selectionDemandes: [],
+            commandes: []
 
         }
     },
@@ -221,6 +222,9 @@ export default {
         });
         axios.get('demande-achat/api/all').then(response => {
             this.demandes = response.data;
+        });
+        axios.get('commande/api/all').then(response => {
+            this.commandes = response.data;
         });
 
     }
