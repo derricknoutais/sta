@@ -31,7 +31,7 @@ class Produit extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'sku', 'nom',
+        'id', 'sku', 'nom', 'variante_une', 'variante_deux', 'variante_trois'
     ];
 
     /**

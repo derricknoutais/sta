@@ -16,6 +16,7 @@
             <table class="table table-striped table-inverse mt-5">
                 <thead class="thead-inverse">
                     <tr>
+                        <th>Index</th>
                         <th>Désignation</th>
                         <th>Quantité</th>
                         <th>Coût</th>
@@ -24,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(produit, index) in data.produits">
-
+                        <td>{{ index + 1}}</td>
                         <td scope="row" v-if="produit.variante_deux !== '' && produit.variante_trois !== ''">{{ produit.variante_une + '/' + produit.variante_deux + '/' + produit.variante_trois }}</td>
                         <td scope="row" v-else-if="produit.variante_deux !== ''">{{ produit.variante_une + '/' + produit.variante_deux }}</td>
                         <td scope="row" v-else-if="produit.variante_une !== ''">{{ produit.variante_une }}</td>
