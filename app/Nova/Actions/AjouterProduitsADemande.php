@@ -32,7 +32,7 @@ class AjouterProduitsADemande extends Action
         foreach($models as $produit){
             foreach($fields->demande as $commande){
                 DemandeAchatProduit::create([
-                    'demande_id' => $commande,
+                    'demande_achat_id' => $commande,
                     'produit_id' => $produit->id
                 ]);
             }
