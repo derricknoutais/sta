@@ -44,6 +44,7 @@ class Commande extends Resource
             ID::make()->sortable(),
             Text::make('nom'),
             BelongsToMany::make('Produits'),
+            BelongsToMany::make('Articles'),
         ];
     }
 

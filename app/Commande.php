@@ -20,7 +20,6 @@ class Commande extends Model
     {
         return $this->belongsToMany('App\Produit', 'produit_commandes', 'commande_id', 'produit_id');
     }
-
     public function articles()
     {
         return $this->belongsToMany('App\Article', 'article_commandes', 'commande_id', 'article_id');
