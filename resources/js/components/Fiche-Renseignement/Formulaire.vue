@@ -33,13 +33,13 @@
                         <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
                     </select>
                 </div>
-                <div class="form-group" v-if="modèles">
+                <div class="form-group">
                     <label>Modèle</label>
                     <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
                         <option :value="modèle.id" v-for="modèle in modèles">{{ modèle.nom }}</option>
                     </select>
                 </div>
-                <div class="form-group" v-if="moteurs.moteurs">
+                <div class="form-group">
                     <label>Moteur</label>
                     <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
                         <option :value="moteur.id" v-for="moteur in moteurs.moteurs">{{ moteur.nom }}</option>
