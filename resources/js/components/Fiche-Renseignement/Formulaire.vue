@@ -33,15 +33,15 @@
                         <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" v-if="modèles">
                     <label>Modèle</label>
                     <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
                         <option :value="modèle.id" v-for="modèle in modèles">{{ modèle.nom }}</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group" v-if="moteurs.moteurs">
                     <label>Moteur</label>
-                    <select type="text" class="form-control" v-model="fiche_renseignement.moteur">
+                    <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
                         <option :value="moteur.id" v-for="moteur in moteurs.moteurs">{{ moteur.nom }}</option>
                     </select>
                 </div>
@@ -75,8 +75,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="modal fade" id="marque" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -208,7 +206,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="modèle_type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -311,8 +308,10 @@ export default {
         },
         chercheMoteurs(){
             axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(response => {
-                this.moteurs = response.data;
-                console.log(response.data);
+                if(response.data.moteurs > 0){
+                    this.moteurs = response.data;
+                }
+                
             }).catch(error => {
                 console.log(error);
             });
@@ -320,8 +319,9 @@ export default {
         },
         chercheModèles(){
             axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(response => {
-                this.modèles = response.data.modèles;
-                console.log(response.data);
+                if(response.data.modèles.length > 0){
+                    this.modèles = response.data.modèles;
+                }
             }).catch(error => {
                 console.log(error);
             });

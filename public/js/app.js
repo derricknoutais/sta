@@ -47922,9 +47922,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -48001,8 +47998,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(function (response) {
-                _this2.moteurs = response.data;
-                console.log(response.data);
+                if (response.data.moteurs > 0) {
+                    _this2.moteurs = response.data;
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -48012,8 +48010,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this3 = this;
 
             axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(function (response) {
-                _this3.modèles = response.data.modèles;
-                console.log(response.data);
+                if (response.data.modèles.length > 0) {
+                    _this3.modèles = response.data.modèles;
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -48288,89 +48287,97 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Modèle")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
+          _vm.modèles
+            ? _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Modèle")]),
+                _vm._v(" "),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fiche_renseignement.modèle,
-                    expression: "fiche_renseignement.modèle"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.fiche_renseignement,
-                      "modèle",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              _vm._l(_vm.modèles, function(modèle) {
-                return _c("option", { domProps: { value: modèle.id } }, [
-                  _vm._v(_vm._s(modèle.nom))
-                ])
-              })
-            )
-          ]),
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fiche_renseignement.modèle,
+                        expression: "fiche_renseignement.modèle"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.fiche_renseignement,
+                          "modèle",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.modèles, function(modèle) {
+                    return _c("option", { domProps: { value: modèle.id } }, [
+                      _vm._v(_vm._s(modèle.nom))
+                    ])
+                  })
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Moteur")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
+          _vm.moteurs.moteurs
+            ? _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Moteur")]),
+                _vm._v(" "),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.fiche_renseignement.moteur,
-                    expression: "fiche_renseignement.moteur"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.fiche_renseignement,
-                      "moteur",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              _vm._l(_vm.moteurs.moteurs, function(moteur) {
-                return _c("option", { domProps: { value: moteur.id } }, [
-                  _vm._v(_vm._s(moteur.nom))
-                ])
-              })
-            )
-          ]),
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fiche_renseignement.moteur,
+                        expression: "fiche_renseignement.moteur"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.fiche_renseignement,
+                          "moteur",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.moteurs.moteurs, function(moteur) {
+                    return _c("option", { domProps: { value: moteur.id } }, [
+                      _vm._v(_vm._s(moteur.nom))
+                    ])
+                  })
+                )
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", [_vm._v("Année")]),
