@@ -103,7 +103,8 @@ class Produit extends Resource
     public function actions(Request $request)
     {
         return [
-            new Actions\AjouterProduitsADemande
+            new Actions\AjouterProduitsADemande,
+            new Actions\AjouterProduitsACommande
         ];
     }
 }

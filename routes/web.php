@@ -66,9 +66,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('répertoire', 'commande.répertoire');
         Route::get('{commande}', 'CommandeController@voir');
         Route::prefix('/api')->group(function(){
+            Route::post('commander', 'CommandeController@commander');
             Route::get('all', 'CommandeController@all');
             Route::post('nouvelle', 'CommandeController@nouvelle');
             
+        });
+    });
+    Route::prefix('/article')->group(function(){
+        Route::prefix('/api')->group(function(){
+            Route::get('all', 'ArticleController@all');
         });
     });
 
@@ -76,7 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('/api')->group(function(){
             Route::get('all', 'DemandeAchatController@all');
             Route::get('créerDemandesParFournisseur/{commande}', 'DemandeAchatController@créerDemandesParFournisseur');
-            Route::post('commander', 'DemandeAchatController@commander');
+            
             Route::post('creer', 'DemandeAchatController@creer');
             Route::post('enregistrer-coût', 'DemandeAchatController@enregistrerCoût');
             Route::post('ajouter-quantité', 'DemandeAchatController@ajouterQuantité');

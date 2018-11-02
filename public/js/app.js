@@ -49656,7 +49656,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.selectionDemandes.push(demande);
         },
         commander: function commander() {
-            axios.post('demande-achat/api/commander', { demandes: this.selectionDemandes, articles: this.selectionArticles }).then(function (response) {
+            axios.post('/commande/api/commander', { commandes: this.selectionDemandes, articles: this.selectionArticles }).then(function (response) {
                 console.log(response.data);
             }).catch(function (error) {
                 console.log(error);
@@ -51899,7 +51899,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             file: '',
-            produits_commande: []
+            produits_commande: [],
+            articles: []
         };
     },
 
@@ -51940,6 +51941,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         axios.get('/produits-commande/api/all/' + this.data.id).then(function (response) {
             _this.produits_commande = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        axios.get('/article/api/all').then(function (response) {
+            _this.articles = response.data;
+            console.log(response.data);
         }).catch(function (error) {
             console.log(error);
         });

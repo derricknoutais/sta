@@ -108,7 +108,8 @@ export default {
     data(){
         return {
             file: '',
-            produits_commande: []
+            produits_commande: [],
+            articles: []
         }
     },
     methods:{
@@ -150,6 +151,14 @@ export default {
         axios.get('/produits-commande/api/all/' + this.data.id).then(response => {
             this.produits_commande = response.data;
 
+        }).catch(error => {
+            console.log(error);
+        });
+
+        axios.get('/article/api/all').then(response => {
+            this.articles = response.data
+            console.log(response.data);
+            
         }).catch(error => {
             console.log(error);
         });

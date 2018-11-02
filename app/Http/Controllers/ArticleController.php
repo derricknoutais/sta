@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -10,5 +10,8 @@ class ArticleController extends Controller
         $article->update([
             'état' => 'En Commande'
         ]);
+    }
+    public function all(){
+        return Article::all();
     }
 }

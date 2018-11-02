@@ -3,20 +3,18 @@
 namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class BonCommandeProduit extends Resource
+class Article extends Resource
 {
-    public static $with = ['bonCommande'];
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\BonCommandeProduit';
+    public static $model = 'App\Article';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,7 +29,7 @@ class BonCommandeProduit extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id', 'nom'
     ];
 
     /**
@@ -44,7 +42,7 @@ class BonCommandeProduit extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('bon_commande_id')
+            Text::make('nom')
         ];
     }
 
@@ -89,6 +87,9 @@ class BonCommandeProduit extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            new Actions\AjouterProduitsADemande,
+            new Actions\AjouterProduitsACommande
+        ];
     }
 }

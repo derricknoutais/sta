@@ -89,6 +89,7 @@ class Commande extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+        ];
     }
 }

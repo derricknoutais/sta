@@ -17,6 +17,8 @@ class CreateArticleCommandesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('article_id');
             $table->unsignedInteger('commande_id');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -161,7 +161,7 @@ export default {
             this.selectionDemandes.push(demande)
         },
         commander(){
-            axios.post('demande-achat/api/commander', {demandes: this.selectionDemandes, articles: this.selectionArticles} ).then(response => {
+            axios.post('/commande/api/commander', {commandes: this.selectionDemandes, articles: this.selectionArticles} ).then(response => {
                 console.log(response.data);
             }).catch(error => {
                 console.log(error);

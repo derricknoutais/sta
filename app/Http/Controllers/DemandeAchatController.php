@@ -60,25 +60,6 @@ class DemandeAchatController extends Controller
         $demande->loadMissing(['produits', 'fournisseur']);
         return view('demande-achat.voir', compact('demande'));
     }
-    public function commander(Request $request){
-        DB::transaction(function () use ($request) {
-            foreach($request->articles as $article){
-                $produit = Produit::create([
-                    'variante_une' => $article['nom']
-                ]);
-                foreach($request->demandes as $demande){
-                    DemandeAchatProduit::create([
-                        'demande_achat_id' => $demande['id'],
-                        'produit_id' => $produit->id
-                    ]);
-                    Article::find($article['id'])->update([
-                        'commandé' => 1
-                    ]);
-                }
-            }
-        });
-        
-    }
 
     public function enregistrerCoût(Request $request){
         foreach($request->all() as $req){
