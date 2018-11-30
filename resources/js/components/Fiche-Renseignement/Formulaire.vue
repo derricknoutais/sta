@@ -36,13 +36,13 @@
                 <div class="form-group">
                     <label>Modèle</label>
                     <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
-                        <option :value="modèle.id" v-for="modèle in modèles">{{ modèle.nom }}</option>
+                        <option :value="modèle.id" v-for="modèle in modèles" @change="chercheMoteurs()">{{ modèle.nom }}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Moteur</label>
                     <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
-                        <option :value="moteur.id" v-for="moteur in moteurs.moteurs">{{ moteur.nom }}</option>
+                        <option :value="moteur.id" v-for="moteur in moteurs">{{ moteur.nom }}</option>
                     </select>
                 </div>
                 
@@ -97,7 +97,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="modal fade" id="type" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -124,7 +123,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="modèle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -151,7 +149,6 @@
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="moteur" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -308,8 +305,8 @@ export default {
         },
         chercheMoteurs(){
             axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(response => {
-                if(response.data.moteurs > 0){
-                    this.moteurs = response.data;
+                if(response.data.moteurs.length > 0){
+                    this.moteurs = response.data.moteurs;
                 }
                 
             }).catch(error => {
@@ -321,6 +318,8 @@ export default {
             axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(response => {
                 if(response.data.modèles.length > 0){
                     this.modèles = response.data.modèles;
+                } else {
+                    this.modèles = []
                 }
             }).catch(error => {
                 console.log(error);

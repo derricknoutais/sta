@@ -47919,9 +47919,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -47998,8 +47995,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this2 = this;
 
             axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(function (response) {
-                if (response.data.moteurs > 0) {
-                    _this2.moteurs = response.data;
+                if (response.data.moteurs.length > 0) {
+                    _this2.moteurs = response.data.moteurs;
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -48012,6 +48009,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(function (response) {
                 if (response.data.modèles.length > 0) {
                     _this3.modèles = response.data.modèles;
+                } else {
+                    _this3.modèles = [];
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -48322,9 +48321,18 @@ var render = function() {
                 }
               },
               _vm._l(_vm.modèles, function(modèle) {
-                return _c("option", { domProps: { value: modèle.id } }, [
-                  _vm._v(_vm._s(modèle.nom))
-                ])
+                return _c(
+                  "option",
+                  {
+                    domProps: { value: modèle.id },
+                    on: {
+                      change: function($event) {
+                        _vm.chercheMoteurs()
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(modèle.nom))]
+                )
               })
             )
           ]),
@@ -48363,7 +48371,7 @@ var render = function() {
                   }
                 }
               },
-              _vm._l(_vm.moteurs.moteurs, function(moteur) {
+              _vm._l(_vm.moteurs, function(moteur) {
                 return _c("option", { domProps: { value: moteur.id } }, [
                   _vm._v(_vm._s(moteur.nom))
                 ])
