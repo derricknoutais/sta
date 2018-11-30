@@ -9,7 +9,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/', function () {
         return view('welcome');
     });
-
     Route::prefix('/fiche-renseignement')->group(function(){
         Route::get('reporting', 'FicheRenseignementController@reporting'); 
         Route::get('/', 'FicheRenseignementController@répertoire');
@@ -18,7 +17,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('all', 'FicheRenseignementController@all');
             Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
             Route::post('/articles/commander/{article}', 'ArticleController@modifier');
-
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');
@@ -69,7 +67,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('commander', 'CommandeController@commander');
             Route::get('all', 'CommandeController@all');
             Route::post('nouvelle', 'CommandeController@nouvelle');
-            
         });
     });
     Route::prefix('/article')->group(function(){
@@ -82,7 +79,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('/api')->group(function(){
             Route::get('all', 'DemandeAchatController@all');
             Route::get('créerDemandesParFournisseur/{commande}', 'DemandeAchatController@créerDemandesParFournisseur');
-            
             Route::post('creer', 'DemandeAchatController@creer');
             Route::post('enregistrer-coût', 'DemandeAchatController@enregistrerCoût');
             Route::post('ajouter-quantité', 'DemandeAchatController@ajouterQuantité');

@@ -66,28 +66,37 @@
                 </div>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <div class="card col-md-3 m-1" v-for="fiche in filtered">
-                <div class="card-header">
-                    <h4 class="text-center">Fiche de Renseignement</h4>
+        <div id="accordion">
+            <div class="card" v-for="(fiche, index) in filtered">
+                <div class="card-header" >
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" :data-target="'#fiche'+index" aria-expanded="true" aria-controls="collapseOne">
+                            Requête
+                            <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span>
+                            <span v-if="fiche.type !== null"> {{ fiche.type.nom }}</span>
+                            <span v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span>
+                            <span v-if="fiche.année !== null">{{ fiche.année }}</span>
+                        </button>
+                    </h5>
                 </div>
-                <div class="card-body" >
-                    <p><strong>Marque:</strong> <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span></p>
-                    <p ><strong>Type:</strong> <span v-if="fiche.type !== null">{{ fiche.type.nom }}</span></p>
-                    <p ><strong>Année:</strong> <span v-if="fiche.année !== null">{{ fiche.année }}</span></p>
-                    <p><strong>Modèle:</strong> <span  v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span></p>
-                    <p><strong>Moteur:</strong> <span v-if="fiche.moteur !== null">{{ fiche.moteur.nom }}</span></p>
-                    <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">{{ fiche.détails }}</span></p>
-                    <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="article in fiche.articles" >
-                            <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé">
-                            {{ article.nom }}
-                        </li>
-                    </ul>
-                </div> 
-            </div>
+                <div :id="'fiche' + index" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        <p><strong>Marque:</strong> <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span></p>
+                        <p ><strong>Type:</strong> <span v-if="fiche.type !== null">{{ fiche.type.nom }}</span></p>
+                        <p ><strong>Année:</strong> <span v-if="fiche.année !== null">{{ fiche.année }}</span></p>
+                        <p><strong>Modèle:</strong> <span  v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span></p>
+                        <p><strong>Moteur:</strong> <span v-if="fiche.moteur !== null">{{ fiche.moteur.nom }}</span></p>
+                        <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">{{ fiche.détails }}</span></p>
+                        <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" v-for="article in fiche.articles" >
+                                <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé">
+                                {{ article.nom }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+          </div>
         </div>
     </div>
 </template>

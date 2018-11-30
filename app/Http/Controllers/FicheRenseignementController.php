@@ -34,7 +34,7 @@ class FicheRenseignementController extends Controller
         return view('fiche-renseignement.accueil');
     }
     public function all(){
-        return $fiches = FicheRenseignement::with(['articles', 'marque', 'type', 'moteur', 'modèle'])->get();
+        return $fiches = FicheRenseignement::with(['articles', 'marque', 'type', 'moteur', 'modèle'])->orderBy('created_at','desc')->get();
     }
 
     public function reporting(){

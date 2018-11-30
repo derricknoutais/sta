@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Services Tous Azimuts</title>
+    <title>Online Resource Management</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

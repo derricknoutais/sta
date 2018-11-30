@@ -47917,8 +47917,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49586,6 +49584,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50037,90 +50044,134 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "row mt-5" },
-      _vm._l(_vm.filtered, function(fiche) {
-        return _c("div", { staticClass: "card col-md-3 m-1" }, [
-          _vm._m(3, true),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("p", [
-              _c("strong", [_vm._v("Marque:")]),
-              _vm._v(" "),
-              fiche.marque !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.marque.nom))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v("Type:")]),
-              _vm._v(" "),
-              fiche.type !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.type.nom))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v("Année:")]),
-              _vm._v(" "),
-              fiche.année !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.année))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v("Modèle:")]),
-              _vm._v(" "),
-              fiche.modèle !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.modèle.nom))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v("Moteur:")]),
-              _vm._v(" "),
-              fiche.moteur !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.moteur.nom))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v("Autre details:")]),
-              _vm._v(" "),
-              fiche.détails !== null
-                ? _c("span", [_vm._v(_vm._s(fiche.détails))])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              fiche.détails !== null
-                ? _c("strong", [_vm._v("Articles Recherchés:")])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticClass: "list-group list-group-flush" },
-              _vm._l(fiche.articles, function(article) {
-                return _c("li", { staticClass: "list-group-item" }, [
-                  !article.commandé
-                    ? _c("input", {
-                        attrs: { type: "checkbox" },
-                        on: {
-                          click: function($event) {
-                            _vm.selectionneArticle(article)
-                          }
-                        }
-                      })
-                    : _vm._e(),
+      { attrs: { id: "accordion" } },
+      _vm._l(_vm.filtered, function(fiche, index) {
+        return _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h5", { staticClass: "mb-0" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-link",
+                  attrs: {
+                    "data-toggle": "collapse",
+                    "data-target": "#fiche" + index,
+                    "aria-expanded": "true",
+                    "aria-controls": "collapseOne"
+                  }
+                },
+                [
                   _vm._v(
-                    "\n                        " +
-                      _vm._s(article.nom) +
-                      "\n                    "
-                  )
-                ])
-              })
-            )
-          ])
+                    "\n                        Requête\n                        "
+                  ),
+                  fiche.marque !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.marque.nom))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  fiche.type !== null
+                    ? _c("span", [_vm._v(" " + _vm._s(fiche.type.nom))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  fiche.modèle !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.modèle.nom))])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  fiche.année !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.année))])
+                    : _vm._e()
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "collapse",
+              attrs: { id: "fiche" + index, "data-parent": "#accordion" }
+            },
+            [
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", [
+                  _c("strong", [_vm._v("Marque:")]),
+                  _vm._v(" "),
+                  fiche.marque !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.marque.nom))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v("Type:")]),
+                  _vm._v(" "),
+                  fiche.type !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.type.nom))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v("Année:")]),
+                  _vm._v(" "),
+                  fiche.année !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.année))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v("Modèle:")]),
+                  _vm._v(" "),
+                  fiche.modèle !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.modèle.nom))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v("Moteur:")]),
+                  _vm._v(" "),
+                  fiche.moteur !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.moteur.nom))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v("Autre details:")]),
+                  _vm._v(" "),
+                  fiche.détails !== null
+                    ? _c("span", [_vm._v(_vm._s(fiche.détails))])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  fiche.détails !== null
+                    ? _c("strong", [_vm._v("Articles Recherchés:")])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "list-group list-group-flush" },
+                  _vm._l(fiche.articles, function(article) {
+                    return _c("li", { staticClass: "list-group-item" }, [
+                      !article.commandé
+                        ? _c("input", {
+                            attrs: { type: "checkbox" },
+                            on: {
+                              click: function($event) {
+                                _vm.selectionneArticle(article)
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(article.nom) +
+                          "\n                        "
+                      )
+                    ])
+                  })
+                )
+              ])
+            ]
+          )
         ])
       })
     )
@@ -50188,16 +50239,6 @@ var staticRenderFns = [
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h4", { staticClass: "text-center" }, [
-        _vm._v("Fiche de Renseignement")
-      ])
     ])
   }
 ]

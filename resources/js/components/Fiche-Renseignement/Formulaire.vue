@@ -4,8 +4,7 @@
         <div class="row my-3">
             <div class="col-md-4 offset-md-4 col-12">
                 <label for="">Ajoute des véhicules</label>
-                <div class="input-group">
-                    
+                <div class="input-group">    
                     <select class="custom-select" id="inputGroupSelect04" @change="displayModal(modal.ajouter)" v-model="modal.ajouter">
                         <option selected>Ajouter...</option>
                         <option value="#marque">Ajouter Marque</option>
@@ -45,7 +44,6 @@
                         <option :value="moteur.id" v-for="moteur in moteurs">{{ moteur.nom }}</option>
                     </select>
                 </div>
-                
                 <div class="form-group">
                     <label>Année</label>
                     <input type="text" class="form-control" v-model="fiche_renseignement.année">
