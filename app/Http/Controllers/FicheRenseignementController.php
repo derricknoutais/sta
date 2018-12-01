@@ -27,8 +27,6 @@ class FicheRenseignementController extends Controller
                 ]);
             }
         }
-        
-
     }
     public function répertoire(){
         return view('fiche-renseignement.accueil');
@@ -42,6 +40,9 @@ class FicheRenseignementController extends Controller
         $rang_type = FicheRenseignement::select(DB::raw('count(*) as type_count, type_id'))->with('type')->groupBy('type_id')->orderBy('type_count', 'DESC')->get();
         $rang_moteur = FicheRenseignement::select(DB::raw('count(*) as moteur_count, moteur_id'))->with('moteur')->groupBy('moteur_id')->orderBy('moteur_count', 'DESC')->get();
         return view('fiche-renseignement.reporting', compact('rang_marque', 'rang_type', 'rang_moteur'));
+    }
+    public function supprimer(FicheRenseignement $fiche){
+        $fiche->delete();
     }
 
 }

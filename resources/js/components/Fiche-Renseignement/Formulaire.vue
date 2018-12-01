@@ -374,25 +374,24 @@ export default {
         },
         displayModal(value){
             $(value).modal('show')
+        },
+        init(){
+            axios.get('/fiche-renseignement/marque/api/all').then(response => {
+                this.marques = response.data;
+            });
+            axios.get('/fiche-renseignement/type/api/all').then(response => {
+                this.types = response.data;
+            });
+            axios.get('/fiche-renseignement/moteur/api/all').then(response => {
+                this.moteurs = response.data;
+            });
+            axios.get('/fiche-renseignement/modèle/api/all').then(response => {
+                this.modèles = response.data;
+            });
         }
     },
     mounted(){
-        axios.get('/fiche-renseignement/marque/api/all').then(response => {
-            this.marques = response.data;
-            console.log(response.data);
-        });
-        axios.get('/fiche-renseignement/type/api/all').then(response => {
-            console.log(response.data);
-            this.types = response.data;
-        });
-        axios.get('/fiche-renseignement/moteur/api/all').then(response => {
-            console.log(response.data);
-            this.moteurs = response.data;
-        });
-        axios.get('/fiche-renseignement/modèle/api/all').then(response => {
-            console.log(response.data);
-            this.modèles = response.data;
-        });
+        this.init();
     }
 }
 </script>

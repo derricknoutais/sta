@@ -15,8 +15,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::view('/renseigner', 'fiche-renseignement.renseigner');
         Route::prefix('/api')->group(function(){
             Route::get('all', 'FicheRenseignementController@all');
+            Route::get('supprimer/{fiche}', 'FicheRenseignementController@supprimer');
             Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
             Route::post('/articles/commander/{article}', 'ArticleController@modifier');
+
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');
