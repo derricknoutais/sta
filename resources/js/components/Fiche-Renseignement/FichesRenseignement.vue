@@ -196,6 +196,25 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <h5 class="">Articles Recherchés
+                                <a href="#" v-if="!editerArticles" @click="toggleEditArticles()"><i class="far fa-edit text-primary mx-3"></i></a>
+                            </h5>
+                        </div>
+                    </div>
+                    
+                    <ol class="list-group list-group-flush offset-md-1 col-md-6 mt-2 " v-if="aEditer">
+                        <li class="list-group-item" v-if="aEditer.articles && !editerArticles" v-for="(article, index) in aEditer.articles">{{ article.nom }}</li>
+                        <div class="row" v-for="(article, index) in aEditer.articles">
+                            <div class="col-md-10" v-if="aEditer.articles && editerArticles">
+                                <input class="form-control d-inline-block" v-if="aEditer" v-model="aEditer.articles[index].nom">
+                            </div>
+                            <div class="col-md-2" v-if="editerArticles" >
+                                <a href="#" class="d-inline-block" @click=""><i class="far fa-save text-success mx-3"></i></a>
+                            </div>
+                        </div>
+                    </ol>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" @click="supprimeLaRequete(aSupprimer)">Supprimer</button>
@@ -291,6 +310,7 @@ export default {
             viewMode: 'Liste',
             aSupprimer: null,
             aEditer: null,
+            editerArticles: false
         }
     },
     methods: {
@@ -388,6 +408,9 @@ export default {
             });
             
         },
+        toggleEditArticles(){
+            this.editerArticles = ! this.editerArticles;
+        },
         init(){
             axios.get('fiche-renseignement/api/all').then(response => {
                 this.fiches = this.filtered = response.data   
@@ -457,3 +480,8 @@ export default {
 }
 </script>
 
+<style>
+    .form-control {
+        display: inline-block;
+    }
+</style>
