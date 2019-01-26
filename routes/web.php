@@ -1,5 +1,5 @@
 <?php
-// Auth::loginUsingId(1);
+Auth::loginUsingId(1);
 Auth::routes();
 
 
@@ -10,15 +10,18 @@ Route::group(['middleware' => ['auth']], function () {
         return view('welcome');
     });
     Route::prefix('/fiche-renseignement')->group(function(){
-        Route::get('reporting', 'FicheRenseignementController@reporting'); 
-        Route::get('/', 'FicheRenseignementController@répertoire');
-        Route::view('/renseigner', 'fiche-renseignement.renseigner');
-        Route::prefix('/api')->group(function(){
-            Route::get('all', 'FicheRenseignementController@all');
-            Route::get('supprimer/{fiche}', 'FicheRenseignementController@supprimer');
-            Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
-            Route::post('/articles/commander/{article}', 'ArticleController@modifier');
+        Route::get('reporting', 'FicheRenseignementController@reporting');
 
+        Route::get('/', 'FicheRenseignementController@répertoire');
+
+        Route::view('/renseigner', 'fiche-renseignement.renseigner');
+
+        Route::prefix('/api')->group(function(){
+            Route::get('/all', 'FicheRenseignementController@all');
+            Route::get('/supprimer/{fiche}', 'FicheRenseignementController@supprimer');
+            Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
+            Route::post('/update', 'FicheRenseignementController@update');
+            Route::post('/articles/commander/{article}', 'ArticleController@modifier');
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');

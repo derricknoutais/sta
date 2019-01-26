@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="float-right">
-                    <a class="btn btn-primary" href="/fiche-renseignement/renseigner">Ajouter une Requête</a>
+                    
                 </div>
             </div>
         </div>
@@ -38,6 +38,7 @@
         </div>
         <div class="row my-5">
             <div class="col-md-4">
+                <a class="btn btn-primary" href="/fiche-renseignement/renseigner">Ajouter une Requête</a>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                   Creer demande
                 </button>
@@ -60,8 +61,14 @@
                                 <span v-if="fiche.année !== null">{{ fiche.année }}</span>
                             </div>
                             <div class="col-md-2 text-right">
-                                <a href="#" @click="selectionneLaModification(fiche)" data-toggle="modal" data-target="#editerRequeteModal"><i class="far fa-edit text-primary mr-3"></i></a>
-                                <a href="#" @click="selectionneLaSuppression(fiche)" data-toggle="modal" data-target="#confirmerSuppressionModal"><i class="fas fa-trash-alt text-danger"></i></a>
+                                <a href="#" @click="selectionneLaModification(fiche)" 
+                                    data-toggle="modal" data-target="#editerRequeteModal">
+                                    <i class="far fa-edit text-primary mr-3"></i>
+                                </a>
+                                <a href="#" @click="selectionneLaSuppression(fiche)" 
+                                    data-toggle="modal" data-target="#confirmerSuppressionModal">
+                                    <i class="fas fa-trash-alt text-danger"></i>
+                                </a>
                             </div>
 
                         </div>
@@ -152,44 +159,44 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Marque</label>
-                            <select type="text" class="form-control" v-if="aEditer" v-model="fiche_renseignement.marque" @change="chercheTypesEdit(fiche_renseignement.marque)">
+                            <select type="text" class="form-control" v-if="aEditer" v-model="aEditer.marque_id" @change="chercheTypesEdit(aEditer.marque_id)">
                                 <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Type</label>
-                            <select type="text" class="form-control" v-model="fiche_renseignement.type" @change="chercheMoteursEdit()">
-                                <option :value="type.id" v-for="type in fiche_renseignement.types">{{ type.nom }}</option>
+                            <select type="text" class="form-control" v-if="aEditer" v-model="aEditer.type_id" @change="chercheMoteursEdit()">
+                                <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Modèle</label>
-                            <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
-                                <option :value="modèle.id" v-for="modèle in fiche_renseignement.modèles" @change="chercheMoteursEdit()">{{ modèle.nom }}</option>
+                            <select type="text" class="form-control" v-if="aEditer" v-model="aEditer.modèle_id">
+                                <option :value="modèle.id" v-for="modèle in modèles" @change="chercheMoteursEdit()">{{ modèle.nom }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Moteur</label>
-                            <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
-                                <option :value="moteur.id" v-for="moteur in fiche_renseignement.moteurs">{{ moteur.nom }}</option>
+                            <select type="text" class="form-control" v-if="aEditer" v-model="aEditer.moteur_id" >
+                                <option :value="moteur.id" v-for="moteur in moteurs.moteurs">{{ moteur.nom }}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Année</label>
-                            <input type="text" class="form-control" v-model="fiche_renseignement.année">
+                            <input type="text" class="form-control" v-if="aEditer" v-model="aEditer.année">
                         </div>
                         <div class="form-group">
                             <label>Numéro de Chassis</label>
-                            <input type="text" class="form-control" v-model="fiche_renseignement.chassis">
+                            <input type="text" class="form-control" v-if="aEditer" v-model="aEditer.chassis">
                         </div>
                         <div class="form-group">
                             <label>Autre details</label>
-                            <input type="text" class="form-control" v-model="fiche_renseignement.détails">
+                            <input type="text" class="form-control" v-if="aEditer" v-model="aEditer.détails">
                         </div>
                         <div class="form-group">
                             <label class="d-block">Articles Recherchés</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" v-model="fiche_renseignement.article">
+                                <input type="text" class="form-control" v-if="aEditer" v-model="articleAEditer">
                                 <div class="input-group-append">
                                   <button class="btn btn-outline-success text-white" type="button" @click="ajouterArticles()">Ajouter</button>
                                 </div>
@@ -199,11 +206,12 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <h5 class="">Articles Recherchés
-                                <a href="#" v-if="!editerArticles" @click="toggleEditArticles()"><i class="far fa-edit text-primary mx-3"></i></a>
+                                <a href="#" v-if="!editerArticles" @click="toggleEditArticles()">
+                                    <i class="far fa-edit text-primary mx-3"></i>
+                                </a>
                             </h5>
                         </div>
                     </div>
-                    
                     <ol class="list-group list-group-flush offset-md-1 col-md-6 mt-2 " v-if="aEditer">
                         <li class="list-group-item" v-if="aEditer.articles && !editerArticles" v-for="(article, index) in aEditer.articles">{{ article.nom }}</li>
                         <div class="row" v-for="(article, index) in aEditer.articles">
@@ -217,7 +225,7 @@
                     </ol>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="supprimeLaRequete(aSupprimer)">Supprimer</button>
+                        <button type="button" class="btn btn-primary" @click="updateRequete()">Modifier</button>
                     </div>
                 </div>
             </div>
@@ -270,7 +278,7 @@
 export default {
     data(){
         return {
-            'fiche_renseignement' : {
+            fiche_renseignement : {
                 marque: '',
                 type: '',
                 année: '',
@@ -310,6 +318,7 @@ export default {
             viewMode: 'Liste',
             aSupprimer: null,
             aEditer: null,
+            articleAEditer: null,
             editerArticles: false
         }
     },
@@ -339,25 +348,25 @@ export default {
             });
         },
         chercheTypesEdit(marque){
-            console.log(marque)
             axios.get('/fiche-renseignement/type/de-marque/' + marque).then(response => {
-                this.fiche_renseignement.types = response.data;
+                this.types = response.data;
                 console.log(response.data);
+                this.$forceUpdate();
             }).catch(error => {
                 console.log(error);
             });
         },
         chercheMoteursEdit(){
-            axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(response => {
-                this.fiche_renseignement.moteurs = response.data.moteurs;
+            axios.get('/fiche-renseignement/moteur/de-type/' + this.aEditer.type_id).then(response => {
+                this.moteurs.moteurs = response.data.moteurs;
             }).catch(error => {
                 console.log(error);
             });
             this.chercheModèlesEdit();
         },
         chercheModèlesEdit(){
-            axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(response => {
-                this.fiche_renseignement.modèles = response.data.modèles;
+            axios.get('/fiche-renseignement/modèle/de-type/' + this.aEditer.type_id).then(response => {
+                this.modèles = response.data.modèles;
             }).catch(error => {
                 console.log(error);
             });
@@ -436,6 +445,19 @@ export default {
             axios.get('/fiche-renseignement/moteur/api/all').then(response => {
                 this.moteurs.moteurs = response.data;
             });
+        },
+        updateRequete(){
+            axios.post('/fiche-renseignement/api/update', this.aEditer ).then(response => {
+                console.log(response.data);
+            }).catch(error => {
+                console.log(error);
+            });
+        },
+        ajouterArticles(){
+            if(this.aEditer && this.articleAEditer){
+                this.aEditer.articles.push({nom: this.articleAEditer})
+                this.$forceUpdate()
+            }
         }
     },
     watch: {

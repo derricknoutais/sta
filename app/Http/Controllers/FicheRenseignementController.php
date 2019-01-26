@@ -44,5 +44,27 @@ class FicheRenseignementController extends Controller
     public function supprimer(FicheRenseignement $fiche){
         $fiche->delete();
     }
+    public function update(Request $request){
+        $fiche = FicheRenseignement::find($request->id);
+        $fiche->update([
+            'marque_id' => $request->marque_id,
+            'type_id' => $request->type_id,
+            'modèle_id' => $request->modèle_id,
+            'moteur_id' => $request->moteur_id,
+            'année' => $request->année,
+            'chassis' => $request->chassis,
+            'détails' => $request->détails
+        ]);
+        foreach($request->articles as $article)
+        { 
+            if(! isset($article['id'])){
+                Article::create([
+                    'nom' => $article['nom'],
+                    'fiche_renseignement_id' => $fiche->id,
+                    'commandé' => 0
+                ]);
+            }
+        }
+    }
 
 }
