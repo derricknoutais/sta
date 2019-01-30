@@ -53504,6 +53504,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
@@ -53511,11 +53537,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             file: '',
             produits_commande: [],
-            articles: []
+            articles: [],
+            aSupprimer: null
         };
     },
 
     methods: {
+        ajouterProduitASupprimer: function ajouterProduitASupprimer(produit, index) {
+            this.aSupprimer = produit;
+            this.aSupprimer.index = index;
+        },
         uploadData: function uploadData() {
             this.file = this.$refs.file.files[0];
             var formData = new FormData();
@@ -53545,19 +53576,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        supprimerProduit: function supprimerProduit() {
+            var _this = this;
+
+            if (this.aSupprimer) {
+                axios.get('/produits-commande/' + this.aSupprimer.id).then(function (response) {
+
+                    $('#confirmDelete').modal('hide');
+                    _this.produits_commande.splice(_this.aSupprimer.index, 1);
+                    _this.$forceUpdate();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
     },
     mounted: function mounted() {
-        var _this = this;
+        var _this2 = this;
 
         axios.get('/produits-commande/api/all/' + this.data.id).then(function (response) {
-            _this.produits_commande = response.data;
+            _this2.produits_commande = response.data;
         }).catch(function (error) {
             console.log(error);
         });
 
         axios.get('/article/api/all').then(function (response) {
-            _this.articles = response.data;
+            _this2.articles = response.data;
             console.log(response.data);
         }).catch(function (error) {
             console.log(error);
@@ -53584,6 +53629,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-3" }, [
             _c("input", {
               ref: "file",
+              staticClass: "form-control",
               attrs: { type: "file", id: "file" },
               on: {
                 change: function($event) {
@@ -53593,7 +53639,9 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1)
         ])
       ]),
       _vm._v(" "),
@@ -53605,7 +53653,7 @@ var render = function() {
         },
         [
           _c("table", { staticClass: "table table-striped mt-3" }, [
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _c(
               "tbody",
@@ -53632,11 +53680,30 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("td")
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#confirmDelete"
+                          },
+                          on: {
+                            click: function($event) {
+                              _vm.ajouterProduitASupprimer(produit, index)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-times-circle" })]
+                      )
+                    ])
                   ])
                 }),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(3)
               ],
               2
             )
@@ -53663,7 +53730,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(4)
         ])
       ]),
       _vm._v(" "),
@@ -53678,7 +53745,7 @@ var render = function() {
             "table",
             { staticClass: "table table-striped table-inverse mt-3" },
             [
-              _vm._m(4),
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -53724,7 +53791,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(6)
         ])
       ]),
       _vm._v(" "),
@@ -53739,7 +53806,7 @@ var render = function() {
             "table",
             { staticClass: "table table-striped table-inverse mt-5" },
             [
-              _vm._m(6),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -53765,7 +53832,63 @@ var render = function() {
           )
         ]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "confirmDelete",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(8),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v(
+                  "\n                    Voulez-vous vraiment supprimer le produit sélectionné\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.supprimerProduit()
+                      }
+                    }
+                  },
+                  [_vm._v("Supprimer")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -53775,6 +53898,25 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-6 text-center" }, [
       _c("h5", [_vm._v("Liste des Produits Commandés")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          attrs: {
+            target: "_blank",
+            href: "/nova/resources/produits",
+            role: "button"
+          }
+        },
+        [_vm._v("Ajouter Produits")]
+      )
     ])
   },
   function() {
@@ -53843,6 +53985,27 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Fournisseur")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Supprimer Produit")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]

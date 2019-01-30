@@ -29,7 +29,6 @@ class ProduitCommandeImport implements ToCollection
                     'commande_id' => $this->commande
                 ]);
             }
-            
         }
     }
 }

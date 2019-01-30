@@ -6,10 +6,13 @@
             <div class="card-header text-center">
                 <div class="row">
                     <div class="col-md-3">
-                        <input type="file" id="file" ref="file" @change="uploadData()"/>
+                        <input class="form-control" type="file" id="file" ref="file" @change="uploadData()"/>
                     </div>
                     <div class="col-md-6 text-center">
                         <h5>Liste des Produits Commandés</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <a target="_blank" class="btn btn-primary" href="/nova/resources/produits" role="button">Ajouter Produits</a>
                     </div>
                 </div>
                 
@@ -30,6 +33,7 @@
                             <td scope="row">{{ produit.produit.sku }}</td>
                             <td>{{ produit.produit.nom + ' / ' + produit.produit.variante_une + ' / ' + produit.produit.variante_deux + ' / ' + produit.produit.variante_trois }}</td>
                             <td></td>
+                            <td><button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete" @click="ajouterProduitASupprimer(produit, index)"><i class="fas fa-times-circle"></i></button></td>
                         </tr>
                         <tr>
                             <td scope="row"></td>
@@ -99,6 +103,28 @@
                 </table>
             </div>
         </div>
+
+        <!-- Confirm Delete Modal -->
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Supprimer Produit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez-vous vraiment supprimer le produit sélectionné
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="supprimerProduit()">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -109,10 +135,15 @@ export default {
         return {
             file: '',
             produits_commande: [],
-            articles: []
+            articles: [],
+            aSupprimer:null
         }
     },
     methods:{
+        ajouterProduitASupprimer(produit, index){
+            this.aSupprimer = produit
+            this.aSupprimer.index = index
+        },
         uploadData(){
             this.file = this.$refs.file.files[0];
             let formData = new FormData();
@@ -145,6 +176,18 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
+        },
+        supprimerProduit(){
+            if(this.aSupprimer){
+                axios.get('/produits-commande/' + this.aSupprimer.id, ).then(response => {
+                    
+                    $('#confirmDelete').modal('hide')
+                    this.produits_commande.splice((this.aSupprimer.index),1)
+                    this.$forceUpdate()
+                }).catch(error => { 
+                    console.log(error);
+                });
+            }
         }
     },
     mounted(){

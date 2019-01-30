@@ -17,4 +17,8 @@ class ProduitCommandeController extends Controller
     public function all($commande){
         return ProduitCommande::where('commande_id', $commande)->with('produit')->get();
     }
+    public function destroy(ProduitCommande $produitcommande){
+        $produitcommande->delete();
+    }
+
 }
