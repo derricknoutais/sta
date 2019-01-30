@@ -87,7 +87,7 @@ export default {
             axios.post('/commande/' + this.commande.id + '/ajouteProduit',this.produit_local_select ).then(response => {
                 this.produits_commande.splice(0,0,this.produit_local_select)
                 this.produit_local_select = null
-                this.$forceUpdate
+                this.$forceUpdate()
             }).catch(error => {
                 console.log(error);
             });

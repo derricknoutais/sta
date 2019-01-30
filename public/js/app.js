@@ -54393,7 +54393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/commande/' + this.commande.id + '/ajouteProduit', this.produit_local_select).then(function (response) {
                 _this.produits_commande.splice(0, 0, _this.produit_local_select);
                 _this.produit_local_select = null;
-                _this.$forceUpdate;
+                _this.$forceUpdate();
             }).catch(function (error) {
                 console.log(error);
             });
