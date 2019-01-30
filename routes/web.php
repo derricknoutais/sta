@@ -73,9 +73,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('all', 'CommandeController@all');
             Route::post('nouvelle', 'CommandeController@nouvelle');
         });
-        Route::get('/{id}', function ($id) {
-            
-        });
+        Route::get('/{commande}/produits', 'CommandeController@voirProduits');
+        Route::post('/{commande}/ajouteProduit', 'CommandeController@ajouteProduits');
     });
     Route::prefix('/article')->group(function(){
         Route::prefix('/api')->group(function(){

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Commande;
 use App\Article;
+use App\Produit;
+use App\ProduitCommande;
 use App\ArticleCommande;
 use DB;
 class CommandeController extends Controller
@@ -37,5 +39,16 @@ class CommandeController extends Controller
             }
         });
         
+    }
+    public function voirProduits (Commande $commande) {
+        $commande->loadMissing('produits');
+        $produits = Produit::all();
+        return view('commande.voir-produits', compact('commande', 'produits'));
+    }
+    public function ajouteProduits (Commande $commande, Request $request) {
+        ProduitCommande::create([
+            'produit_id' => $request->id,
+            'commande_id' =>$commande->id
+        ]);
     }
 }

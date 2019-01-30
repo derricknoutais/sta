@@ -8,11 +8,23 @@
                     <div class="col-md-3">
                         <input class="form-control" type="file" id="file" ref="file" @change="uploadData()"/>
                     </div>
-                    <div class="col-md-6 text-center">
+                    <div class="col-md-3 text-center">
                         <h5>Liste des Produits Commandés</h5>
                     </div>
-                    <div class="col-md-3">
-                        <a target="_blank" class="btn btn-primary" href="/nova/resources/produits" role="button">Ajouter Produits</a>
+                    <div class="col-md-6 text-right">
+                        
+                            <button class="btn btn-primary" type="button" id="triggerId" data-toggle="dropdown">
+                               <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                <a target="_blank" class="dropdown-item" href="/nova/resources/produits">
+                                    Ajouter Produits
+                                    </a>
+                                <a class="dropdown-item" :href="'/commande/' + this.data.id + '/produits'">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    Plein Écran
+                                </a>
+                            </div>
                     </div>
                 </div>
                 

@@ -14036,6 +14036,7 @@ Vue.component('voir-bon-commande', __webpack_require__(70));
 Vue.component('commande', __webpack_require__(73));
 Vue.component('voir-commande', __webpack_require__(76));
 Vue.component('repertoire-commandes', __webpack_require__(79));
+Vue.component('voir-produits', __webpack_require__(86));
 
 var app = new Vue({
   el: '#app',
@@ -53530,6 +53531,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['data'],
@@ -53641,7 +53654,48 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "col-md-6 text-right" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "triggerId" }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: {
+                      target: "_blank",
+                      href: "/nova/resources/produits"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                                Ajouter Produits\n                                "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { href: "/commande/" + this.data.id + "/produits" }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-expand-arrows-alt" }),
+                    _vm._v(
+                      "\n                                Plein Écran\n                            "
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -53896,7 +53950,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 text-center" }, [
+    return _c("div", { staticClass: "col-md-3 text-center" }, [
       _c("h5", [_vm._v("Liste des Produits Commandés")])
     ])
   },
@@ -53904,20 +53958,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            target: "_blank",
-            href: "/nova/resources/produits",
-            role: "button"
-          }
-        },
-        [_vm._v("Ajouter Produits")]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        attrs: { type: "button", id: "triggerId", "data-toggle": "dropdown" }
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-h" })]
+    )
   },
   function() {
     var _vm = this
@@ -54206,6 +54254,308 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Commande/voirProduits.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2f449f46", Component.options)
+  } else {
+    hotAPI.reload("data-v-2f449f46", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['commande', 'produits'],
+    data: function data() {
+        return {
+            produits_commande: null,
+            produits_locaux: null,
+            produit_local_select: null
+        };
+    },
+
+    methods: {
+        initProduits: function initProduits() {
+            this.produits_locaux = this.produits;
+            this.produits_locaux.forEach(function (produit) {
+                produit.nomComplet = produit.nom + ' / ' + produit.variante_une + ' / ' + produit.variante_deux + ' / ' + produit.variante_trois;
+            });
+        },
+        ajouterProduit: function ajouterProduit() {
+            var _this = this;
+
+            axios.post('/commande/' + this.commande.id + '/ajouteProduit', this.produit_local_select).then(function (response) {
+                _this.produits_commande.splice(0, 0, _this.produit_local_select);
+                _this.this.produit_local_select = null;
+                _this.$forceUpdate;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.produits_commande = this.commande.produits;
+        this.initProduits();
+    }
+});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c("h2", { staticClass: "text-center" }, [
+          _vm._v(_vm._s(_vm.commande.nom))
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "row mt-3",
+        on: {
+          keyup: function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            _vm.ajouterProduit()
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c("v-select", {
+              attrs: { options: _vm.produits, label: "nomComplet" },
+              model: {
+                value: _vm.produit_local_select,
+                callback: function($$v) {
+                  _vm.produit_local_select = $$v
+                },
+                expression: "produit_local_select"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-lg btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.ajouterProduit()
+                }
+              }
+            },
+            [_vm._v("Ajouter")]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped mt-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        [
+          _vm._l(_vm.produits_commande, function(produit, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _vm._v(" "),
+              _c("td", { attrs: { scope: "row" } }, [
+                _vm._v(_vm._s(produit.sku))
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _vm._v(
+                  _vm._s(
+                    produit.nom +
+                      " / " +
+                      produit.variante_une +
+                      " / " +
+                      produit.variante_deux +
+                      " / " +
+                      produit.variante_trois
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c("td"),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#confirmDelete"
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.ajouterProduitASupprimer(produit, index)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-times-circle" })]
+                )
+              ])
+            ])
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Numéro")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("SKU")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Désignation")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Quantité")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { scope: "row" } }),
+      _vm._v(" "),
+      _c("td"),
+      _vm._v(" "),
+      _c("td")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2f449f46", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

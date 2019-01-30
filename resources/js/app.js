@@ -37,6 +37,7 @@ Vue.component('voir-bon-commande', require('./components/Bon-Commande/voir-bon-c
 Vue.component('commande', require('./components/Commande/nouvelle-commande.vue'));
 Vue.component('voir-commande', require('./components/Commande/voir-commande.vue'));
 Vue.component('repertoire-commandes', require('./components/Commande/répertoire-commandes.vue'));
+Vue.component('voir-produits', require('./components/Commande/voirProduits.vue'))
 
 const app = new Vue({
     el: '#app',
