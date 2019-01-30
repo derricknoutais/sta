@@ -86,7 +86,7 @@ export default {
         ajouterProduit(){
             axios.post('/commande/' + this.commande.id + '/ajouteProduit',this.produit_local_select ).then(response => {
                 this.produits_commande.splice(0,0,this.produit_local_select)
-                this.this.produit_local_select = null
+                this.produit_local_select = null
                 this.$forceUpdate
             }).catch(error => {
                 console.log(error);
@@ -98,7 +98,7 @@ export default {
         },
         supprimerProduit(){
             if(this.aSupprimer){
-                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy' ).then(response => {
+                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy').then(response => {
                     $('#confirmDelete').modal('hide')
                     this.produits_commande.splice((this.aSupprimer.index),1)
                     this.$forceUpdate()
