@@ -39,6 +39,28 @@
                 </tr>
             </tbody>
         </table>
+
+
+        <!-- Confirm Delete Modal -->
+        <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Supprimer Produit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        Voulez-vous vraiment supprimer le produit sélectionné
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="supprimerProduit()">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -49,7 +71,8 @@ export default {
         return {
             produits_commande: null,
             produits_locaux: null,
-            produit_local_select: null
+            produit_local_select: null,
+            aSupprimer:null
         }
     },
     methods:{
@@ -68,6 +91,21 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
+        },
+        ajouterProduitASupprimer(produit, index){
+            this.aSupprimer = produit
+            this.aSupprimer.index = index
+        },
+        supprimerProduit(){
+            if(this.aSupprimer){
+                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy' ).then(response => {
+                    $('#confirmDelete').modal('hide')
+                    this.produits_commande.splice((this.aSupprimer.index),1)
+                    this.$forceUpdate()
+                }).catch(error => { 
+                    console.log(error);
+                });
+            }
         }
     },
     mounted(){

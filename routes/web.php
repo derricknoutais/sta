@@ -105,7 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('/produits-commande')->group(function(){
-        Route::get('{produitcommande}', 'ProduitCommandeController@destroy');
+        Route::get('/{produitcommande}/destroy', 'ProduitCommandeController@destroy');
         Route::prefix('api')->group(function(){
             Route::post('upload', 'ProduitCommandeController@upload');
             Route::get('all/{commande}', 'ProduitCommandeController@all');

@@ -53594,7 +53594,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             if (this.aSupprimer) {
-                axios.get('/produits-commande/' + this.aSupprimer.id).then(function (response) {
+                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy').then(function (response) {
 
                     $('#confirmDelete').modal('hide');
                     _this.produits_commande.splice(_this.aSupprimer.index, 1);
@@ -54355,6 +54355,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['commande', 'produits'],
@@ -54362,7 +54384,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             produits_commande: null,
             produits_locaux: null,
-            produit_local_select: null
+            produit_local_select: null,
+            aSupprimer: null
         };
     },
 
@@ -54383,6 +54406,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        ajouterProduitASupprimer: function ajouterProduitASupprimer(produit, index) {
+            this.aSupprimer = produit;
+            this.aSupprimer.index = index;
+        },
+        supprimerProduit: function supprimerProduit() {
+            var _this2 = this;
+
+            if (this.aSupprimer) {
+                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy').then(function (response) {
+                    $('#confirmDelete').modal('hide');
+                    _this2.produits_commande.splice(_this2.aSupprimer.index, 1);
+                    _this2.$forceUpdate();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }
     },
     mounted: function mounted() {
@@ -54515,7 +54555,63 @@ var render = function() {
         ],
         2
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "confirmDelete",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modelTitleId",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _vm._v(
+                  "\n                    Voulez-vous vraiment supprimer le produit sélectionné\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.supprimerProduit()
+                      }
+                    }
+                  },
+                  [_vm._v("Supprimer")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -54545,6 +54641,27 @@ var staticRenderFns = [
       _c("td"),
       _vm._v(" "),
       _c("td")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Supprimer Produit")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]

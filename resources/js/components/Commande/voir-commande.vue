@@ -191,7 +191,7 @@ export default {
         },
         supprimerProduit(){
             if(this.aSupprimer){
-                axios.get('/produits-commande/' + this.aSupprimer.id, ).then(response => {
+                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy' ).then(response => {
                     
                     $('#confirmDelete').modal('hide')
                     this.produits_commande.splice((this.aSupprimer.index),1)
