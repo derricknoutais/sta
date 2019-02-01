@@ -8,18 +8,24 @@
         </div>
         <!-- Boutons de Fonctionalité -->
         <div class="row mt-3">
-            <div class="col-md-9">
+            <div class="col-1">
+                <label>Ajouter Produits</label>
+            </div>
+            <div class="col-10">
                 <v-select :options="produits" label="nomComplet" v-model="produit_local_select" ></v-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-1">
                 <button class="btn btn-lg btn-primary" @click="ajouterProduit()">Ajouter</button>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-9">
+            <div class="col-1">
+                <label>Ajouter Articles</label>
+            </div>
+            <div class="col-10">
                 <v-select :options="articles" label="nom" v-model="article_select" ></v-select>
             </div>
-            <div class="col-md-3">
+            <div class="col-1">
                 <button class="btn btn-lg btn-primary" @click="ajouterArticle()">Ajouter</button>
             </div>
         </div>

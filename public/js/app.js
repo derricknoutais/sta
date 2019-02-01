@@ -54375,6 +54375,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['commande', 'produits', 'articles'],
@@ -54459,9 +54465,11 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-3" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-9" },
+        { staticClass: "col-10" },
         [
           _c("v-select", {
             attrs: { options: _vm.produits, label: "nomComplet" },
@@ -54477,7 +54485,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "col-1" }, [
         _c(
           "button",
           {
@@ -54494,9 +54502,11 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-3" }, [
+      _vm._m(1),
+      _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-9" },
+        { staticClass: "col-10" },
         [
           _c("v-select", {
             attrs: { options: _vm.articles, label: "nom" },
@@ -54512,7 +54522,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
+      _c("div", { staticClass: "col-1" }, [
         _c(
           "button",
           {
@@ -54529,7 +54539,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("table", { staticClass: "table table-striped mt-3" }, [
-      _vm._m(0),
+      _vm._m(2),
       _vm._v(" "),
       _c(
         "tbody",
@@ -54579,7 +54589,7 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(3)
         ],
         2
       )
@@ -54603,7 +54613,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _vm._v(
@@ -54643,6 +54653,22 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-1" }, [
+      _c("label", [_vm._v("Ajouter Produits")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-1" }, [
+      _c("label", [_vm._v("Ajouter Articles")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
