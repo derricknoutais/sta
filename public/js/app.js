@@ -54368,14 +54368,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['commande', 'produits'],
+    props: ['commande', 'produits', 'articles'],
     data: function data() {
         return {
             produits_commande: null,
             produits_locaux: null,
             produit_local_select: null,
+            article_select: null,
             aSupprimer: null
         };
     },
@@ -54414,6 +54422,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     console.log(error);
                 });
             }
+        },
+        ajouterArticle: function ajouterArticle() {
+            var _this3 = this;
+
+            axios.post('/commande/' + this.commande.id + '/ajouteArticle', this.article_select).then(function (response) {
+                _this3.produits_commande.splice(0, 0, _this3.article_select);
+                _this3.article_select = null;
+                _this3.$forceUpdate();
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     },
     mounted: function mounted() {
@@ -54439,57 +54458,75 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "row mt-3",
-        on: {
-          keyup: function($event) {
-            if (
-              !("button" in $event) &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
+    _c("div", { staticClass: "row mt-3" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-9" },
+        [
+          _c("v-select", {
+            attrs: { options: _vm.produits, label: "nomComplet" },
+            model: {
+              value: _vm.produit_local_select,
+              callback: function($$v) {
+                _vm.produit_local_select = $$v
+              },
+              expression: "produit_local_select"
             }
-            _vm.ajouterProduit()
-          }
-        }
-      },
-      [
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
         _c(
-          "div",
-          { staticClass: "col-md-6" },
-          [
-            _c("v-select", {
-              attrs: { options: _vm.produits, label: "nomComplet" },
-              model: {
-                value: _vm.produit_local_select,
-                callback: function($$v) {
-                  _vm.produit_local_select = $$v
-                },
-                expression: "produit_local_select"
+          "button",
+          {
+            staticClass: "btn btn-lg btn-primary",
+            on: {
+              click: function($event) {
+                _vm.ajouterProduit()
               }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-lg btn-primary",
-              on: {
-                click: function($event) {
-                  _vm.ajouterProduit()
-                }
+            }
+          },
+          [_vm._v("Ajouter")]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-3" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-9" },
+        [
+          _c("v-select", {
+            attrs: { options: _vm.articles, label: "nom" },
+            model: {
+              value: _vm.article_select,
+              callback: function($$v) {
+                _vm.article_select = $$v
+              },
+              expression: "article_select"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-lg btn-primary",
+            on: {
+              click: function($event) {
+                _vm.ajouterArticle()
               }
-            },
-            [_vm._v("Ajouter")]
-          )
-        ])
-      ]
-    ),
+            }
+          },
+          [_vm._v("Ajouter")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("table", { staticClass: "table table-striped mt-3" }, [
       _vm._m(0),

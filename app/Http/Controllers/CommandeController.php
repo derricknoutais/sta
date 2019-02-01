@@ -43,11 +43,18 @@ class CommandeController extends Controller
     public function voirProduits (Commande $commande) {
         $commande->loadMissing('produits');
         $produits = Produit::all();
-        return view('commande.voir-produits', compact('commande', 'produits'));
+        $articles = Article::where('commandé', 0)->get();
+        return view('commande.voir-produits', compact('commande', 'produits', 'articles'));
     }
     public function ajouteProduits (Commande $commande, Request $request) {
         ProduitCommande::create([
             'produit_id' => $request->id,
+            'commande_id' =>$commande->id
+        ]);
+    }
+    public function ajouteArticles(Commande $commande, Request $request) {
+        ArticleCommande::create([
+            'article_id' => $request->id,
             'commande_id' =>$commande->id
         ]);
     }

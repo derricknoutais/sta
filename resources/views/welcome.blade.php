@@ -73,16 +73,22 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    S.T.A
+                    APP-Pro
                 </div>
 
                 <div class="links">
-                    <a href="/fiche-renseignement">Fiche Renseignement</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="/fiche-renseignement">
+                        <i class="fab fa-file-alt"></i>
+                        Fiche Renseignement
+                    </a>
+                    <a href="/commande/répertoire">
+                        Commande
+                    </a>
+                    <a href="/demande-achat/répertoire">
+                        Demande Achat
+                    <a href="/bon-commande/répertoire">
+                        Bon Commande
+                    </a>
                 </div>
             </div>
         </div>

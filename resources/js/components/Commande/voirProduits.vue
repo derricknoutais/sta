@@ -7,12 +7,20 @@
             </div>
         </div>
         <!-- Boutons de Fonctionalité -->
-        <div class="row mt-3" @keyup.enter="ajouterProduit()">
-            <div class="col-md-6">
+        <div class="row mt-3">
+            <div class="col-md-9">
                 <v-select :options="produits" label="nomComplet" v-model="produit_local_select" ></v-select>
             </div>
             <div class="col-md-3">
                 <button class="btn btn-lg btn-primary" @click="ajouterProduit()">Ajouter</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-9">
+                <v-select :options="articles" label="nom" v-model="article_select" ></v-select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-lg btn-primary" @click="ajouterArticle()">Ajouter</button>
             </div>
         </div>
         <table class="table table-striped mt-3">
@@ -40,7 +48,6 @@
             </tbody>
         </table>
 
-
         <!-- Confirm Delete Modal -->
         <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -66,12 +73,13 @@
 
 <script>
 export default {
-    props: ['commande', 'produits'],
+    props: ['commande', 'produits', 'articles'],
     data(){
         return {
             produits_commande: null,
             produits_locaux: null,
             produit_local_select: null,
+            article_select: null,
             aSupprimer:null
         }
     },
@@ -106,6 +114,15 @@ export default {
                     console.log(error);
                 });
             }
+        },
+        ajouterArticle(){
+            axios.post('/commande/' + this.commande.id + '/ajouteArticle',this.article_select ).then(response => {
+                this.produits_commande.splice(0,0,this.article_select)
+                this.article_select = null
+                this.$forceUpdate()
+            }).catch(error => {
+                console.log(error);
+            });
         }
     },
     mounted(){
