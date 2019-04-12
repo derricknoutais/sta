@@ -50414,8 +50414,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.filtered = this.fiches.filter(function (each) {
                     return each.marque_id === _this10.filtre_marque.id;
                 });
-                this.filtered_moteurs = this.moteurs.moteurs.filter(function (each) {
+                this.filtered_moteurs = this.moteurs.filter(function (each) {
                     return each.marque_id === _this10.filtre_marque.id;
+                });
+            } else {
+                axios.get('fiche-renseignement/marque/api/all').then(function (response) {
+                    _this10.marques = response.data;
                 });
             }
         },
@@ -50427,6 +50431,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.filtered = this.fiches.filter(function (each) {
                     return each.type_id === _this11.filtre_type.id;
                 });
+            } else {
+                axios.get('fiche-renseignement/type/api/all').then(function (response) {
+                    _this11.types = response.data;
+                });
             }
         },
         filtre_moteur: function filtre_moteur() {
@@ -50435,6 +50443,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.filtre_moteur !== 'moteur') {
                 this.filtered = this.fiches.filter(function (each) {
                     return each.moteur_id === _this12.filtre_moteur.id;
+                });
+            } else {
+                axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
+                    _this12.filtered_moteurs = _this12.moteurs.moteurs = response.data;
                 });
             }
         },

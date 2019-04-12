@@ -502,8 +502,12 @@ export default {
                 this.filtered = this.fiches.filter( (each) => {
                     return each.marque_id === this.filtre_marque.id
                 });
-                this.filtered_moteurs = this.moteurs.moteurs.filter( (each) => {
+                this.filtered_moteurs = this.moteurs.filter( (each) => {
                     return each.marque_id === this.filtre_marque.id
+                });
+            } else {
+                axios.get('fiche-renseignement/marque/api/all').then(response => {
+                    this.marques = response.data;
                 });
             }
         },
@@ -513,6 +517,10 @@ export default {
                 this.filtered = this.fiches.filter( (each) => {
                     return each.type_id === this.filtre_type.id
                 })
+            } else {
+                axios.get('fiche-renseignement/type/api/all').then(response => {
+                    this.types = response.data;
+                });
             }
             
         },
@@ -521,6 +529,10 @@ export default {
                 this.filtered = this.fiches.filter( (each) => {
                     return each.moteur_id === this.filtre_moteur.id
                 })
+            } else {
+                axios.get('fiche-renseignement/moteur/api/all').then(response => {
+                    this.filtered_moteurs = this.moteurs.moteurs = response.data;
+                });
             }
         },
         filtre_modele(){
