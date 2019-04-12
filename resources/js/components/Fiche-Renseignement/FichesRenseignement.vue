@@ -8,36 +8,53 @@
             </div>
         </div>
         <div class="row mt-5">
-            <div class="col-md-2">
-                <select class="form-control" v-model="filtre_marque" @change="chercheTypes(filtre_marque)">
+            <div class="col-md-3">
+                <!-- <select class="form-control" v-model="filtre_marque" @change="chercheTypes(filtre_marque)">
                     <option value="marque">Sélectionne une Marque</option>
                     <option :value="marque.id" v-for="marque in marques" v-if="marque !== null">{{ marque.nom }}</option>
-                </select>
+                </select> -->
+                <label>Marque</label>
+                <multiselect v-model="filtre_marque" :options="this.marques" label="nom" track-by="id" placeholder="Select one" @select="chercheTypes()">
+                    <template slot="singleLabel" slot-scope="{ option }" :value="option.id"><strong>{{ option.nom }}</strong></template>
+                </multiselect>
             </div>
-            <div class="col-md-2">
-                <select class="form-control" v-model="filtre_type" @change="chercheMoteurs()">
+            <div class="col-md-3">
+                <!-- <select class="form-control" v-model="filtre_type" @change="chercheMoteurs()">
                     <option value="type">Sélectionne un Type</option>
                     <option :value="type.id" v-for="type in types" v-if="type !== null">{{ type.nom }}</option>
-                </select>
+                </select> -->
+                <label>Type</label>
+                <multiselect v-model="filtre_type" :options="this.types" label="nom"  @select="chercheMoteurs()">
+                    <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.nom }}</strong></template>
+                </multiselect>
             </div>
-            <div class="col-md-2">
-                <select class="form-control" v-model="filtre_moteur">
+            <div class="col-md-3">
+                <!-- <select class="form-control" v-model="filtre_moteur">
                     <option value="moteur">Sélectionne un Moteur</option>
-                    <option :value="moteur.id" v-for="moteur in this.filtered_moteurs" v-if="moteur !== null">{{ moteur.nom }}</option>
-                </select>
+                    <option :value="moteur.id" v-for="moteur in this.moteurs" v-if="moteur !== null">{{ moteur.nom }}</option>
+                </select> -->
+                <label>Moteur</label>
+                <multiselect v-model="filtre_moteur" :options="this.moteurs" label="nom"  @select="chercheMoteurs()">
+                    <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.nom }}</strong></template>
+                </multiselect>
             </div>
-            <div class="col-md-2">
-                <select class="form-control" v-model="filtre_modele">
+            <div class="col-md-3">
+                <!-- <select class="form-control" v-model="filtre_modele">
                     <option value="modèle">Sélectionne un Modèle</option>
                     <option :value="modèle.id" v-for="modèle in this.modèles" v-if="modèle !== null">{{ modèle.nom }}</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary" @click="réinitialiser()">Réinitialiser Filtres</button>
+                </select> -->
+                <label>Modèle</label>
+                <multiselect v-model="filtre_modele" :options="this.modèles" label="nom"  @select="chercheMoteurs()">
+                    <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.nom }}</strong></template>
+                </multiselect>
             </div>
         </div>
         <div class="row my-5">
+            <div class="col-md-2">
+                <button class="btn btn-primary" @click="réinitialiser()">Réinitialiser Filtres</button>
+            </div>
             <div class="col-md-4">
+                
                 <a class="btn btn-primary" href="/fiche-renseignement/renseigner">Ajouter une Requête</a>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                   Creer demande
@@ -275,6 +292,7 @@
     </div>
 </template>
 <script>
+import Multiselect from 'vue-multiselect';
 export default {
     data(){
         return {
@@ -306,7 +324,7 @@ export default {
             types : [],
             types_moteurs: [],
             moteurs : {
-                moteurs : []
+                
             },
             filtered: [],
             filtered_moteurs: [],
@@ -323,22 +341,33 @@ export default {
         }
     },
     methods: {
-        chercheTypes(marque){
-            console.log(marque)
-            axios.get('/fiche-renseignement/type/de-marque/' + marque).then(response => {
-                this.fiche_renseignement.type = this.types = response.data;
-                console.log(response.data);
-            }).catch(error => {
-                console.log(error);
-            });
+        chercheTypes(){
+            setTimeout(() => {
+                console.log( 'The id is ' + this.filtre_marque.id)
+                axios.get('/fiche-renseignement/type/de-marque/' + this.filtre_marque.id).then(response => {
+                    this.types = response.data;
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+            }, 100);
+            
         },
         chercheMoteurs(){
-            axios.get('/fiche-renseignement/moteur/de-type/' + this.filtre_type).then(response => {
-                this.fiche_renseignement.moteur = this.moteurs.moteurs = response.data;
-            }).catch(error => {
-                console.log(error);
-            });
-            this.chercheModèles();
+            setTimeout(() => {
+                axios.get('/fiche-renseignement/moteur/de-type/' + this.filtre_type.id).then(response => {
+                    console.log('Moteur Time ' + this.filtre_type.id)
+                    console.log(response.data)
+                    this.moteurs  =  response.data.moteurs
+                    // this.filtre_moteur = response.data.moteurs
+                }).catch(error => {
+                    console.log(error);
+                });
+            }, 1000);
+            
+            // setTimeout(() => {
+            //     this.chercheModèles();
+            // }, 3000);
         },
         chercheModèles(){
             axios.get('/fiche-renseignement/modèle/de-type/' + this.filtre_modèle).then(response => {
@@ -443,7 +472,7 @@ export default {
                 this.commandes = response.data;
             });
             axios.get('/fiche-renseignement/moteur/api/all').then(response => {
-                this.moteurs.moteurs = response.data;
+                this.moteurs = response.data;
             });
         },
         updateRequete(){
@@ -458,25 +487,31 @@ export default {
                 this.aEditer.articles.push({nom: this.articleAEditer})
                 this.$forceUpdate()
             }
+        },
+        test(){
+            setTimeout(() => {
+                console.log(this.filtre_marque.nom)
+            }, 10);
+            
         }
     },
     watch: {
         filtre_marque(){
-            console.log('hello')
+            console.log('I changed')
             if(this.filtre_marque !== 'marque'){
                 this.filtered = this.fiches.filter( (each) => {
-                    return each.marque_id === this.filtre_marque
+                    return each.marque_id === this.filtre_marque.id
                 });
                 this.filtered_moteurs = this.moteurs.moteurs.filter( (each) => {
-                    return each.marque_id === this.filtre_marque
+                    return each.marque_id === this.filtre_marque.id
                 });
             }
         },
         filtre_type(){
-            console.log('hello')
+            console.log('I changed too')
             if(this.filtre_type !== 'type'){
                 this.filtered = this.fiches.filter( (each) => {
-                    return each.type_id === this.filtre_type
+                    return each.type_id === this.filtre_type.id
                 })
             }
             
@@ -484,14 +519,14 @@ export default {
         filtre_moteur(){
             if(this.filtre_moteur !== 'moteur'){
                 this.filtered = this.fiches.filter( (each) => {
-                    return each.moteur_id === this.filtre_moteur
+                    return each.moteur_id === this.filtre_moteur.id
                 })
             }
         },
         filtre_modele(){
             if(this.filtre_modele !== 'modèle'){
                 this.filtered = this.fiches.filter( (each) => {
-                    return each.modèle_id === this.filtre_modele
+                    return each.modèle_id === this.filtre_modele.id
                 })
             }
         },

@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
             });
         });
         Route::prefix('/moteur')->group(function(){
-            Route::get('de-type/{type}', 'MoteurController@chercheMoteurs')->where('modele', '[0-9]+');
+            Route::get('/de-type/{type}', 'MoteurController@chercheMoteurs')->where('type', '[0-9]+');
             Route::prefix('/api')->group(function(){
                 Route::get('/all', 'MoteurController@all');
                 Route::post('/enregistrer', 'MoteurController@enregistrer');

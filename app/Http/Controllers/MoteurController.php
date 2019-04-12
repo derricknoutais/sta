@@ -11,7 +11,7 @@ class MoteurController extends Controller
         return Moteur::orderBy('nom')->get();
     }
     public function chercheMoteurs($type){
-        return Type::where('id', $type)->with('moteurs')->first();
+        return Type::where('id', $type)->with(['moteurs', 'modèles'])->first();
     }
     public function enregistrer(Request $request){
         Moteur::create([

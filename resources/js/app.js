@@ -18,6 +18,9 @@ import vSelect from 'vue-select'
 
 Vue.component('v-select', vSelect)
 
+import Multiselect from 'vue-multiselect';
+Vue.component('multiselect', Multiselect)
+
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('reporting-renseignement', require('./components/Fiche-Renseignement/Reporting.vue'));
 Vue.component('fiche-renseignement', require('./components/Fiche-Renseignement/Formulaire.vue'));

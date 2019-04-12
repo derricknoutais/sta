@@ -1,7 +1,8 @@
 <template>
     <div class='container'>
+
         <h2 class="text-center mt-5">Commande  {{ data.nom }}</h2>
-        
+
         <div class="card mt-5">
             <div class="card-header text-center">
                 <div class="row">
@@ -11,23 +12,21 @@
                     <div class="col-md-3 text-center">
                         <h5>Liste des Produits Commandés</h5>
                     </div>
-                    <div class="col-md-6 text-right">
-                        
-                            <button class="btn btn-primary" type="button" id="triggerId" data-toggle="dropdown">
-                               <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="triggerId">
-                                <a target="_blank" class="dropdown-item" href="/nova/resources/produits">
-                                    Ajouter Produits
-                                    </a>
-                                <a class="dropdown-item" :href="'/commande/' + this.data.id + '/produits'">
-                                    <i class="fas fa-expand-arrows-alt"></i>
-                                    Plein Écran
+                    <div class="col-md-6 text-right">  
+                        <button class="btn btn-primary" type="button" id="triggerId" data-toggle="dropdown">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="triggerId">
+                            <a target="_blank" class="dropdown-item" href="/nova/resources/produits">
+                                Ajouter Produits
                                 </a>
-                            </div>
+                            <a class="dropdown-item" :href="'/commande/' + this.data.id + '/produits'">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                Plein Écran
+                            </a>
+                        </div>
                     </div>
                 </div>
-                
             </div>
             <div class="card-body" style="max-height:30em;overflow-y: scroll;">
                 <table class="table table-striped mt-3">
@@ -141,83 +140,81 @@
 </template>
 
 <script>
-export default {
-    props: ['data'],
-    data(){
-        return {
-            file: '',
-            produits_commande: [],
-            articles: [],
-            aSupprimer:null
-        }
-    },
-    methods:{
-        ajouterProduitASupprimer(produit, index){
-            this.aSupprimer = produit
-            this.aSupprimer.index = index
+    export default {
+        props: ['data'],
+        data(){
+            return {
+                file: '',
+                produits_commande: [],
+                articles: [],
+                aSupprimer:null
+            }
         },
-        uploadData(){
-            this.file = this.$refs.file.files[0];
-            let formData = new FormData();
-            formData.append('file', this.file);
-            formData.append('commande', this.data.id)
+        methods:{
+            ajouterProduitASupprimer(produit, index){
+                this.aSupprimer = produit
+                this.aSupprimer.index = index
+            },
+            uploadData(){
+                this.file = this.$refs.file.files[0];
+                let formData = new FormData()
+                formData.append('file', this.file)
+                formData.append('commande', this.data.id)
 
-            axios.post('/produits-commande/api/upload',formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+                axios.post('/produits-commande/api/upload',formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            créerDemandesParFournisseur(){
+                axios.get('/demande-achat/api/créerDemandesParFournisseur/' + this.data.id).then(response => {
+                    console.log(response.data);
+
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            créerCommandes(){
+                axios.get('/bon-commande/api/créerCommandes/' + this.data.id).then(response => {
+                    console.log(response.data);
+                    
+                }).catch(error => {
+                    console.log(error);
+                });
+            },
+            supprimerProduit(){
+                if(this.aSupprimer){
+                    axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy' ).then(response => {
+                        
+                        $('#confirmDelete').modal('hide')
+                        this.produits_commande.splice((this.aSupprimer.index),1)
+                        this.$forceUpdate()
+                    }).catch(error => { 
+                        console.log(error);
+                    });
                 }
-            }).then(response => {
-                console.log(response.data);
+            }
+        },
+        mounted(){
+            axios.get('/produits-commande/api/all/' + this.data.id).then(response => {
+                this.produits_commande = response.data;
             }).catch(error => {
                 console.log(error);
             });
-        },
-        créerDemandesParFournisseur(){
-            axios.get('/demande-achat/api/créerDemandesParFournisseur/' + this.data.id).then(response => {
-                console.log(response.data);
 
-            }).catch(error => {
-                console.log(error);
-            });
-        },
-        créerCommandes(){
-            axios.get('/bon-commande/api/créerCommandes/' + this.data.id).then(response => {
+            axios.get('/article/api/all').then(response => {
+                this.articles = response.data
                 console.log(response.data);
                 
             }).catch(error => {
                 console.log(error);
             });
-        },
-        supprimerProduit(){
-            if(this.aSupprimer){
-                axios.get('/produits-commande/' + this.aSupprimer.id + '/destroy' ).then(response => {
-                    
-                    $('#confirmDelete').modal('hide')
-                    this.produits_commande.splice((this.aSupprimer.index),1)
-                    this.$forceUpdate()
-                }).catch(error => { 
-                    console.log(error);
-                });
-            }
         }
-    },
-    mounted(){
-        axios.get('/produits-commande/api/all/' + this.data.id).then(response => {
-            this.produits_commande = response.data;
-
-        }).catch(error => {
-            console.log(error);
-        });
-
-        axios.get('/article/api/all').then(response => {
-            this.articles = response.data
-            console.log(response.data);
-            
-        }).catch(error => {
-            console.log(error);
-        });
-        
     }
-}
 </script>

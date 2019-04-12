@@ -4,6 +4,7 @@
     <voir-produits 
         :commande="{{ $commande }}" 
         :produits="{{ $produits }}"
-        :articles="{{ $articles }}" >
+        :articles="{{ $articles }}" 
+    >
     </voir-produits>
 @endsection
