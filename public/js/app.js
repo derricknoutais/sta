@@ -50368,9 +50368,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        changerEtat: function changerEtat(article, etat) {
-            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article, { 'etat': etat }).then(function (response) {
+        changerEtat: function changerEtat(fiche, article, etat) {
+            var _this7 = this;
+
+            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article.id, { 'etat': etat }).then(function (response) {
                 console.log(response.data);
+                article.état = etat;
+                fiche.color = _this7.ficheColor(fiche);
+                // window.location.reload()
+                _this7.$forceUpdate();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -50385,7 +50391,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.aEditer = fiche;
         },
         supprimeLaRequete: function supprimeLaRequete(fiche) {
-            var _this7 = this;
+            var _this8 = this;
 
             axios.get('fiche-renseignement/api/supprimer/' + fiche.id).then(function (response) {
                 console.log(response.data);
@@ -50394,7 +50400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 setTimeout(function () {
                     $('#succèsSuppression').modal('hide');
                 }, 2000);
-                _this7.init();
+                _this8.init();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -50403,31 +50409,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editerArticles = !this.editerArticles;
         },
         init: function init() {
-            var _this8 = this;
+            var _this9 = this;
 
             axios.get('fiche-renseignement/api/all').then(function (response) {
-                _this8.fiches = _this8.filtered = response.data;
+                _this9.fiches = _this9.filtered = response.data;
             });
             axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                _this8.marques = response.data;
+                _this9.marques = response.data;
             });
             axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                _this8.types = response.data;
+                _this9.types = response.data;
             });
             axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                _this8.filtered_moteurs = _this8.moteurs.moteurs = response.data;
+                _this9.filtered_moteurs = _this9.moteurs.moteurs = response.data;
             });
             axios.get('fiche-renseignement/modèle/api/all').then(function (response) {
-                _this8.modèles = response.data;
+                _this9.modèles = response.data;
             });
             axios.get('demande-achat/api/all').then(function (response) {
-                _this8.demandes = response.data;
+                _this9.demandes = response.data;
             });
             axios.get('commande/api/all').then(function (response) {
-                _this8.commandes = response.data;
+                _this9.commandes = response.data;
             });
             axios.get('/fiche-renseignement/moteur/api/all').then(function (response) {
-                _this8.moteurs = response.data;
+                _this9.moteurs = response.data;
             });
         },
         updateRequete: function updateRequete() {
@@ -50444,10 +50450,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         test: function test() {
-            var _this9 = this;
+            var _this10 = this;
 
             setTimeout(function () {
-                console.log(_this9.filtre_marque.nom);
+                console.log(_this10.filtre_marque.nom);
             }, 10);
         },
         ficheColor: function ficheColor(fiche) {
@@ -50464,74 +50470,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
             if (nombreCommandé === fiche.articles.length) {
-                return 'success';
+                return 'bg-success';
             } else if (nombreCommandé > 0 && nombreCommandé < fiche.articles.length) {
-                return 'danger text-white';
+                return 'bg-danger text-white';
             } else if (nombreCommandé === fiche.articles.length) {
-                return 'success';
+                return 'bg-success';
             }
         }
     },
     watch: {
         filtre_marque: function filtre_marque() {
-            var _this10 = this;
+            var _this11 = this;
 
             console.log('I changed');
             if (this.filtre_marque !== 'marque') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.marque_id === _this10.filtre_marque.id;
+                    return each.marque_id === _this11.filtre_marque.id;
                 });
                 this.filtered_moteurs = this.moteurs.filter(function (each) {
-                    return each.marque_id === _this10.filtre_marque.id;
+                    return each.marque_id === _this11.filtre_marque.id;
                 });
             } else {
                 axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                    _this10.marques = response.data;
+                    _this11.marques = response.data;
                 });
             }
         },
         filtre_type: function filtre_type() {
-            var _this11 = this;
+            var _this12 = this;
 
             console.log('I changed too');
             if (this.filtre_type !== 'type') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.type_id === _this11.filtre_type.id;
+                    return each.type_id === _this12.filtre_type.id;
                 });
             } else {
                 axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                    _this11.types = response.data;
+                    _this12.types = response.data;
                 });
             }
         },
         filtre_moteur: function filtre_moteur() {
-            var _this12 = this;
+            var _this13 = this;
 
             if (this.filtre_moteur !== 'moteur') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.moteur_id === _this12.filtre_moteur.id;
+                    return each.moteur_id === _this13.filtre_moteur.id;
                 });
             } else {
                 axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                    _this12.filtered_moteurs = _this12.moteurs.moteurs = response.data;
+                    _this13.filtered_moteurs = _this13.moteurs.moteurs = response.data;
                 });
             }
         },
         filtre_modele: function filtre_modele() {
-            var _this13 = this;
+            var _this14 = this;
 
             if (this.filtre_modele !== 'modèle') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this13.filtre_modele.id;
+                    return each.modèle_id === _this14.filtre_modele.id;
                 });
             }
         },
         filtre_partiellement_commande: function filtre_partiellement_commande() {
-            var _this14 = this;
+            var _this15 = this;
 
             if (this.filtre_partiellement_commande === 1) {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this14.filtre_modele.id;
+                    return each.modèle_id === _this15.filtre_modele.id;
                 });
             }
         }
@@ -50544,15 +50550,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {},
     mounted: function mounted() {
-        var _this15 = this;
+        var _this16 = this;
 
         this.init();
         setTimeout(function () {
-            _this15.fiches.forEach(function (fiche) {
+            _this16.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = 'bg-' + _this15.ficheColor(fiche);
+                fiche.color = _this16.ficheColor(fiche);
             });
-            _this15.$forceUpdate();
+            _this16.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -50936,7 +50942,11 @@ var render = function() {
                                     attrs: { type: "button" },
                                     on: {
                                       click: function($event) {
-                                        _vm.changerEtat(article.id, "commandé")
+                                        _vm.changerEtat(
+                                          fiche,
+                                          article,
+                                          "commandé"
+                                        )
                                       }
                                     }
                                   },
@@ -51082,7 +51092,7 @@ var render = function() {
                               attrs: { type: "button" },
                               on: {
                                 click: function($event) {
-                                  _vm.changerEtat(article.id, "commandé")
+                                  _vm.changerEtat(fiche, article, "commandé")
                                 }
                               }
                             },

@@ -133,7 +133,7 @@
                                     <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
                                     <div class="row">{{ article.nom }}</div>
                                     
-                                    <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(article.id, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                                    <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                     <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                     
                                     <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
@@ -168,7 +168,7 @@
                             <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
                             <div class="row">{{ article.nom }}</div>
 
-                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(article.id, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                             <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
 
                             <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
@@ -458,10 +458,13 @@ export default {
                 console.log(error);
             });
         },
-        changerEtat(article, etat){
-            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article , { 'etat' : etat }).then(response => {
+        changerEtat(fiche, article, etat){
+            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article.id , { 'etat' : etat }).then(response => {
                 console.log(response.data);
-                
+                article.état = etat;
+                fiche.color = this.ficheColor(fiche)
+                // window.location.reload()
+                this.$forceUpdate()
             }).catch(error => {
                 console.log(error);
             });
@@ -553,11 +556,11 @@ export default {
                 }
             })
             if( nombreCommandé === fiche.articles.length ){
-                return 'success'
+                return 'bg-success'
             } else if( nombreCommandé > 0 && nombreCommandé < fiche.articles.length ){
-                return 'danger text-white'
+                return 'bg-danger text-white'
             } else if( nombreCommandé === fiche.articles.length ){
-                return 'success'
+                return 'bg-success'
             } 
         }
     },
@@ -629,7 +632,7 @@ export default {
         setTimeout(() => {
             this.fiches.forEach((fiche) => {
                 // console.log(fiche.id)
-                fiche.color = 'bg-' + this.ficheColor(fiche)
+                fiche.color = this.ficheColor(fiche)
             });
             this.$forceUpdate()
         }, 3000);
