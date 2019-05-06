@@ -50,6 +50,33 @@
                 </multiselect>
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
+                    Archivé
+                  </label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+                    Entièrment Commandé
+                  </label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
+                    Partiellement Commandé
+                  </label>
+                </div>
+            </div>
+            
+        </div>
         <!-- Boutons Fonctionnalité -->
         <div class="row my-5">
             <div class="col-md-6">
@@ -66,6 +93,7 @@
                 <button @click="changeView('Carte')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Carte"><i class="fas fa-grip-horizontal fa-1x mx-1"></i></button>
             </div>
         </div>
+        
         <div class="row" v-if="this.viewMode === 'Liste'">
             <div class="col-md-6" id="accordion">
                 <div class="card" v-for="(fiche, index) in filtered">
@@ -118,7 +146,7 @@
         </div>
         <div class="row" v-if="this.viewMode === 'Carte'">
             <div class="card col-md-3 m-1" v-for="(fiche, index) in filtered">
-                <div class="card-header">
+                <div class="card-header" :class="fiche.color">
                     <h5 class="mb-0">
                         Requête
                         <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span>
@@ -137,8 +165,13 @@
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles" >
-                            <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé">
-                            {{ article.nom }}
+                            <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
+                            <div class="row">{{ article.nom }}</div>
+
+                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(article.id, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                            <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
+
+                            <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
                         </li>
                     </ul>
                 </div>

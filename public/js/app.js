@@ -50195,6 +50195,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50655,9 +50688,11 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
     _c("div", { staticClass: "row my-5" }, [
       _c("div", { staticClass: "col-md-6" }, [
-        _vm._m(1),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "button",
@@ -50943,7 +50978,7 @@ var render = function() {
           { staticClass: "row" },
           _vm._l(_vm.filtered, function(fiche, index) {
             return _c("div", { staticClass: "card col-md-3 m-1" }, [
-              _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "card-header", class: fiche.color }, [
                 _c("h5", { staticClass: "mb-0" }, [
                   _vm._v("\n                    Requête\n                    "),
                   fiche.marque !== null
@@ -51020,20 +51055,55 @@ var render = function() {
                   { staticClass: "list-group list-group-flush" },
                   _vm._l(fiche.articles, function(article) {
                     return _c("li", { staticClass: "list-group-item" }, [
-                      !article.commandé
-                        ? _c("input", {
-                            attrs: { type: "checkbox" },
-                            on: {
-                              click: function($event) {
-                                _vm.selectionneArticle(article)
+                      _c("div", { staticClass: "row" }, [
+                        _vm._v(_vm._s(article.nom))
+                      ]),
+                      _vm._v(" "),
+                      article.état === "enregistré"
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary btn-sm py-0 px-1",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.changerEtat(article.id, "commandé")
+                                }
                               }
+                            },
+                            [
+                              _vm._v("Commander "),
+                              _c("i", {
+                                staticClass: "fas fa-envelope-open-text    "
+                              })
+                            ]
+                          )
+                        : article.état === "commandé"
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "badge badge-success badge-pill py-1"
+                              },
+                              [
+                                _vm._v(" Commandé "),
+                                _c("i", { staticClass: "fas fa-clock" })
+                              ]
+                            )
+                          : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-sm py-0 px-1",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.changerEtat(article.id, "archivé")
                             }
-                          })
-                        : _vm._e(),
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(article.nom) +
-                          "\n                    "
+                          }
+                        },
+                        [_vm._v("Réceptionner")]
                       )
                     ])
                   })
@@ -51062,7 +51132,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -51144,7 +51214,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(4),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "form-group" }, [
@@ -51661,9 +51731,9 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
-              _vm._v(" "),
               _vm._m(5),
+              _vm._v(" "),
+              _vm._m(6),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -51695,7 +51765,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(6)
+    _vm._m(7)
   ])
 }
 var staticRenderFns = [
@@ -51706,6 +51776,64 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "float-right" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "checkbox",
+                name: "",
+                id: "",
+                value: "checkedValue",
+                checked: ""
+              }
+            }),
+            _vm._v("\n                Archivé\n              ")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "checkbox",
+                name: "",
+                id: "",
+                value: "checkedValue"
+              }
+            }),
+            _vm._v("\n                Entièrment Commandé\n              ")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "checkbox",
+                name: "",
+                id: "",
+                value: "checkedValue"
+              }
+            }),
+            _vm._v("\n                Partiellement Commandé\n              ")
+          ])
+        ])
       ])
     ])
   },
