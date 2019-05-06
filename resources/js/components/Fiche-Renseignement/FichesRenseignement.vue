@@ -7,6 +7,7 @@
                 </div>
             </div>
         </div>
+        <!-- Input Filtres -->
         <div class="row mt-5">
             <div class="col-md-3">
                 <!-- <select class="form-control" v-model="filtre_marque" @change="chercheTypes(filtre_marque)">
@@ -45,30 +46,30 @@
                 </select> -->
                 <label>Modèle</label>
                 <multiselect v-model="filtre_modele" :options="this.modèles" label="nom"  @select="chercheMoteurs()">
-                    <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.nom }}</strong></template>
+                    <!-- <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.nom }}</strong></template> -->
                 </multiselect>
             </div>
         </div>
+        <!-- Boutons Fonctionnalité -->
         <div class="row my-5">
-            <div class="col-md-2">
-                <button class="btn btn-primary" @click="réinitialiser()">Réinitialiser Filtres</button>
-            </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
+                <a class="btn btn-success" href="/fiche-renseignement/renseigner"> <i class="fas fa-plus"></i> Ajouter une Requête</a>
+                <button class="btn btn-dark" @click="réinitialiser()">Réinitialiser Filtres</button>
                 
-                <a class="btn btn-primary" href="/fiche-renseignement/renseigner">Ajouter une Requête</a>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                   Creer demande
-                </button>
-            </div> 
-            <div class="col-md-2 offset-md-6 text-right">
+                </button> -->
+            </div>
+             
+            <div class="col-md-2 offset-md-4 text-right">
                 <button @click="changeView('Liste')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Liste"><i class="fas fa-bars mx-1"></i></button>
                 <button @click="changeView('Carte')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Carte"><i class="fas fa-grip-horizontal fa-1x mx-1"></i></button>
             </div>
         </div>
         <div class="row" v-if="this.viewMode === 'Liste'">
-            <div class="col-md-6" id="accordion"s>
+            <div class="col-md-6" id="accordion">
                 <div class="card" v-for="(fiche, index) in filtered">
-                    <div class="card-header" >
+                    <div class="card-header "  :class="fiche.color" >
                         <div class="mb-0 row">
                             <div class="col-md-10 border-right" data-toggle="collapse" :data-target="'#fiche'+index">
                                 Requête
@@ -80,17 +81,17 @@
                             <div class="col-md-2 text-right">
                                 <a href="#" @click="selectionneLaModification(fiche)" 
                                     data-toggle="modal" data-target="#editerRequeteModal">
-                                    <i class="far fa-edit text-primary mr-3"></i>
+                                    <i class="far fa-edit mr-3" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : ''"></i>
                                 </a>
                                 <a href="#" @click="selectionneLaSuppression(fiche)" 
                                     data-toggle="modal" data-target="#confirmerSuppressionModal">
-                                    <i class="fas fa-trash-alt text-danger"></i>
+                                    <i class="fas fa-trash-alt" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : 'text-danger'"></i>
                                 </a>
                             </div>
 
                         </div>
                     </div>
-                    <div :id="'fiche' + index" class="collapse" data-parent="#accordion">
+                    <div :id="'fiche' + index" class="collapse" data-parent="#accordion" >
                         <div class="card-body">
                             <p><strong>Marque:</strong> <span v-if="fiche.marque !== null">{{ fiche.marque.nom }}</span></p>
                             <p ><strong>Type:</strong> <span v-if="fiche.type !== null">{{ fiche.type.nom }}</span></p>
@@ -101,8 +102,13 @@
                             <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" v-for="article in fiche.articles" >
-                                    <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé">
-                                    {{ article.nom }}
+                                    <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
+                                    <div class="row">{{ article.nom }}</div>
+                                    
+                                    <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(article.id, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                                    <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
+                                    
+                                    <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
                                 </li>
                             </ul>
                         </div>
@@ -323,9 +329,7 @@ export default {
             marques: [],
             types : [],
             types_moteurs: [],
-            moteurs : {
-                
-            },
+            moteurs : [],
             filtered: [],
             filtered_moteurs: [],
             modèles: [],
@@ -421,6 +425,14 @@ export default {
                 console.log(error);
             });
         },
+        changerEtat(article, etat){
+            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article , { 'etat' : etat }).then(response => {
+                console.log(response.data);
+                
+            }).catch(error => {
+                console.log(error);
+            });
+        },
         changeView(mode){
             this.viewMode = mode;
         },
@@ -493,6 +505,27 @@ export default {
                 console.log(this.filtre_marque.nom)
             }, 10);
             
+        },
+        ficheColor(fiche){
+            var nombreCommandé = 0;
+            var nombreArchivé = 0;
+            var nombreEnregistré = 0;
+            fiche.articles.forEach( (article) => {
+                if(article.état === 'commandé'){
+                    nombreCommandé += 1
+                } else if(article.état === 'archivé'){
+                    nombreArchivé += 1
+                } else if(article.état === 'enregistré'){
+                    nombreEnregistré += 1
+                }
+            })
+            if( nombreCommandé === fiche.articles.length ){
+                return 'success'
+            } else if( nombreCommandé > 0 && nombreCommandé < fiche.articles.length ){
+                return 'danger text-white'
+            } else if( nombreCommandé === fiche.articles.length ){
+                return 'success'
+            } 
         }
     },
     watch: {
@@ -542,9 +575,28 @@ export default {
                 })
             }
         },
+        // filtered(){
+        //     this.filtered.forEach(fiche => {
+        //         fiche.color = this.ficheColor(fiche)
+        //     });
+        // }
+    },
+    computed : {
+        
     },
     mounted(){
         this.init();
+        setTimeout(() => {
+            this.fiches.forEach((fiche) => {
+                // console.log(fiche.id)
+                fiche.color = 'bg-' + this.ficheColor(fiche)
+            });
+            this.$forceUpdate()
+        }, 500);
+        
+    },
+    created(){
+        
     }
 }
 </script>

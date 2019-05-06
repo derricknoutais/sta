@@ -14,4 +14,7 @@ class ArticleController extends Controller
     public function all(){
         return Article::all();
     }
+    public function changerEtat(Request $request, Article $article){
+        $article->changeEtat($request->etat);
+    }
 }

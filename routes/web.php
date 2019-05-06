@@ -22,6 +22,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/enregistrer', 'FicheRenseignementController@enregistrer');
             Route::post('/update', 'FicheRenseignementController@update');
             Route::post('/articles/commander/{article}', 'ArticleController@modifier');
+            Route::post('/articles/changer-etat/{article}', 'ArticleController@changerEtat');
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');

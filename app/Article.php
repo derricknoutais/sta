@@ -8,4 +8,9 @@ class Article extends Model
 {
     protected $guarded = [];
 
+    public function changeEtat($etat){
+        $this->update([
+            'état' => $etat
+        ]);
+    }
 }

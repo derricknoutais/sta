@@ -50189,6 +50189,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50221,7 +50227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             marques: [],
             types: [],
             types_moteurs: [],
-            moteurs: {},
+            moteurs: [],
             filtered: [],
             filtered_moteurs: [],
             modèles: [],
@@ -50329,6 +50335,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
+        changerEtat: function changerEtat(article, etat) {
+            axios.post('/fiche-renseignement/api/articles/changer-etat/' + article, { 'etat': etat }).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         changeView: function changeView(mode) {
             this.viewMode = mode;
         },
@@ -50403,6 +50416,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             setTimeout(function () {
                 console.log(_this9.filtre_marque.nom);
             }, 10);
+        },
+        ficheColor: function ficheColor(fiche) {
+            var nombreCommandé = 0;
+            var nombreArchivé = 0;
+            var nombreEnregistré = 0;
+            fiche.articles.forEach(function (article) {
+                if (article.état === 'commandé') {
+                    nombreCommandé += 1;
+                } else if (article.état === 'archivé') {
+                    nombreArchivé += 1;
+                } else if (article.état === 'enregistré') {
+                    nombreEnregistré += 1;
+                }
+            });
+            if (nombreCommandé === fiche.articles.length) {
+                return 'success';
+            } else if (nombreCommandé > 0 && nombreCommandé < fiche.articles.length) {
+                return 'danger text-white';
+            } else if (nombreCommandé === fiche.articles.length) {
+                return 'success';
+            }
         }
     },
     watch: {
@@ -50460,9 +50494,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         }
     },
+    computed: {},
     mounted: function mounted() {
+        var _this14 = this;
+
         this.init();
-    }
+        setTimeout(function () {
+            _this14.fiches.forEach(function (fiche) {
+                // console.log(fiche.id)
+                fiche.color = 'bg-' + _this14.ficheColor(fiche);
+            });
+            _this14.$forceUpdate();
+        }, 500);
+    },
+    created: function created() {}
 });
 
 /***/ }),
@@ -50597,15 +50642,6 @@ var render = function() {
                 _vm.chercheMoteurs()
               }
             },
-            scopedSlots: _vm._u([
-              {
-                key: "singleLabel",
-                fn: function(ref) {
-                  var option = ref.option
-                  return [_c("strong", [_vm._v(_vm._s(option.nom))])]
-                }
-              }
-            ]),
             model: {
               value: _vm.filtre_modele,
               callback: function($$v) {
@@ -50620,11 +50656,13 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row my-5" }, [
-      _c("div", { staticClass: "col-md-2" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _vm._m(1),
+        _vm._v(" "),
         _c(
           "button",
           {
-            staticClass: "btn btn-primary",
+            staticClass: "btn btn-dark",
             on: {
               click: function($event) {
                 _vm.réinitialiser()
@@ -50635,9 +50673,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-2 offset-md-6 text-right" }, [
+      _c("div", { staticClass: "col-md-2 offset-md-4 text-right" }, [
         _c(
           "button",
           {
@@ -50680,10 +50716,10 @@ var render = function() {
       ? _c("div", { staticClass: "row" }, [
           _c(
             "div",
-            { staticClass: "col-md-6", attrs: { id: "accordion", s: "" } },
+            { staticClass: "col-md-6", attrs: { id: "accordion" } },
             _vm._l(_vm.filtered, function(fiche, index) {
               return _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-header" }, [
+                _c("div", { staticClass: "card-header ", class: fiche.color }, [
                   _c("div", { staticClass: "mb-0 row" }, [
                     _c(
                       "div",
@@ -50733,7 +50769,11 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "far fa-edit text-primary mr-3"
+                            staticClass: "far fa-edit mr-3",
+                            class:
+                              fiche.color === "bg-danger text-white"
+                                ? "text-white"
+                                : ""
                           })
                         ]
                       ),
@@ -50754,7 +50794,11 @@ var render = function() {
                         },
                         [
                           _c("i", {
-                            staticClass: "fas fa-trash-alt text-danger"
+                            staticClass: "fas fa-trash-alt",
+                            class:
+                              fiche.color === "bg-danger text-white"
+                                ? "text-white"
+                                : "text-danger"
                           })
                         ]
                       )
@@ -50829,20 +50873,57 @@ var render = function() {
                         { staticClass: "list-group list-group-flush" },
                         _vm._l(fiche.articles, function(article) {
                           return _c("li", { staticClass: "list-group-item" }, [
-                            !article.commandé
-                              ? _c("input", {
-                                  attrs: { type: "checkbox" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.selectionneArticle(article)
+                            _c("div", { staticClass: "row" }, [
+                              _vm._v(_vm._s(article.nom))
+                            ]),
+                            _vm._v(" "),
+                            article.état === "enregistré"
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-primary btn-sm py-0 px-1",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.changerEtat(article.id, "commandé")
+                                      }
                                     }
+                                  },
+                                  [
+                                    _vm._v("Commander "),
+                                    _c("i", {
+                                      staticClass:
+                                        "fas fa-envelope-open-text    "
+                                    })
+                                  ]
+                                )
+                              : article.état === "commandé"
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "badge badge-success badge-pill py-1"
+                                    },
+                                    [
+                                      _vm._v(" Commandé "),
+                                      _c("i", { staticClass: "fas fa-clock" })
+                                    ]
+                                  )
+                                : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger btn-sm py-0 px-1",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.changerEtat(article.id, "archivé")
                                   }
-                                })
-                              : _vm._e(),
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(article.nom) +
-                                "\n                            "
+                                }
+                              },
+                              [_vm._v("Réceptionner")]
                             )
                           ])
                         })
@@ -51632,29 +51713,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { href: "/fiche-renseignement/renseigner" }
-        },
-        [_vm._v("Ajouter une Requête")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#exampleModal"
-          }
-        },
-        [_vm._v("\n              Creer demande\n            ")]
-      )
-    ])
+    return _c(
+      "a",
+      {
+        staticClass: "btn btn-success",
+        attrs: { href: "/fiche-renseignement/renseigner" }
+      },
+      [_c("i", { staticClass: "fas fa-plus" }), _vm._v(" Ajouter une Requête")]
+    )
   },
   function() {
     var _vm = this

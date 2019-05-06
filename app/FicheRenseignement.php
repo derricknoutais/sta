@@ -27,4 +27,5 @@ class FicheRenseignement extends Model
     {
         return $this->hasMany('App\Article');
     }
+    
 }
