@@ -54,28 +54,11 @@
             <div class="col-3">
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue" checked>
+                    <input type="checkbox" class="form-check-input" name="" id="" value=1 v-model="filtre_archive">
                     Archivé
                   </label>
                 </div>
             </div>
-            <div class="col-3">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
-                    Entièrment Commandé
-                  </label>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="" id="" value="checkedValue">
-                    Partiellement Commandé
-                  </label>
-                </div>
-            </div>
-            
         </div>
         <!-- Boutons Fonctionnalité -->
         <div class="row my-5">
@@ -133,7 +116,7 @@
                                     <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
                                     <div class="row">{{ article.nom }}</div>
                                     
-                                    <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                                    <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                     <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                     
                                     <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
@@ -168,10 +151,10 @@
                             <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
                             <div class="row">{{ article.nom }}</div>
 
-                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                             <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
 
-                            <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
+                            <!-- <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button> -->
                         </li>
                     </ul>
                 </div>
@@ -354,6 +337,7 @@ export default {
             filtre_type: 'type',
             filtre_moteur: 'moteur',
             filtre_modele: 'modèle',
+            filtre_archive : false,
             filtre : {
                 marque: '',
                 type: ''
@@ -458,11 +442,12 @@ export default {
                 console.log(error);
             });
         },
-        changerEtat(fiche, article, etat){
+        changerEtat(index, fiche, article, etat){
             axios.post('/fiche-renseignement/api/articles/changer-etat/' + article.id , { 'etat' : etat }).then(response => {
                 console.log(response.data);
                 article.état = etat;
                 fiche.color = this.ficheColor(fiche)
+                this.filtered.splice(index, 1)
                 // window.location.reload()
                 this.$forceUpdate()
             }).catch(error => {
@@ -497,9 +482,15 @@ export default {
         toggleEditArticles(){
             this.editerArticles = ! this.editerArticles;
         },
+        removeArchived(){
+            this.filtered = this.fiches.filter( each => {
+                return this.ficheColor(each) !== 'bg-success'
+            });
+        },
         init(){
             axios.get('fiche-renseignement/api/all').then(response => {
-                this.fiches = this.filtered = response.data   
+                this.fiches = this.filtered = response.data 
+                this.removeArchived()  
             });
             axios.get('fiche-renseignement/marque/api/all').then(response => {
                 this.marques = response.data;
@@ -522,6 +513,7 @@ export default {
             axios.get('/fiche-renseignement/moteur/api/all').then(response => {
                 this.moteurs = response.data;
             });
+            
         },
         updateRequete(){
             axios.post('/fiche-renseignement/api/update', this.aEditer ).then(response => {
@@ -611,10 +603,14 @@ export default {
                 })
             }
         },
-        filtre_partiellement_commande(){
-            if(this.filtre_partiellement_commande === 1){
+        filtre_archive(){
+            if(this.filtre_archive === true){
                 this.filtered = this.fiches.filter( (each) => {
-                    return each.modèle_id === this.filtre_modele.id
+                    return this.ficheColor(each) === 'bg-success'
+                })
+            } else {
+                this.filtered = this.fiches.filter( (each) => {
+                    return this.ficheColor(each) !== 'bg-success'
                 })
             }
         }

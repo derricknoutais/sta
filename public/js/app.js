@@ -50211,23 +50211,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50252,6 +50235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             filtre_type: 'type',
             filtre_moteur: 'moteur',
             filtre_modele: 'modèle',
+            filtre_archive: false,
             filtre: {
                 marque: '',
                 type: ''
@@ -50368,13 +50352,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        changerEtat: function changerEtat(fiche, article, etat) {
+        changerEtat: function changerEtat(index, fiche, article, etat) {
             var _this7 = this;
 
             axios.post('/fiche-renseignement/api/articles/changer-etat/' + article.id, { 'etat': etat }).then(function (response) {
                 console.log(response.data);
                 article.état = etat;
                 fiche.color = _this7.ficheColor(fiche);
+                _this7.filtered.splice(index, 1);
                 // window.location.reload()
                 _this7.$forceUpdate();
             }).catch(function (error) {
@@ -50408,32 +50393,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         toggleEditArticles: function toggleEditArticles() {
             this.editerArticles = !this.editerArticles;
         },
-        init: function init() {
+        removeArchived: function removeArchived() {
             var _this9 = this;
 
+            this.filtered = this.fiches.filter(function (each) {
+                return _this9.ficheColor(each) !== 'bg-success';
+            });
+        },
+        init: function init() {
+            var _this10 = this;
+
             axios.get('fiche-renseignement/api/all').then(function (response) {
-                _this9.fiches = _this9.filtered = response.data;
+                _this10.fiches = _this10.filtered = response.data;
+                _this10.removeArchived();
             });
             axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                _this9.marques = response.data;
+                _this10.marques = response.data;
             });
             axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                _this9.types = response.data;
+                _this10.types = response.data;
             });
             axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                _this9.filtered_moteurs = _this9.moteurs.moteurs = response.data;
+                _this10.filtered_moteurs = _this10.moteurs.moteurs = response.data;
             });
             axios.get('fiche-renseignement/modèle/api/all').then(function (response) {
-                _this9.modèles = response.data;
+                _this10.modèles = response.data;
             });
             axios.get('demande-achat/api/all').then(function (response) {
-                _this9.demandes = response.data;
+                _this10.demandes = response.data;
             });
             axios.get('commande/api/all').then(function (response) {
-                _this9.commandes = response.data;
+                _this10.commandes = response.data;
             });
             axios.get('/fiche-renseignement/moteur/api/all').then(function (response) {
-                _this9.moteurs = response.data;
+                _this10.moteurs = response.data;
             });
         },
         updateRequete: function updateRequete() {
@@ -50450,10 +50443,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         test: function test() {
-            var _this10 = this;
+            var _this11 = this;
 
             setTimeout(function () {
-                console.log(_this10.filtre_marque.nom);
+                console.log(_this11.filtre_marque.nom);
             }, 10);
         },
         ficheColor: function ficheColor(fiche) {
@@ -50480,64 +50473,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         filtre_marque: function filtre_marque() {
-            var _this11 = this;
+            var _this12 = this;
 
             console.log('I changed');
             if (this.filtre_marque !== 'marque') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.marque_id === _this11.filtre_marque.id;
+                    return each.marque_id === _this12.filtre_marque.id;
                 });
                 this.filtered_moteurs = this.moteurs.filter(function (each) {
-                    return each.marque_id === _this11.filtre_marque.id;
+                    return each.marque_id === _this12.filtre_marque.id;
                 });
             } else {
                 axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                    _this11.marques = response.data;
+                    _this12.marques = response.data;
                 });
             }
         },
         filtre_type: function filtre_type() {
-            var _this12 = this;
+            var _this13 = this;
 
             console.log('I changed too');
             if (this.filtre_type !== 'type') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.type_id === _this12.filtre_type.id;
+                    return each.type_id === _this13.filtre_type.id;
                 });
             } else {
                 axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                    _this12.types = response.data;
+                    _this13.types = response.data;
                 });
             }
         },
         filtre_moteur: function filtre_moteur() {
-            var _this13 = this;
+            var _this14 = this;
 
             if (this.filtre_moteur !== 'moteur') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.moteur_id === _this13.filtre_moteur.id;
+                    return each.moteur_id === _this14.filtre_moteur.id;
                 });
             } else {
                 axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                    _this13.filtered_moteurs = _this13.moteurs.moteurs = response.data;
+                    _this14.filtered_moteurs = _this14.moteurs.moteurs = response.data;
                 });
             }
         },
         filtre_modele: function filtre_modele() {
-            var _this14 = this;
+            var _this15 = this;
 
             if (this.filtre_modele !== 'modèle') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this14.filtre_modele.id;
+                    return each.modèle_id === _this15.filtre_modele.id;
                 });
             }
         },
-        filtre_partiellement_commande: function filtre_partiellement_commande() {
-            var _this15 = this;
+        filtre_archive: function filtre_archive() {
+            var _this16 = this;
 
-            if (this.filtre_partiellement_commande === 1) {
+            if (this.filtre_archive === true) {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this15.filtre_modele.id;
+                    return _this16.ficheColor(each) === 'bg-success';
+                });
+            } else {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this16.ficheColor(each) !== 'bg-success';
                 });
             }
         }
@@ -50550,15 +50547,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {},
     mounted: function mounted() {
-        var _this16 = this;
+        var _this17 = this;
 
         this.init();
         setTimeout(function () {
-            _this16.fiches.forEach(function (fiche) {
+            _this17.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = _this16.ficheColor(fiche);
+                fiche.color = _this17.ficheColor(fiche);
             });
-            _this16.$forceUpdate();
+            _this17.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -50709,11 +50706,57 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "row mt-3" }, [
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filtre_archive,
+                  expression: "filtre_archive"
+                }
+              ],
+              staticClass: "form-check-input",
+              attrs: { type: "checkbox", name: "", id: "", value: "1" },
+              domProps: {
+                checked: Array.isArray(_vm.filtre_archive)
+                  ? _vm._i(_vm.filtre_archive, "1") > -1
+                  : _vm.filtre_archive
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.filtre_archive,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "1",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.filtre_archive = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.filtre_archive = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.filtre_archive = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v("\n                Archivé\n              ")
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row my-5" }, [
       _c("div", { staticClass: "col-md-6" }, [
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "button",
@@ -50943,6 +50986,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.changerEtat(
+                                          index,
                                           fiche,
                                           article,
                                           "commandé"
@@ -51092,7 +51136,12 @@ var render = function() {
                               attrs: { type: "button" },
                               on: {
                                 click: function($event) {
-                                  _vm.changerEtat(fiche, article, "commandé")
+                                  _vm.changerEtat(
+                                    index,
+                                    fiche,
+                                    article,
+                                    "commandé"
+                                  )
                                 }
                               }
                             },
@@ -51115,21 +51164,7 @@ var render = function() {
                                 _c("i", { staticClass: "fas fa-clock" })
                               ]
                             )
-                          : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm py-0 px-1",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.changerEtat(article.id, "archivé")
-                            }
-                          }
-                        },
-                        [_vm._v("Réceptionner")]
-                      )
+                          : _vm._e()
                     ])
                   })
                 )
@@ -51157,7 +51192,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -51239,7 +51274,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "form-group" }, [
@@ -51756,9 +51791,9 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(5),
+              _vm._m(4),
               _vm._v(" "),
-              _vm._m(6),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -51790,7 +51825,7 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(7)
+    _vm._m(6)
   ])
 }
 var staticRenderFns = [
@@ -51801,64 +51836,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "float-right" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-3" }, [
-      _c("div", { staticClass: "col-3" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                type: "checkbox",
-                name: "",
-                id: "",
-                value: "checkedValue",
-                checked: ""
-              }
-            }),
-            _vm._v("\n                Archivé\n              ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-3" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                type: "checkbox",
-                name: "",
-                id: "",
-                value: "checkedValue"
-              }
-            }),
-            _vm._v("\n                Entièrment Commandé\n              ")
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-3" }, [
-        _c("div", { staticClass: "form-check" }, [
-          _c("label", { staticClass: "form-check-label" }, [
-            _c("input", {
-              staticClass: "form-check-input",
-              attrs: {
-                type: "checkbox",
-                name: "",
-                id: "",
-                value: "checkedValue"
-              }
-            }),
-            _vm._v("\n                Partiellement Commandé\n              ")
-          ])
-        ])
       ])
     ])
   },
