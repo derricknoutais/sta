@@ -59,6 +59,14 @@
                   </label>
                 </div>
             </div>
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="" id="" value=1 v-model="filtre_partiel">
+                    Partiellement Archivé
+                  </label>
+                </div>
+            </div>
         </div>
         <!-- Boutons Fonctionnalité -->
         <div class="row my-5">
@@ -338,6 +346,7 @@ export default {
             filtre_moteur: 'moteur',
             filtre_modele: 'modèle',
             filtre_archive : false,
+            filtre_partiel : false,
             filtre : {
                 marque: '',
                 type: ''
@@ -606,19 +615,29 @@ export default {
         filtre_archive(){
             if(this.filtre_archive === true){
                 this.filtered = this.fiches.filter( (each) => {
-                    return this.ficheColor(each) === 'bg-success'
+                    return this.ficheColor(each) === 'bg-success' 
                 })
             } else {
                 this.filtered = this.fiches.filter( (each) => {
-                    return this.ficheColor(each) !== 'bg-success'
+                    return this.ficheColor(each) !== 'bg-success' 
+                })
+                
+            }
+        },
+        filtre_partiel(){
+            if(this.filtre_partiel === true){
+                this.filtered = this.fiches.filter( (each) => {
+                    return this.ficheColor(each) === 'bg-danger text-white'
+                })
+            } else {
+                this.filtered = this.fiches.filter( (each) => {
+                    return ( this.ficheColor(each) !== 'bg-danger text-white' )
+                })
+                this.filtered = this.filtered.filter( (each) => {
+                    return this.ficheColor(each) !== 'bg-success' 
                 })
             }
         }
-        // filtered(){
-        //     this.filtered.forEach(fiche => {
-        //         fiche.color = this.ficheColor(fiche)
-        //     });
-        // }
     },
     computed : {
         

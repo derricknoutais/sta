@@ -50211,6 +50211,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50236,6 +50244,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             filtre_moteur: 'moteur',
             filtre_modele: 'modèle',
             filtre_archive: false,
+            filtre_partiel: false,
             filtre: {
                 marque: '',
                 type: ''
@@ -50537,25 +50546,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return _this16.ficheColor(each) !== 'bg-success';
                 });
             }
-        }
-        // filtered(){
-        //     this.filtered.forEach(fiche => {
-        //         fiche.color = this.ficheColor(fiche)
-        //     });
-        // }
+        },
+        filtre_partiel: function filtre_partiel() {
+            var _this17 = this;
 
+            if (this.filtre_partiel === true) {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this17.ficheColor(each) === 'bg-danger text-white';
+                });
+            } else {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this17.ficheColor(each) !== 'bg-danger text-white';
+                });
+                this.filtered = this.filtered.filter(function (each) {
+                    return _this17.ficheColor(each) !== 'bg-success';
+                });
+            }
+        }
     },
     computed: {},
     mounted: function mounted() {
-        var _this17 = this;
+        var _this18 = this;
 
         this.init();
         setTimeout(function () {
-            _this17.fiches.forEach(function (fiche) {
+            _this18.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = _this17.ficheColor(fiche);
+                fiche.color = _this18.ficheColor(fiche);
             });
-            _this17.$forceUpdate();
+            _this18.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -50749,6 +50768,52 @@ var render = function() {
               }
             }),
             _vm._v("\n                Archivé\n              ")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filtre_partiel,
+                  expression: "filtre_partiel"
+                }
+              ],
+              staticClass: "form-check-input",
+              attrs: { type: "checkbox", name: "", id: "", value: "1" },
+              domProps: {
+                checked: Array.isArray(_vm.filtre_partiel)
+                  ? _vm._i(_vm.filtre_partiel, "1") > -1
+                  : _vm.filtre_partiel
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.filtre_partiel,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "1",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.filtre_partiel = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.filtre_partiel = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
+                    }
+                  } else {
+                    _vm.filtre_partiel = $$c
+                  }
+                }
+              }
+            }),
+            _vm._v("\n                Partiellement Archivé\n              ")
           ])
         ])
       ])
