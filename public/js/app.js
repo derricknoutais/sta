@@ -50525,20 +50525,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return each.modèle_id === _this13.filtre_modele.id;
                 });
             }
+        },
+        filtre_partiellement_commande: function filtre_partiellement_commande() {
+            var _this14 = this;
+
+            if (this.filtre_partiellement_commande === 1) {
+                this.filtered = this.fiches.filter(function (each) {
+                    return each.modèle_id === _this14.filtre_modele.id;
+                });
+            }
         }
+        // filtered(){
+        //     this.filtered.forEach(fiche => {
+        //         fiche.color = this.ficheColor(fiche)
+        //     });
+        // }
+
     },
     computed: {},
     mounted: function mounted() {
-        var _this14 = this;
+        var _this15 = this;
 
         this.init();
         setTimeout(function () {
-            _this14.fiches.forEach(function (fiche) {
+            _this15.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = 'bg-' + _this14.ficheColor(fiche);
+                fiche.color = 'bg-' + _this15.ficheColor(fiche);
             });
-            _this14.$forceUpdate();
-        }, 500);
+            _this15.$forceUpdate();
+        }, 3000);
     },
     created: function created() {}
 });

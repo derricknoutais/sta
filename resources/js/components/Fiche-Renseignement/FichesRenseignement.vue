@@ -608,6 +608,13 @@ export default {
                 })
             }
         },
+        filtre_partiellement_commande(){
+            if(this.filtre_partiellement_commande === 1){
+                this.filtered = this.fiches.filter( (each) => {
+                    return each.modèle_id === this.filtre_modele.id
+                })
+            }
+        }
         // filtered(){
         //     this.filtered.forEach(fiche => {
         //         fiche.color = this.ficheColor(fiche)
@@ -625,7 +632,7 @@ export default {
                 fiche.color = 'bg-' + this.ficheColor(fiche)
             });
             this.$forceUpdate()
-        }, 500);
+        }, 3000);
         
     },
     created(){
