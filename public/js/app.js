@@ -50584,13 +50584,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         filtre_date_from: function filtre_date_from() {
             var _this18 = this;
 
-            this.filtered = this.filtered.filter(function (element) {
-                if (_this18.filtre_date_to !== null) {
+            if (this.filtre_date_to !== null) {
+
+                this.filtered = this.filtered.filter(function (element) {
+
                     return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from);
-                } else {
+                });
+            } else {
+                this.filtered = this.filtered.filter(function (element) {
+
                     return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this18.filtre_date_to);
-                }
-            });
+                });
+            };
         },
         filtre_date_to: function filtre_date_to() {
             var _this19 = this;

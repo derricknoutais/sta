@@ -657,13 +657,20 @@ export default {
             }
         },
         filtre_date_from(){
-            this.filtered = this.filtered.filter( element => {
-                if(this.filtre_date_to !== null){
+            if(this.filtre_date_to !== null){
+                
+                this.filtered = this.filtered.filter( element => {
+                
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from)
-                } else {
+                
+                })
+            } else {
+                this.filtered = this.filtered.filter( element => {
+                    
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from) && Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
-                }
-            });
+                
+                })
+            };
         },
         filtre_date_to(){
             this.filtered = this.filtered.filter( element => {
