@@ -657,7 +657,7 @@ export default {
             }
         },
         filtre_date_from(){
-            this.filtered = this.filtered.filter( element => {
+            this.filtered = this.fiches.filter( element => {
                 if(this.filtre_date_to === null){
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from)
                 } else {
@@ -666,7 +666,7 @@ export default {
             });
         },
         filtre_date_to(){
-            this.filtered = this.filtered.filter( element => {
+            this.filtered = this.fiches.filter( element => {
                 if(this.filtre_date_from === null){
                     return Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
                 } else {
