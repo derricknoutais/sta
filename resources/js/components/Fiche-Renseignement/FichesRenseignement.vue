@@ -67,13 +67,28 @@
                   </label>
                 </div>
             </div>
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    Date From
+                    <input type="date" class="form-control" name="" id="" value=1 v-model="filtre_date_from">
+                  </label>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    Date To
+                    <input type="date" class="form-control" name="" id="" value=1 v-model="filtre_date_to">
+                  </label>
+                </div>
+            </div>
         </div>
         <!-- Boutons Fonctionnalité -->
         <div class="row my-5">
             <div class="col-md-6">
                 <a class="btn btn-success" href="/fiche-renseignement/renseigner"> <i class="fas fa-plus"></i> Ajouter une Requête</a>
-                <button class="btn btn-dark" @click="réinitialiser()">Réinitialiser Filtres</button>
-                
+                <button class="btn btn-dark" @click="réinitialiser()"> <i class="fas fa-broom"></i>Réinitialiser Filtres</button>
                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                   Creer demande
                 </button> -->
@@ -127,7 +142,7 @@
                                     <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                     <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                     
-                                    <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button>
+                                    <!-- <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button> -->
                                 </li>
                             </ul>
                         </div>
@@ -135,6 +150,7 @@
                 </div>
             </div>    
         </div>
+
         <div class="row" v-if="this.viewMode === 'Carte'">
             <div class="card col-md-3 m-1" v-for="(fiche, index) in filtered">
                 <div class="card-header" :class="fiche.color">
@@ -347,6 +363,8 @@ export default {
             filtre_modele: 'modèle',
             filtre_archive : false,
             filtre_partiel : false,
+            filtre_date_from: null,
+            filtre_date_to : null,
             filtre : {
                 marque: '',
                 type: ''
@@ -637,6 +655,24 @@ export default {
                     return this.ficheColor(each) !== 'bg-success' 
                 })
             }
+        },
+        filtre_date_from(){
+            this.filtered = this.filtered.filter( element => {
+                if(this.filtre_date_to !== null){
+                    return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from)
+                } else {
+                    return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from) && Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
+                }
+            });
+        },
+        filtre_date_to(){
+            this.filtered = this.filtered.filter( element => {
+                if(this.filtre_date_from !== null){
+                    return Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
+                } else {
+                    return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from) && Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
+                }
+            });
         }
     },
     computed : {

@@ -50219,6 +50219,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50245,6 +50261,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             filtre_modele: 'modèle',
             filtre_archive: false,
             filtre_partiel: false,
+            filtre_date_from: null,
+            filtre_date_to: null,
             filtre: {
                 marque: '',
                 type: ''
@@ -50562,19 +50580,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return _this17.ficheColor(each) !== 'bg-success';
                 });
             }
+        },
+        filtre_date_from: function filtre_date_from() {
+            var _this18 = this;
+
+            this.filtered = this.filtered.filter(function (element) {
+                if (_this18.filtre_date_to !== null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from);
+                } else {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this18.filtre_date_to);
+                }
+            });
+        },
+        filtre_date_to: function filtre_date_to() {
+            var _this19 = this;
+
+            this.filtered = this.filtered.filter(function (element) {
+                if (_this19.filtre_date_from !== null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
+                } else {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
+                }
+            });
         }
     },
     computed: {},
     mounted: function mounted() {
-        var _this18 = this;
+        var _this20 = this;
 
         this.init();
         setTimeout(function () {
-            _this18.fiches.forEach(function (fiche) {
+            _this20.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = _this18.ficheColor(fiche);
+                fiche.color = _this20.ficheColor(fiche);
             });
-            _this18.$forceUpdate();
+            _this20.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -50816,6 +50856,64 @@ var render = function() {
             _vm._v("\n                Partiellement Archivé\n              ")
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v("\n                Date From\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filtre_date_from,
+                  expression: "filtre_date_from"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", name: "", id: "", value: "1" },
+              domProps: { value: _vm.filtre_date_from },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.filtre_date_from = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "form-check" }, [
+          _c("label", { staticClass: "form-check-label" }, [
+            _vm._v("\n                Date To\n                "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filtre_date_to,
+                  expression: "filtre_date_to"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", name: "", id: "", value: "1" },
+              domProps: { value: _vm.filtre_date_to },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.filtre_date_to = $event.target.value
+                }
+              }
+            })
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -50833,7 +50931,10 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Réinitialiser Filtres")]
+          [
+            _c("i", { staticClass: "fas fa-broom" }),
+            _vm._v("Réinitialiser Filtres")
+          ]
         )
       ]),
       _vm._v(" "),
@@ -51079,21 +51180,7 @@ var render = function() {
                                       _c("i", { staticClass: "fas fa-clock" })
                                     ]
                                   )
-                                : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger btn-sm py-0 px-1",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.changerEtat(article.id, "archivé")
-                                  }
-                                }
-                              },
-                              [_vm._v("Réceptionner")]
-                            )
+                                : _vm._e()
                           ])
                         })
                       )
