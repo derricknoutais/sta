@@ -657,24 +657,17 @@ export default {
             }
         },
         filtre_date_from(){
-            if(this.filtre_date_to !== null){
-                
-                this.filtered = this.filtered.filter( element => {
-                
+            this.filtered = this.filtered.filter( element => {
+                if(this.filtre_date_to === null){
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from)
-                
-                })
-            } else {
-                this.filtered = this.filtered.filter( element => {
-                    
+                } else {
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from) && Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
-                
-                })
-            };
+                }
+            });
         },
         filtre_date_to(){
             this.filtered = this.filtered.filter( element => {
-                if(this.filtre_date_from !== null){
+                if(this.filtre_date_from === null){
                     return Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)
                 } else {
                     return Date.parse(element.created_at.replace('-','/','g')) > Date.parse(this.filtre_date_from) && Date.parse(element.created_at.replace('-','/','g')) < Date.parse(this.filtre_date_to)

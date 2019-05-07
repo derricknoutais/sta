@@ -50584,24 +50584,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         filtre_date_from: function filtre_date_from() {
             var _this18 = this;
 
-            if (this.filtre_date_to !== null) {
-
-                this.filtered = this.filtered.filter(function (element) {
-
+            this.filtered = this.filtered.filter(function (element) {
+                if (_this18.filtre_date_to === null) {
                     return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from);
-                });
-            } else {
-                this.filtered = this.filtered.filter(function (element) {
-
+                } else {
                     return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this18.filtre_date_to);
-                });
-            };
+                }
+            });
         },
         filtre_date_to: function filtre_date_to() {
             var _this19 = this;
 
             this.filtered = this.filtered.filter(function (element) {
-                if (_this19.filtre_date_from !== null) {
+                if (_this19.filtre_date_from === null) {
                     return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
                 } else {
                     return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
