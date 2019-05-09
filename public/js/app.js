@@ -49540,7 +49540,7 @@ exports = module.exports = __webpack_require__(54)(false);
 
 
 // module
-exports.push([module.i, "\n.form-control {\n    display: inline-block;\n}\n", ""]);
+exports.push([module.i, "\n.form-control {\n    display: inline-block;\n}\n.star:hover {\n    cursor:pointer;\n}\n", ""]);
 
 // exports
 
@@ -50235,6 +50235,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -50279,7 +50291,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             demandes: [],
             selectionDemandes: [],
             commandes: [],
-            viewMode: 'Liste',
+            viewMode: 'Carte',
             aSupprimer: null,
             aEditer: null,
             articleAEditer: null,
@@ -50365,6 +50377,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.filtre_moteur = 'moteur';
             this.filtre_modele = 'modèle';
             this.filtered_moteurs = this.moteurs.moteurs;
+            this.filtre_date_from = null;
+            this.filtre_date_to = null;
         },
         selectionneArticle: function selectionneArticle(article) {
             this.selectionArticles.push(article);
@@ -50496,125 +50510,149 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else if (nombreCommandé === fiche.articles.length) {
                 return 'bg-success';
             }
+        },
+        lightTheStars: function lightTheStars(article, number) {
+            article.starDup = number;
+            this.$forceUpdate();
+        },
+        storeTheStars: function storeTheStars(article, number) {
+            var _this12 = this;
+
+            axios.post('/fiche-renseignement/api/articles/' + article.id + '/store-the-stars', { stars: number }).then(function (response) {
+                console.log(response.data);
+                article.starDup = number;
+                article.star = number;
+                _this12.$forceUpdate();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        bringTheOriginalLightsBack: function bringTheOriginalLightsBack(article) {
+            article.starDup = article.star;
+            this.$forceUpdate();
         }
     },
     watch: {
         filtre_marque: function filtre_marque() {
-            var _this12 = this;
+            var _this13 = this;
 
             console.log('I changed');
             if (this.filtre_marque !== 'marque') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.marque_id === _this12.filtre_marque.id;
+                    return each.marque_id === _this13.filtre_marque.id;
                 });
                 this.filtered_moteurs = this.moteurs.filter(function (each) {
-                    return each.marque_id === _this12.filtre_marque.id;
+                    return each.marque_id === _this13.filtre_marque.id;
                 });
             } else {
                 axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                    _this12.marques = response.data;
+                    _this13.marques = response.data;
                 });
             }
         },
         filtre_type: function filtre_type() {
-            var _this13 = this;
+            var _this14 = this;
 
             console.log('I changed too');
             if (this.filtre_type !== 'type') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.type_id === _this13.filtre_type.id;
+                    return each.type_id === _this14.filtre_type.id;
                 });
             } else {
                 axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                    _this13.types = response.data;
+                    _this14.types = response.data;
                 });
             }
         },
         filtre_moteur: function filtre_moteur() {
-            var _this14 = this;
+            var _this15 = this;
 
             if (this.filtre_moteur !== 'moteur') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.moteur_id === _this14.filtre_moteur.id;
+                    return each.moteur_id === _this15.filtre_moteur.id;
                 });
             } else {
                 axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                    _this14.filtered_moteurs = _this14.moteurs.moteurs = response.data;
+                    _this15.filtered_moteurs = _this15.moteurs.moteurs = response.data;
                 });
             }
         },
         filtre_modele: function filtre_modele() {
-            var _this15 = this;
+            var _this16 = this;
 
             if (this.filtre_modele !== 'modèle') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this15.filtre_modele.id;
+                    return each.modèle_id === _this16.filtre_modele.id;
                 });
             }
         },
         filtre_archive: function filtre_archive() {
-            var _this16 = this;
+            var _this17 = this;
 
             if (this.filtre_archive === true) {
                 this.filtered = this.fiches.filter(function (each) {
-                    return _this16.ficheColor(each) === 'bg-success';
+                    return _this17.ficheColor(each) === 'bg-success';
                 });
             } else {
                 this.filtered = this.fiches.filter(function (each) {
-                    return _this16.ficheColor(each) !== 'bg-success';
-                });
-            }
-        },
-        filtre_partiel: function filtre_partiel() {
-            var _this17 = this;
-
-            if (this.filtre_partiel === true) {
-                this.filtered = this.fiches.filter(function (each) {
-                    return _this17.ficheColor(each) === 'bg-danger text-white';
-                });
-            } else {
-                this.filtered = this.fiches.filter(function (each) {
-                    return _this17.ficheColor(each) !== 'bg-danger text-white';
-                });
-                this.filtered = this.filtered.filter(function (each) {
                     return _this17.ficheColor(each) !== 'bg-success';
                 });
             }
         },
-        filtre_date_from: function filtre_date_from() {
+        filtre_partiel: function filtre_partiel() {
             var _this18 = this;
 
+            if (this.filtre_partiel === true) {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this18.ficheColor(each) === 'bg-danger text-white';
+                });
+            } else {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this18.ficheColor(each) !== 'bg-danger text-white';
+                });
+                this.filtered = this.filtered.filter(function (each) {
+                    return _this18.ficheColor(each) !== 'bg-success';
+                });
+            }
+        },
+        filtre_date_from: function filtre_date_from() {
+            var _this19 = this;
+
             this.filtered = this.fiches.filter(function (element) {
-                if (_this18.filtre_date_to === null) {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from);
+                if (_this19.filtre_date_to === null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from);
                 } else {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this18.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this18.filtre_date_to);
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
                 }
             });
         },
         filtre_date_to: function filtre_date_to() {
-            var _this19 = this;
+            var _this20 = this;
 
             this.filtered = this.fiches.filter(function (element) {
-                if (_this19.filtre_date_from === null) {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
+                if (_this20.filtre_date_from === null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this20.filtre_date_to);
                 } else {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this20.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this20.filtre_date_to);
                 }
             });
         }
     },
     computed: {},
     mounted: function mounted() {
-        var _this20 = this;
+        var _this21 = this;
 
         this.init();
         setTimeout(function () {
-            _this20.fiches.forEach(function (fiche) {
+            _this21.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = _this20.ficheColor(fiche);
+                fiche.color = _this21.ficheColor(fiche);
+                fiche.articles.forEach(function (article) {
+                    // article.star = Math.floor(Math.random() * 4) + 1
+                    article.starDup = article.stars;
+                });
             });
-            _this20.$forceUpdate();
+            _this21.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -51280,43 +51318,125 @@ var render = function() {
                         _vm._v(_vm._s(article.nom))
                       ]),
                       _vm._v(" "),
-                      article.état === "enregistré"
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary btn-sm py-0 px-1",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  _vm.changerEtat(
-                                    index,
-                                    fiche,
-                                    article,
-                                    "commandé"
-                                  )
-                                }
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row star",
+                          on: {
+                            mouseleave: function($event) {
+                              _vm.bringTheOriginalLightsBack(article)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fas fa-star",
+                            class: article.starDup >= 1 ? "text-warning" : "",
+                            on: {
+                              mouseover: function($event) {
+                                _vm.lightTheStars(article, 1)
+                              },
+                              click: function($event) {
+                                _vm.storeTheStars(article, 1)
                               }
-                            },
-                            [
-                              _vm._v("Commander "),
-                              _c("i", {
-                                staticClass: "fas fa-envelope-open-text    "
-                              })
-                            ]
-                          )
-                        : article.état === "commandé"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-star",
+                            class: article.starDup >= 2 ? "text-warning" : "",
+                            on: {
+                              mouseover: function($event) {
+                                _vm.lightTheStars(article, 2)
+                              },
+                              click: function($event) {
+                                _vm.storeTheStars(article, 2)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-star",
+                            class: article.starDup >= 3 ? "text-warning" : "",
+                            on: {
+                              mouseover: function($event) {
+                                _vm.lightTheStars(article, 3)
+                              },
+                              click: function($event) {
+                                _vm.storeTheStars(article, 3)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-star",
+                            class: article.starDup >= 4 ? "text-warning" : "",
+                            on: {
+                              mouseover: function($event) {
+                                _vm.lightTheStars(article, 4)
+                              },
+                              click: function($event) {
+                                _vm.storeTheStars(article, 4)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-star",
+                            class: article.starDup >= 5 ? "text-warning" : "",
+                            on: {
+                              mouseover: function($event) {
+                                _vm.lightTheStars(article, 5)
+                              },
+                              click: function($event) {
+                                _vm.storeTheStars(article, 5)
+                              }
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row my-2" }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        article.état === "enregistré"
                           ? _c(
-                              "span",
+                              "button",
                               {
-                                staticClass:
-                                  "badge badge-success badge-pill py-1"
+                                staticClass: "btn btn-primary btn-sm py-0 px-1",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.changerEtat(
+                                      index,
+                                      fiche,
+                                      article,
+                                      "commandé"
+                                    )
+                                  }
+                                }
                               },
                               [
-                                _vm._v(" Commandé "),
-                                _c("i", { staticClass: "fas fa-clock" })
+                                _vm._v("Commander "),
+                                _c("i", {
+                                  staticClass: "fas fa-envelope-open-text    "
+                                })
                               ]
                             )
-                          : _vm._e()
+                          : article.état === "commandé"
+                            ? _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "badge badge-success badge-pill py-1"
+                                },
+                                [
+                                  _vm._v(" Commandé "),
+                                  _c("i", { staticClass: "fas fa-clock" })
+                                ]
+                              )
+                            : _vm._e()
+                      ])
                     ])
                   })
                 )

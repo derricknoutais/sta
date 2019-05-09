@@ -17,4 +17,9 @@ class ArticleController extends Controller
     public function changerEtat(Request $request, Article $article){
         $article->changeEtat($request->etat);
     }
+    public function storeTheStars(Request $request, Article $article){
+        $article->update([
+            'stars' => $request->stars
+        ]);
+    }
 }

@@ -172,13 +172,25 @@
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles" >
-                            <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
+                            
+                            
                             <div class="row">{{ article.nom }}</div>
+                            <div class="row star" @mouseleave="bringTheOriginalLightsBack(article)">
+                                <i class="fas fa-star" :class="article.starDup >= 1 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,1)" @click="storeTheStars(article ,1)"></i>
+                                <i class="fas fa-star" :class="article.starDup >= 2 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,2)" @click="storeTheStars(article ,2)"></i>
+                                <i class="fas fa-star" :class="article.starDup >= 3 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,3)" @click="storeTheStars(article ,3)"></i>
+                                <i class="fas fa-star" :class="article.starDup >= 4 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,4)" @click="storeTheStars(article ,4)"></i>
+                                <i class="fas fa-star" :class="article.starDup >= 5 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,5)" @click="storeTheStars(article ,5)"></i>
+                            </div>
+                            <div class="row my-2">
+                                
+                            </div>
+                            <div class="row">
+                                <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
+                                <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
+                            </div>
+                            
 
-                            <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
-                            <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
-
-                            <!-- <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button> -->
                         </li>
                     </ul>
                 </div>
@@ -381,7 +393,7 @@ export default {
             demandes: [],
             selectionDemandes: [],
             commandes: [],
-            viewMode: 'Liste',
+            viewMode: 'Carte',
             aSupprimer: null,
             aEditer: null,
             articleAEditer: null,
@@ -455,6 +467,8 @@ export default {
             this.filtre_moteur = 'moteur'
             this.filtre_modele = 'modèle'
             this.filtered_moteurs = this.moteurs.moteurs
+            this.filtre_date_from = null
+            this.filtre_date_to = null
         },
         selectionneArticle(article){
             this.selectionArticles.push(article)
@@ -581,6 +595,25 @@ export default {
             } else if( nombreCommandé === fiche.articles.length ){
                 return 'bg-success'
             } 
+        },
+        lightTheStars(article, number){
+            article.starDup = number
+            this.$forceUpdate()
+        },
+        storeTheStars(article, number){
+            axios.post('/fiche-renseignement/api/articles/' + article.id + '/store-the-stars', {stars : number} ).then(response => {
+                console.log(response.data);
+                article.starDup = number
+                article.star = number
+                this.$forceUpdate()
+            }).catch(error => {
+                console.log(error);
+            });
+            
+        },
+        bringTheOriginalLightsBack(article){
+            article.starDup = article.star
+            this.$forceUpdate()
         }
     },
     watch: {
@@ -676,7 +709,7 @@ export default {
         }
     },
     computed : {
-        
+
     },
     mounted(){
         this.init();
@@ -684,6 +717,11 @@ export default {
             this.fiches.forEach((fiche) => {
                 // console.log(fiche.id)
                 fiche.color = this.ficheColor(fiche)
+                fiche.articles.forEach(article => {
+                    // article.star = Math.floor(Math.random() * 4) + 1
+                    article.starDup = article.stars
+                })
+                
             });
             this.$forceUpdate()
         }, 3000);
@@ -698,5 +736,8 @@ export default {
 <style>
     .form-control {
         display: inline-block;
+    }
+    .star:hover {
+        cursor:pointer;
     }
 </style>
