@@ -22,7 +22,7 @@ export default {
     methods:{
         créerCommande(){
             axios.post('/commande/api/nouvelle',{ nom: this.nom }).then(response => {
-                console.log(response.data)
+                window.location.href = '/commande/répertoire';
             }).catch(error => {
                 console.log(error);
             });

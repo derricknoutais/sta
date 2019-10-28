@@ -1,48 +1,55 @@
 <template>
     <div class="container-fluid">
-        <h1 class="text-center">Fiche de Renseignement</h1>
-        <div class="row my-3">
-            <div class="col-md-4 offset-md-4 col-12">
-                <label for="">Ajoute des véhicules</label>
-                <div class="input-group">    
-                    <select class="custom-select" id="inputGroupSelect04" @change="displayModal(modal.ajouter)" v-model="modal.ajouter">
-                        <option selected>Ajouter...</option>
-                        <option value="#marque">Ajouter Marque</option>
-                        <option value="#type">Ajouter Type</option>
-                        <option value="#modèle">Ajouter Modèle</option>
-                        <option value="#moteur">Ajouter Moteur</option>
-                        <option value="#moteur_type">Attribuer un Moteur à un Type</option>
-                        <option value="#modèle_type">Attribuer un Modèle à un Type</option>
-                    </select>
-                </div>
+
+        <div class="row d-flex">
+            <div class=" d-flex flex-column align-items-center col-md-2">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#marque">Ajouter Marque</button>
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#type">Ajouter Type</button>
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#modèle">Ajouter Modèle</button>
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#moteur">Ajouter Moteur</button>
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#moteur_type">Attribuer un Moteur à un Type</button>
+                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#modèle_type">Attribuer un Modèle à un Type</button>
+                
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 offset-md-4 border p-3 bg-primary col-10 offset-1">
+            <div class="col-md-4 offset-md-2 border p-3 bg-primary">
                 <h1 class="text-center mt-5">Fiche de Renseignement</h1>
                 <div class="form-group">
                     <label>Marque</label>
-                    <select type="text" class="form-control" v-model="fiche_renseignement.marque" @change="chercheType(fiche_renseignement.marque)">
+                    <multiselect v-model="fiche_renseignement.marque" :options="marques" label="nom" track-by="id" placeholder="Selectionne une Marque" @select="chercheType()">
+                        <template slot="singleLabel" slot-scope="{ option }" :value="option.id"><strong>{{ option.nom }}</strong></template>
+                    </multiselect>
+
+                    <!-- <select type="text" class="form-control" v-model="fiche_renseignement.marque" @change="chercheType(fiche_renseignement.marque)">
                         <option :value="marque.id" v-for="marque in marques">{{ marque.nom }}</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Type</label>
-                    <select type="text" class="form-control" v-model="fiche_renseignement.type" @change="chercheMoteurs()">
+                    <multiselect v-model="fiche_renseignement.type" :options="types" label="nom" track-by="id" placeholder="Selectionne un Type" @select="chercheMoteurs()">
+                        <template slot="singleLabel" slot-scope="{ option }" :value="option.id"><strong>{{ option.nom }}</strong></template>
+                    </multiselect>
+                    <!-- <select type="text" class="form-control" v-model="fiche_renseignement.type" @change="chercheMoteurs()">
                         <option :value="type.id" v-for="type in types">{{ type.nom }}</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Modèle</label>
-                    <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
+                    <multiselect v-model="fiche_renseignement.modèle" :options="modèles" label="nom" track-by="id" placeholder="Selectionne un Modèle" @select="chercheMoteurs()">
+                        <template slot="singleLabel" slot-scope="{ option }" :value="option.id"><strong>{{ option.nom }}</strong></template>
+                    </multiselect>
+                    <!-- <select type="text" class="form-control" v-model="fiche_renseignement.modèle">
                         <option :value="modèle.id" v-for="modèle in modèles" @change="chercheMoteurs()">{{ modèle.nom }}</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Moteur</label>
-                    <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
+                    <multiselect v-model="fiche_renseignement.moteur" :options="moteurs" label="nom" track-by="id" placeholder="Selectionne un Moteur">
+                        <template slot="singleLabel" slot-scope="{ option }" :value="option.id"><strong>{{ option.nom }}</strong></template>
+                    </multiselect>
+                    <!-- <select type="text" class="form-control" v-model="fiche_renseignement.moteur" >
                         <option :value="moteur.id" v-for="moteur in moteurs">{{ moteur.nom }}</option>
-                    </select>
+                    </select> -->
                 </div>
                 <div class="form-group">
                     <label>Année</label>
@@ -53,7 +60,7 @@
                     <input type="text" class="form-control" v-model="fiche_renseignement.chassis">
                 </div>
                 <div class="form-group">
-                    <label>Autre details</label>
+                    <label>Lien Partsouq</label>
                     <input type="text" class="form-control" v-model="fiche_renseignement.détails">
                 </div>
                 <div class="form-group">
@@ -68,7 +75,7 @@
                 <ol class="list-group list-group-flush offset-md-1 col-md-6 mt-5">
                     <li class="list-group-item" v-for="article in fiche_renseignement.articles">{{ article }}</li>
                 </ol>
-                <div class="row justify-content-center mt-5">
+                <div class="row justify-content-center mt-2">
                     <button class="btn btn-success" @click="enregistreLaFiche()">Enregistrer</button>
                 </div>
             </div>
@@ -292,36 +299,43 @@ export default {
                 console.log(error);
             });
         },
-        chercheType(marque){
-            console.log(marque)
-            axios.get('/fiche-renseignement/type/de-marque/' + marque).then(response => {
-                this.types = response.data;
-                console.log(response.data);
-            }).catch(error => {
-                console.log(error);
-            });
+        chercheType(){
+            setTimeout(() => {
+                console.log(this.fiche_renseignement.marque.id)
+                axios.get('/fiche-renseignement/type/de-marque/' + this.fiche_renseignement.marque.id).then(response => {
+                    this.types = response.data;
+                    console.log(response.data);
+                    this.$forceUpdate()
+                }).catch(error => {
+                    console.log(error);
+                });
+            }, 100);
+            
         },
         chercheMoteurs(){
-            axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type).then(response => {
-                if(response.data.moteurs.length > 0){
-                    this.moteurs = response.data.moteurs;
-                }
-                
-            }).catch(error => {
-                console.log(error);
-            });
-            this.chercheModèles();
+            setTimeout(() => {
+                axios.get('/fiche-renseignement/moteur/de-type/' + this.fiche_renseignement.type.id).then(response => {
+                    if(response.data.moteurs.length > 0){
+                        this.moteurs = response.data.moteurs;
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+                this.chercheModèles();   
+            }, 100);
         },
         chercheModèles(){
-            axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type).then(response => {
-                if(response.data.modèles.length > 0){
-                    this.modèles = response.data.modèles;
-                } else {
-                    this.modèles = []
-                }
-            }).catch(error => {
-                console.log(error);
-            });
+            setTimeout(() => {
+                axios.get('/fiche-renseignement/modèle/de-type/' + this.fiche_renseignement.type.id).then(response => {
+                    if(response.data.modèles.length > 0){
+                        this.modèles = response.data.modèles;
+                    } else {
+                        this.modèles = []
+                    }
+                }).catch(error => {
+                    console.log(error);
+                });
+            }, 100);
         },
         enregistreUneMarque(){
             axios.post('/fiche-renseignement/marque/api/enregistrer', this.formulaire_marque ).then(response => {

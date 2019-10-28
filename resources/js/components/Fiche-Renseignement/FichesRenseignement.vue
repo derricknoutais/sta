@@ -132,7 +132,9 @@
                             <p ><strong>Année:</strong> <span v-if="fiche.année !== null">{{ fiche.année }}</span></p>
                             <p><strong>Modèle:</strong> <span  v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span></p>
                             <p><strong>Moteur:</strong> <span v-if="fiche.moteur !== null">{{ fiche.moteur.nom }}</span></p>
-                            <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">{{ fiche.détails }}</span></p>
+                            <p><strong>Autre details:</strong> <span v-if="fiche.détails !== null">
+                                <a :href="fiche.détails">{{ fiche.détails }}</a>
+                            </span></p>
                             <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" v-for="article in fiche.articles" >
@@ -168,7 +170,7 @@
                     <p v-if="fiche.année !== null"><strong>Année:</strong><span>{{ fiche.année }}</span></p>
                     <p v-if="fiche.modèle !== null"><strong>Modèle:</strong><span>{{ fiche.modèle.nom }}</span></p>
                     <p v-if="fiche.moteur !== null"><strong>Moteur:</strong><span>{{ fiche.moteur.nom }}</span></p>
-                    <p v-if="fiche.détails !== null"><strong>Autre details:</strong> <span>{{ fiche.détails }}</span></p>
+                    <p v-if="fiche.détails !== null"><strong>Autre details:</strong> <span><a :href="fiche.détails">{{ fiche.détails }}</a></span></p>
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles" >

@@ -9,13 +9,26 @@ use App\Produit;
 use App\ProduitCommande;
 use App\ArticleCommande;
 use DB;
+use App\Playground;
+
 class CommandeController extends Controller
 {
-    public function nouvelle(Request $request){
-        Commande::create([
+    public function store(Request $request){
+        $commande = Commande::create([
             'nom' => $request->nom
         ]);
-    }
+        $playground = Playground::create([
+            'commande_id' => $commande->id,
+            'nom' => 'Playground ' . $request->nom
+        ]);
+        
+        $commande->update([
+            'playground_id' => $playground->id
+        ]);
+
+
+        return redirect('/commande/répertoire');
+    }   
     public function all(){
         return Commande::all();
     }

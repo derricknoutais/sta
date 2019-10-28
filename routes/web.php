@@ -1,14 +1,15 @@
 <?php
-Auth::loginUsingId(1);
+// Auth::loginUsingId(1);
 Auth::routes();
 
 
-Route::group(['middleware' => ['auth']], function () {
+// Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', function () {
         return view('welcome');
     });
+    
     Route::prefix('/fiche-renseignement')->group(function(){
         Route::get('reporting', 'FicheRenseignementController@reporting');
 
@@ -67,24 +68,28 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    // Route::prefix('/customers')->
     Route::prefix('/commande')->group(function(){
         Route::view('nouvelle', 'commande.nouvelle');
         Route::view('répertoire', 'commande.répertoire');
         Route::get('{commande}', 'CommandeController@voir');
-        Route::prefix('/api')->group(function(){
-            Route::post('commander', 'CommandeController@commander');
-            Route::get('all', 'CommandeController@all');
-            Route::post('nouvelle', 'CommandeController@nouvelle');
-        });
         Route::get('/{commande}/produits', 'CommandeController@voirProduits');
         Route::post('/{commande}/ajouteProduit', 'CommandeController@ajouteProduits');
         Route::post('/{commande}/ajouteArticle', 'CommandeController@ajouteArticles');
+        Route::get('/{commande}/playground', 'PlaygroundController@show');
+        Route::prefix('/api')->group(function(){
+            Route::post('commander', 'CommandeController@commander');
+            Route::get('all', 'CommandeController@all');
+            Route::post('nouvelle', 'CommandeController@store');
+        });
+        
     });
     Route::prefix('/article')->group(function(){
         Route::prefix('/api')->group(function(){
             Route::get('all', 'ArticleController@all');
         });
     });
+
 
     Route::prefix('/demande-achat')->group(function(){
         Route::prefix('/api')->group(function(){
@@ -129,7 +134,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('all', 'ProduitController@all');
         });
     });
-});
+// });
 
 
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommandesTable extends Migration
+class CreatePlaygroundsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCommandesTable extends Migration
      */
     public function up()
     {
-        Schema::create('commandes', function (Blueprint $table) {
+        Schema::create('playgrounds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
-            $table->unsignedInteger('playground_id');
+            $table->unsignedInteger('commande_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateCommandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commandes');
+        Schema::dropIfExists('playgrounds');
     }
 }
