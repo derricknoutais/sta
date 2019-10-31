@@ -11,10 +11,10 @@ class FicheRenseignementController extends Controller
     public function enregistrer(Request $request){
 
         $fiche = FicheRenseignement::create([
-            'marque_id' => $request->marque,
-            'type_id' => $request->type,
-            'moteur_id' => $request->moteur,
-            'modèle_id' => $request->modèle,
+            'marque_id' => $request->marque['id'],
+            'type_id' => $request->type['id'],
+            'moteur_id' => $request->moteur['id'],
+            'modèle_id' => $request->modèle['id'],
             'année' => $request->année,
             'chassis' => $request->chassis,
             'détails' => $request->détails

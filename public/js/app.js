@@ -47941,6 +47941,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -48130,7 +48131,7 @@ var render = function() {
     _c("div", { staticClass: "row d-flex" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 offset-md-2 border p-3 bg-primary" }, [
+      _c("div", { staticClass: "col-md-4 offset-md-1 border p-3 bg-primary" }, [
         _c("h1", { staticClass: "text-center mt-5" }, [
           _vm._v("Fiche de Renseignement")
         ]),
@@ -49187,12 +49188,12 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: " d-flex flex-column align-items-center col-md-2" },
+      { staticClass: " d-flex flex-column align-items-center col-md-3" },
       [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -49205,7 +49206,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -49218,7 +49219,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -49231,7 +49232,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -49244,7 +49245,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",
@@ -49257,7 +49258,7 @@ var staticRenderFns = [
         _c(
           "button",
           {
-            staticClass: "btn btn-primary  btn-block",
+            staticClass: "btn btn-primary mt-3 btn-block",
             attrs: {
               type: "button",
               "data-toggle": "modal",

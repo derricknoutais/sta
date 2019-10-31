@@ -2,17 +2,18 @@
     <div class="container-fluid">
 
         <div class="row d-flex">
-            <div class=" d-flex flex-column align-items-center col-md-2">
+            <div class=" d-flex flex-column align-items-center col-md-3">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#marque">Ajouter Marque</button>
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#type">Ajouter Type</button>
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#modèle">Ajouter Modèle</button>
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#moteur">Ajouter Moteur</button>
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#moteur_type">Attribuer un Moteur à un Type</button>
-                <button type="button" class="btn btn-primary  btn-block" data-toggle="modal" data-target="#modèle_type">Attribuer un Modèle à un Type</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#marque">Ajouter Marque</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#type">Ajouter Type</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#modèle">Ajouter Modèle</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#moteur">Ajouter Moteur</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#moteur_type">Attribuer un Moteur à un Type</button>
+                    <button type="button" class="btn btn-primary mt-3 btn-block" data-toggle="modal" data-target="#modèle_type">Attribuer un Modèle à un Type</button>
+                
                 
             </div>
-            <div class="col-md-4 offset-md-2 border p-3 bg-primary">
+            <div class="col-md-4 offset-md-1 border p-3 bg-primary">
                 <h1 class="text-center mt-5">Fiche de Renseignement</h1>
                 <div class="form-group">
                     <label>Marque</label>
