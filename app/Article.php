@@ -13,4 +13,8 @@ class Article extends Model
             'état' => $etat
         ]);
     }
+    public function fiche_renseignement()
+    {
+        return $this->belongsTo('App\FicheRenseignement');
+    }
 }
