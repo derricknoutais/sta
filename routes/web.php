@@ -87,6 +87,7 @@ Auth::routes();
     Route::prefix('/article')->group(function(){
         Route::prefix('/api')->group(function(){
             Route::get('all', 'ArticleController@all');
+            Route::get('non-commandé', 'ArticleController@nonCommandé');
         });
     });
 
