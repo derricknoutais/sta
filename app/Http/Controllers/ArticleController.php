@@ -16,7 +16,7 @@ class ArticleController extends Controller
     }
 
     public function nonCommandé(){
-        return Article::where('commandé', 0)->with('fiche_renseignement', 'fiche_renseignement.marque', 'fiche_renseignement.type', 'fiche_renseignement.moteur')->get();
+        return Article::where('état', 'enregistré')->with('fiche_renseignement', 'fiche_renseignement.marque', 'fiche_renseignement.type', 'fiche_renseignement.moteur')->get();
     }
     public function changerEtat(Request $request, Article $article){
         $article->changeEtat($request->etat);
