@@ -354,6 +354,7 @@
 <script>
 import Multiselect from 'vue-multiselect';
 export default {
+    props: ['fiches_prop'],
     data(){
         return {
             fiche_renseignement : {
@@ -531,31 +532,34 @@ export default {
             });
         },
         init(){
-            axios.get('fiche-renseignement/api/all').then(response => {
-                this.fiches = this.filtered = response.data 
-                this.removeArchived()  
-            });
-            axios.get('fiche-renseignement/marque/api/all').then(response => {
-                this.marques = response.data;
-            });
-            axios.get('fiche-renseignement/type/api/all').then(response => {
-                this.types = response.data;
-            });
-            axios.get('fiche-renseignement/moteur/api/all').then(response => {
-                this.filtered_moteurs = this.moteurs.moteurs = response.data;
-            });
-            axios.get('fiche-renseignement/modèle/api/all').then(response => {
-                this.modèles = response.data;
-            });
-            axios.get('demande-achat/api/all').then(response => {
-                this.demandes = response.data;
-            });
-            axios.get('commande/api/all').then(response => {
-                this.commandes = response.data;
-            });
-            axios.get('/fiche-renseignement/moteur/api/all').then(response => {
-                this.moteurs = response.data;
-            });
+            if(! this.fiches_prop){
+                axios.get('fiche-renseignement/api/all').then(response => {
+                    this.fiches = this.filtered = response.data 
+                    this.removeArchived()  
+                });
+                axios.get('fiche-renseignement/marque/api/all').then(response => {
+                    this.marques = response.data;
+                });
+                axios.get('fiche-renseignement/type/api/all').then(response => {
+                    this.types = response.data;
+                });
+                axios.get('fiche-renseignement/moteur/api/all').then(response => {
+                    this.filtered_moteurs = this.moteurs.moteurs = response.data;
+                });
+                axios.get('fiche-renseignement/modèle/api/all').then(response => {
+                    this.modèles = response.data;
+                });
+                axios.get('demande-achat/api/all').then(response => {
+                    this.demandes = response.data;
+                });
+                axios.get('commande/api/all').then(response => {
+                    this.commandes = response.data;
+                });
+                axios.get('/fiche-renseignement/moteur/api/all').then(response => {
+                    this.moteurs = response.data;
+                });
+            } 
+            
             
         },
         updateRequete(){

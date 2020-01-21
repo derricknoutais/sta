@@ -25,6 +25,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('reporting-renseignement', require('./components/Fiche-Renseignement/Reporting.vue'));
 Vue.component('fiche-renseignement', require('./components/Fiche-Renseignement/Formulaire.vue'));
 Vue.component('fiches-de-renseignement', require('./components/Fiche-Renseignement/FichesRenseignement.vue'));
+Vue.component('show-fiche', require('./components/Fiche-Renseignement/ShowFiche.vue'));
 
 // NOUVELLE DEMANDE
 

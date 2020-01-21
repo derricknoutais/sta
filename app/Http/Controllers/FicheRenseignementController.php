@@ -66,5 +66,9 @@ class FicheRenseignementController extends Controller
             }
         }
     }
+    public function show(FicheRenseignement $fiche){
+        $fiche->loadMissing(['articles', 'marque', 'type', 'moteur', 'modèle']);
+        return view('fiche-renseignement.show', compact('fiche'));
+    }
 
 }

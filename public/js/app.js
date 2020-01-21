@@ -14034,6 +14034,7 @@ Vue.component('example-component', __webpack_require__(42));
 Vue.component('reporting-renseignement', __webpack_require__(45));
 Vue.component('fiche-renseignement', __webpack_require__(48));
 Vue.component('fiches-de-renseignement', __webpack_require__(51));
+Vue.component('show-fiche', __webpack_require__(105));
 
 // NOUVELLE DEMANDE
 
@@ -50228,6 +50229,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['fiches_prop'],
     data: function data() {
         return {
             fiche_renseignement: {
@@ -50422,31 +50424,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         init: function init() {
             var _this10 = this;
 
-            axios.get('fiche-renseignement/api/all').then(function (response) {
-                _this10.fiches = _this10.filtered = response.data;
-                _this10.removeArchived();
-            });
-            axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                _this10.marques = response.data;
-            });
-            axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                _this10.types = response.data;
-            });
-            axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                _this10.filtered_moteurs = _this10.moteurs.moteurs = response.data;
-            });
-            axios.get('fiche-renseignement/modèle/api/all').then(function (response) {
-                _this10.modèles = response.data;
-            });
-            axios.get('demande-achat/api/all').then(function (response) {
-                _this10.demandes = response.data;
-            });
-            axios.get('commande/api/all').then(function (response) {
-                _this10.commandes = response.data;
-            });
-            axios.get('/fiche-renseignement/moteur/api/all').then(function (response) {
-                _this10.moteurs = response.data;
-            });
+            if (!this.fiches_prop) {
+                axios.get('fiche-renseignement/api/all').then(function (response) {
+                    _this10.fiches = _this10.filtered = response.data;
+                    _this10.removeArchived();
+                });
+                axios.get('fiche-renseignement/marque/api/all').then(function (response) {
+                    _this10.marques = response.data;
+                });
+                axios.get('fiche-renseignement/type/api/all').then(function (response) {
+                    _this10.types = response.data;
+                });
+                axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
+                    _this10.filtered_moteurs = _this10.moteurs.moteurs = response.data;
+                });
+                axios.get('fiche-renseignement/modèle/api/all').then(function (response) {
+                    _this10.modèles = response.data;
+                });
+                axios.get('demande-achat/api/all').then(function (response) {
+                    _this10.demandes = response.data;
+                });
+                axios.get('commande/api/all').then(function (response) {
+                    _this10.commandes = response.data;
+                });
+                axios.get('/fiche-renseignement/moteur/api/all').then(function (response) {
+                    _this10.moteurs = response.data;
+                });
+            }
         },
         updateRequete: function updateRequete() {
             axios.post('/fiche-renseignement/api/update', this.aEditer).then(function (response) {
@@ -54607,6 +54611,90 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(106)
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Fiche-Renseignement/ShowFiche.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-accea3b4", Component.options)
+  } else {
+    hotAPI.reload("data-v-accea3b4", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 106 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['fiche'],
+    data: function data() {
+        return {};
+    },
+
+    methods: {},
+    mounted: function mounted() {}
+});
 
 /***/ })
 /******/ ]);

@@ -18,6 +18,8 @@ Auth::routes();
 
         Route::get('/', 'FicheRenseignementController@répertoire');
 
+        Route::get('/{fiche}', 'FicheRenseignementController@show' );
+
         Route::view('/renseigner', 'fiche-renseignement.renseigner');
 
         Route::prefix('/api')->group(function(){
