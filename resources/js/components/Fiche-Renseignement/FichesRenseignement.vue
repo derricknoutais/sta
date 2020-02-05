@@ -100,6 +100,9 @@
             </div>
         </div>
         
+
+
+
         <div class="row" v-if="this.viewMode === 'Liste'">
             <div class="col-md-6" id="accordion">
                 <div class="card" v-for="(fiche, index) in filtered">
@@ -198,6 +201,13 @@
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
 
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

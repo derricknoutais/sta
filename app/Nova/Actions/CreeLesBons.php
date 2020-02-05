@@ -40,6 +40,7 @@ class CreeLesBons extends Action
                 if( $produit['pivot']['checked'] == 0){
                     // Retiens produit
                     $bcp = $produit;
+                    // Ass
                     $moinsCher = $produit['pivot']['coût'];
                     $fournisseur_id = $models[$i]['fournisseur_id'];
                     $model_id = $models[$i]['id'];

@@ -1,18 +1,20 @@
 <?php
-// Auth::loginUsingId(1);
+
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
-Auth::routes();
+    Auth::routes();
 
 
-// Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/', function () {
         return view('welcome');
     });
-    
+    Route::get('/tess', function(){
+        return 1;
+    });
+    Route::view('/fiche-renseignement/renseigner', 'fiche-renseignement.create');
     Route::prefix('/fiche-renseignement')->group(function(){
         Route::get('reporting', 'FicheRenseignementController@reporting');
 
@@ -20,7 +22,7 @@ Auth::routes();
 
         Route::get('/{fiche}', 'FicheRenseignementController@show' );
 
-        Route::view('/renseigner', 'fiche-renseignement.renseigner');
+        
 
         Route::prefix('/api')->group(function(){
             Route::get('/all', 'FicheRenseignementController@all');
@@ -73,7 +75,6 @@ Auth::routes();
         });
     });
 
-    // Route::prefix('/customers')->
     Route::prefix('/commande')->group(function(){
         Route::view('nouvelle', 'commande.nouvelle');
         Route::view('répertoire', 'commande.répertoire');
@@ -89,13 +90,13 @@ Auth::routes();
         });
         
     });
+
     Route::prefix('/article')->group(function(){
         Route::prefix('/api')->group(function(){
             Route::get('all', 'ArticleController@all');
             Route::get('non-commandé', 'ArticleController@nonCommandé');
         });
     });
-
 
     Route::prefix('/demande-achat')->group(function(){
         Route::prefix('/api')->group(function(){
@@ -140,7 +141,6 @@ Auth::routes();
             Route::get('all', 'ProduitController@all');
         });
     });
-// });
 
 
 
