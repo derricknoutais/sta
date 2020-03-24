@@ -22,7 +22,7 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
 
         Route::get('/{fiche}', 'FicheRenseignementController@show' );
 
-        
+
 
         Route::prefix('/api')->group(function(){
             Route::get('/all', 'FicheRenseignementController@all');
@@ -31,8 +31,9 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
             Route::post('/update', 'FicheRenseignementController@update');
             Route::post('/articles/commander/{article}', 'ArticleController@modifier');
             Route::post('/articles/changer-etat/{article}', 'ArticleController@changerEtat');
+
             Route::post('/articles/{article}/store-the-stars', 'ArticleController@storeTheStars');
-            
+
         });
         Route::prefix('/marque')->group(function(){
             Route::view('créer', 'fiche-renseignement.marque.créer');
@@ -88,13 +89,22 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
             Route::get('all', 'CommandeController@all');
             Route::post('nouvelle', 'CommandeController@store');
         });
-        
+
     });
 
     Route::prefix('/article')->group(function(){
         Route::prefix('/api')->group(function(){
             Route::get('all', 'ArticleController@all');
             Route::get('non-commandé', 'ArticleController@nonCommandé');
+            Route::post('changer-etat/{article}', function(Request $request, Article $article){
+
+                $updated = $article->update([
+                    'etat' => $request->etat
+                ]);
+                if($updated){
+                    return 'ok';
+                }
+            });
         });
     });
 

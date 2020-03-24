@@ -18,9 +18,11 @@ class ArticleController extends Controller
     public function nonCommandé(){
         return Article::with('fiche_renseignement', 'fiche_renseignement.marque', 'fiche_renseignement.type', 'fiche_renseignement.moteur')->get();
     }
+
     public function changerEtat(Request $request, Article $article){
         $article->changeEtat($request->etat);
     }
+
     public function storeTheStars(Request $request, Article $article){
         $article->update([
             'stars' => $request->stars
