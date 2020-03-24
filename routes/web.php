@@ -99,7 +99,7 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
             Route::post('changer-etat/{article}', function(Request $request, Article $article){
 
                 $updated = $article->update([
-                    'etat' => $request->etat
+                    'état' => $request->etat
                 ]);
                 if($updated){
                     return 'ok';
