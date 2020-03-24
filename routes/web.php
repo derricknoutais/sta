@@ -96,10 +96,10 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
         Route::prefix('/api')->group(function(){
             Route::get('all', 'ArticleController@all');
             Route::get('non-commandé', 'ArticleController@nonCommandé');
-            Route::post('changer-etat/{article}', function(Request $request, App\Article $article){
-
+            Route::get('changer-etat/{article_id}/{etat}', function($article_id, $etat){
+                $article = App\Article::find($article_id);
                 $updated = $article->update([
-                    'état' => $request->etat
+                    'état' => $etat
                 ]);
                 if($updated){
                     return 'ok';
