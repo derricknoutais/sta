@@ -50475,6 +50475,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.$forceUpdate();
             }
         },
+        updateArticle: function updateArticle(article) {
+            axios.put('/article', article).then(function (response) {
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         test: function test() {
             var _this11 = this;
 
@@ -51982,11 +51989,14 @@ var render = function() {
                           _vm.editerArticles
                             ? _c("div", { staticClass: "col-md-2" }, [
                                 _c(
-                                  "a",
+                                  "button",
                                   {
                                     staticClass: "d-inline-block",
-                                    attrs: { href: "#" },
-                                    on: { click: function($event) {} }
+                                    on: {
+                                      click: function($event) {
+                                        _vm.updateArticle(article)
+                                      }
+                                    }
                                   },
                                   [
                                     _c("i", {

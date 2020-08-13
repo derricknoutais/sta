@@ -27,5 +27,8 @@ class FicheRenseignement extends Model
     {
         return $this->hasMany('App\Article');
     }
-    
+    public function articles_commandés(){
+        return $this->hasMany('App\Article')->where('état', '=', 'commandé');
+    }
+
 }

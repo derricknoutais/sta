@@ -41,7 +41,7 @@ export default {
         }
     },
     methods: {
-        
+
     },
     mounted(){
         this.rang_moteur = this.data_moteur;

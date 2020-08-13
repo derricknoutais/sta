@@ -44,6 +44,7 @@ class FicheRenseignementController extends Controller
     public function supprimer(FicheRenseignement $fiche){
         $fiche->delete();
     }
+
     public function update(Request $request){
         $fiche = FicheRenseignement::find($request->id);
         $fiche->update([
@@ -56,7 +57,7 @@ class FicheRenseignementController extends Controller
             'détails' => $request->détails
         ]);
         foreach($request->articles as $article)
-        { 
+        {
             if(! isset($article['id'])){
                 Article::create([
                     'nom' => $article['nom'],

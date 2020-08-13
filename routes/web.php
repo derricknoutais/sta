@@ -106,6 +106,7 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
                 }
             });
         });
+        Route::put('', 'ArticleController@update');
     });
 
     Route::prefix('/demande-achat')->group(function(){

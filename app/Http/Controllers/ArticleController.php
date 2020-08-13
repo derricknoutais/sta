@@ -15,6 +15,16 @@ class ArticleController extends Controller
         return Article::all();
     }
 
+    public function update(Request $request){
+        // return $request->all();
+        $article = Article::find($request['id'])->update([
+            'nom' => $request['nom']
+        ]);
+        if($article){
+            return 'ok';
+        }
+    }
+
     public function nonCommandé(){
         return Article::with('fiche_renseignement', 'fiche_renseignement.marque', 'fiche_renseignement.type', 'fiche_renseignement.moteur')->get();
     }

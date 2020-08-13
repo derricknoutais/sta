@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="float-right">
-                    
+
                 </div>
             </div>
         </div>
@@ -93,13 +93,13 @@
                   Creer demande
                 </button> -->
             </div>
-             
+
             <div class="col-md-2 offset-md-4 text-right">
                 <button @click="changeView('Liste')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Liste"><i class="fas fa-bars mx-1"></i></button>
                 <button @click="changeView('Carte')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Carte"><i class="fas fa-grip-horizontal fa-1x mx-1"></i></button>
             </div>
         </div>
-        
+
 
 
 
@@ -116,11 +116,11 @@
                                 <span v-if="fiche.année !== null">{{ fiche.année }}</span>
                             </div>
                             <div class="col-md-2 text-right">
-                                <a href="#" @click="selectionneLaModification(fiche)" 
+                                <a href="#" @click="selectionneLaModification(fiche)"
                                     data-toggle="modal" data-target="#editerRequeteModal">
                                     <i class="far fa-edit mr-3" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : ''"></i>
                                 </a>
-                                <a href="#" @click="selectionneLaSuppression(fiche)" 
+                                <a href="#" @click="selectionneLaSuppression(fiche)"
                                     data-toggle="modal" data-target="#confirmerSuppressionModal">
                                     <i class="fas fa-trash-alt" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : 'text-danger'"></i>
                                 </a>
@@ -143,17 +143,17 @@
                                 <li class="list-group-item" v-for="article in fiche.articles" >
                                     <!-- <input type="checkbox" @click="selectionneArticle(article)" v-if="! article.commandé"> -->
                                     <div class="row">{{ article.nom }}</div>
-                                    
+
                                     <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                     <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
-                                    
+
                                     <!-- <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button> -->
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
 
         <div class="row" v-if="this.viewMode === 'Carte'">
@@ -177,8 +177,8 @@
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles" >
-                            
-                            
+
+
                             <div class="row">{{ article.nom }}</div>
                             <div class="row star" @mouseleave="bringTheOriginalLightsBack(article)">
                                 <i class="fas fa-star" :class="article.starDup >= 1 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,1)" @click="storeTheStars(article ,1)"></i>
@@ -188,13 +188,13 @@
                                 <i class="fas fa-star" :class="article.starDup >= 5 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,5)" @click="storeTheStars(article ,5)"></i>
                             </div>
                             <div class="row my-2">
-                                
+
                             </div>
                             <div class="row">
                                 <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                 <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                             </div>
-                            
+
 
                         </li>
                     </ul>
@@ -225,7 +225,7 @@
                                 <label>{{ demande.nom }}</label>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -306,7 +306,7 @@
                                 <input class="form-control d-inline-block" v-if="aEditer" v-model="aEditer.articles[index].nom">
                             </div>
                             <div class="col-md-2" v-if="editerArticles" >
-                                <a href="#" class="d-inline-block" @click=""><i class="far fa-save text-success mx-3"></i></a>
+                                <button class="d-inline-block" @click="updateArticle(article)"><i class="far fa-save text-success mx-3"></i></button>
                             </div>
                         </div>
                     </ol>
@@ -424,7 +424,7 @@ export default {
                     console.log(error);
                 });
             }, 100);
-            
+
         },
         chercheMoteurs(){
             setTimeout(() => {
@@ -437,7 +437,7 @@ export default {
                     console.log(error);
                 });
             }, 1000);
-            
+
             // setTimeout(() => {
             //     this.chercheModèles();
             // }, 3000);
@@ -523,15 +523,15 @@ export default {
                 console.log(response.data);
                 $('#confirmerSuppressionModal').modal('hide')
                 $('#succèsSuppression').modal('show')
-                setTimeout(function(){ 
+                setTimeout(function(){
                     $('#succèsSuppression').modal('hide')
-                    
+
                 }, 2000);
                 this.init();
             }).catch(error => {
                 console.log(error);
             });
-            
+
         },
         toggleEditArticles(){
             this.editerArticles = ! this.editerArticles;
@@ -544,8 +544,8 @@ export default {
         init(){
             if(! this.fiches_prop){
                 axios.get('fiche-renseignement/api/all').then(response => {
-                    this.fiches = this.filtered = response.data 
-                    this.removeArchived()  
+                    this.fiches = this.filtered = response.data
+                    this.removeArchived()
                 });
                 axios.get('fiche-renseignement/marque/api/all').then(response => {
                     this.marques = response.data;
@@ -568,9 +568,9 @@ export default {
                 axios.get('/fiche-renseignement/moteur/api/all').then(response => {
                     this.moteurs = response.data;
                 });
-            } 
-            
-            
+            }
+
+
         },
         updateRequete(){
             axios.post('/fiche-renseignement/api/update', this.aEditer ).then(response => {
@@ -585,11 +585,19 @@ export default {
                 this.$forceUpdate()
             }
         },
+        updateArticle(article){
+            axios.put('/article',article ).then(response => {
+                console.log(response.data);
+
+            }).catch(error => {
+                console.log(error);
+            });
+        },
         test(){
             setTimeout(() => {
                 console.log(this.filtre_marque.nom)
             }, 10);
-            
+
         },
         ficheColor(fiche){
             var nombreCommandé = 0;
@@ -610,7 +618,7 @@ export default {
                 return 'bg-danger text-white'
             } else if( nombreCommandé === fiche.articles.length ){
                 return 'bg-success'
-            } 
+            }
         },
         lightTheStars(article, number){
             article.starDup = number
@@ -625,7 +633,7 @@ export default {
             }).catch(error => {
                 console.log(error);
             });
-            
+
         },
         bringTheOriginalLightsBack(article){
             article.starDup = article.star
@@ -659,7 +667,7 @@ export default {
                     this.types = response.data;
                 });
             }
-            
+
         },
         filtre_moteur(){
             if(this.filtre_moteur !== 'moteur'){
@@ -682,13 +690,13 @@ export default {
         filtre_archive(){
             if(this.filtre_archive === true){
                 this.filtered = this.fiches.filter( (each) => {
-                    return this.ficheColor(each) === 'bg-success' 
+                    return this.ficheColor(each) === 'bg-success'
                 })
             } else {
                 this.filtered = this.fiches.filter( (each) => {
-                    return this.ficheColor(each) !== 'bg-success' 
+                    return this.ficheColor(each) !== 'bg-success'
                 })
-                
+
             }
         },
         filtre_partiel(){
@@ -701,7 +709,7 @@ export default {
                     return ( this.ficheColor(each) !== 'bg-danger text-white' )
                 })
                 this.filtered = this.filtered.filter( (each) => {
-                    return this.ficheColor(each) !== 'bg-success' 
+                    return this.ficheColor(each) !== 'bg-success'
                 })
             }
         },
@@ -737,14 +745,14 @@ export default {
                     // article.star = Math.floor(Math.random() * 4) + 1
                     article.starDup = article.stars
                 })
-                
+
             });
             this.$forceUpdate()
         }, 3000);
-        
+
     },
     created(){
-        
+
     }
 }
 </script>
