@@ -105,6 +105,7 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
                     return 'ok';
                 }
             });
+            Route::get('/search/{query}', 'ArticleController@search');
         });
         Route::put('', 'ArticleController@update');
     });

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    public function search($query){
+        return $response = Article::where('nom', 'like',  '%' . $query . '%' )->get();
+    }
     public function commander(Article $article){
         $article->update([
             'état' => 'En Commande'
