@@ -50236,6 +50236,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51258,6 +51269,58 @@ var render = function() {
                   fiche.année !== null
                     ? _c("span", [_vm._v(_vm._s(fiche.année))])
                     : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "#",
+                        "data-toggle": "modal",
+                        "data-target": "#editerRequeteModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.selectionneLaModification(fiche)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "far fa-edit mr-3",
+                        class:
+                          fiche.color === "bg-danger text-white"
+                            ? "text-white"
+                            : ""
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "#",
+                        "data-toggle": "modal",
+                        "data-target": "#confirmerSuppressionModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.selectionneLaSuppression(fiche)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-trash-alt",
+                        class:
+                          fiche.color === "bg-danger text-white"
+                            ? "text-white"
+                            : "text-danger"
+                      })
+                    ]
+                  )
                 ])
               ]),
               _vm._v(" "),

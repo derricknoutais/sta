@@ -165,7 +165,18 @@
                         <span v-if="fiche.type !== null"> {{ fiche.type.nom }}</span>
                         <span v-if="fiche.modèle !== null">{{ fiche.modèle.nom }}</span>
                         <span v-if="fiche.année !== null">{{ fiche.année }}</span>
+
                     </h5>
+                    <div class="col-md-12">
+                        <a href="#" @click="selectionneLaModification(fiche)"
+                            data-toggle="modal" data-target="#editerRequeteModal">
+                            <i class="far fa-edit mr-3" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : ''"></i>
+                        </a>
+                        <a href="#" @click="selectionneLaSuppression(fiche)"
+                            data-toggle="modal" data-target="#confirmerSuppressionModal">
+                            <i class="fas fa-trash-alt" :class="fiche.color === 'bg-danger text-white' ? 'text-white' : 'text-danger'"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <p v-if="fiche.marque !== null"><strong>Marque:</strong> <span>{{ fiche.marque.nom }}</span></p>
