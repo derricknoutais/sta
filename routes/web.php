@@ -1,5 +1,8 @@
 <?php
 
+use App\Article;
+use Illuminate\Http\Request;
+
 header('Access-Control-Allow-Origin:  *');
 header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
 header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization');
@@ -106,6 +109,15 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
                 }
             });
             Route::get('/search/{query}', 'ArticleController@search');
+
+            Route::get('/{article}', function(Article $article){
+                return $article;
+            });
+
+            Route::post('/bulk-fetch', function(Request $request){
+                return $request->all();
+                return Article::whereIn('id', $request->all())->get();
+            });
         });
         Route::put('', 'ArticleController@update');
     });

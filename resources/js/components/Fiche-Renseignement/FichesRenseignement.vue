@@ -188,8 +188,6 @@
                     <p><strong v-if="fiche.détails !== null">Articles Recherchés:</strong></p>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" v-for="article in fiche.articles" >
-
-
                             <div class="row">{{ article.nom }}</div>
                             <div class="row star" @mouseleave="bringTheOriginalLightsBack(article)">
                                 <i class="fas fa-star" :class="article.starDup >= 1 ? 'text-warning' : ''" @mouseover="lightTheStars(article ,1)" @click="storeTheStars(article ,1)"></i>
