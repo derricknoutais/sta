@@ -115,7 +115,6 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
             });
 
             Route::post('/bulk-fetch', function(Request $request){
-                return $request->all();
                 return Article::whereIn('id', $request->all())->get();
             });
         });
