@@ -109,6 +109,8 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
                 }
             });
             Route::get('/search/{query}', 'ArticleController@search');
+            Route::post('/search', 'ArticleController@search_ids');
+
 
             Route::get('/{article}', function(Article $article){
                 return $article;
