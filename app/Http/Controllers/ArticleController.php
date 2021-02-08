@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ArticleController extends Controller
 {
     public function search($query){
-        return $response = Article::where('nom', 'like',  '%' . $query . '%' )->with('fiche_renseignement')->get();
+        return $response = Article::where('nom', 'like',  '%' . $query . '%' )->with('fiche_renseignement', 'fiche_renseignement.marque', 'fiche_renseignement.modèle', 'fiche_renseignement.type', 'fiche_renseignement.moteur')->get();
     }
 
     public function commander(Article $article){
