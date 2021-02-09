@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('nom');
             $table->tinyInteger('stars')->default(0);
             $table->boolean('commandé')->default(0);
-            $table->enum('état', ['enregistré', 'commandé', 'archivé'])->default('enregistré')->nullable();
+            $table->enum('état', ['enregistré', 'demandé', 'commandé', 'archivé'])->default('enregistré')->nullable();
             $table->foreign('fiche_renseignement_id')->references('id')->on('fiche_renseignements')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
