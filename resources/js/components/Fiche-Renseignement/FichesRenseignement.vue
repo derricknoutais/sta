@@ -147,7 +147,7 @@
                                     <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button>
                                     <span v-else-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                     <span v-else-if="article.état === 'demandé' " class="badge badge-warning badge-pill py-1"> Demandé <i class="fas fa-sms"></i></span>
-                                    <span v-else-if="article.état === 'wished' " class="badge badge-warning badge-pill py-1"> Souhaité <i class="fas fa-hand-holding-medical"></i></span>
+                                    <span v-else-if="article.état === 'wished' " class="badge badge-warning badge-pill py-1"> Souhaité <i class="fas fa-hand-holding    "></i></span>
 
                                     <!-- <button type="button" class="btn btn-danger btn-sm py-0 px-1" @click="changerEtat(article.id, 'archivé')" >Réceptionner</button> -->
                                 </li>

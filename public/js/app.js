@@ -53341,7 +53341,7 @@ var render = function() {
                                   [
                                     _vm._v(" Souhaité "),
                                     _c("i", {
-                                      staticClass: "fas fa-hand-holding-medical"
+                                      staticClass: "fas fa-hand-holding    "
                                     })
                                   ]
                                 )
