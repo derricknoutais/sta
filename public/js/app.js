@@ -53282,33 +53282,7 @@ var render = function() {
                               _vm._v(_vm._s(article.nom))
                             ]),
                             _vm._v(" "),
-                            article.état === "enregistré"
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-primary btn-sm py-0 px-1",
-                                    attrs: { type: "button" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.changerEtat(
-                                          index,
-                                          fiche,
-                                          article,
-                                          "commandé"
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v("Commander "),
-                                    _c("i", {
-                                      staticClass:
-                                        "fas fa-envelope-open-text    "
-                                    })
-                                  ]
-                                )
-                              : article.état === "commandé"
+                            article.état === "commandé"
                               ? _c(
                                   "span",
                                   {
@@ -53583,31 +53557,7 @@ var render = function() {
                       _c("div", { staticClass: "row my-2" }),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        article.état === "enregistré"
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary btn-sm py-0 px-1",
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.changerEtat(
-                                      index,
-                                      fiche,
-                                      article,
-                                      "commandé"
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v("Commander "),
-                                _c("i", {
-                                  staticClass: "fas fa-envelope-open-text    "
-                                })
-                              ]
-                            )
-                          : article.état === "commandé"
+                        article.état === "commandé"
                           ? _c(
                               "span",
                               {
