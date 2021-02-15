@@ -53314,7 +53314,7 @@ var render = function() {
                                       "badge badge-warning badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Souhaité "),
+                                    _vm._v(" Wished "),
                                     _c("i", { staticClass: "fas fa-clock" })
                                   ]
                                 )
@@ -53589,7 +53589,7 @@ var render = function() {
                                   "badge badge-warning badge-pill py-1"
                               },
                               [
-                                _vm._v(" Souhaité "),
+                                _vm._v(" Wished "),
                                 _c("i", { staticClass: "fas fa-hand-holding" })
                               ]
                             )
