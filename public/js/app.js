@@ -52333,6 +52333,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53328,6 +53329,20 @@ var render = function() {
                                   [
                                     _vm._v(" Demandé "),
                                     _c("i", { staticClass: "fas fa-sms" })
+                                  ]
+                                )
+                              : article.état === "wished"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-warning badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v(" Souhaité "),
+                                    _c("i", {
+                                      staticClass: "fas fa-hand-holding-medical"
+                                    })
                                   ]
                                 )
                               : _vm._e()
