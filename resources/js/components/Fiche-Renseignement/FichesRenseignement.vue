@@ -99,10 +99,7 @@
                 <button @click="changeView('Carte')" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Mode Carte"><i class="fas fa-grip-horizontal fa-1x mx-1"></i></button>
             </div>
         </div>
-
-
-
-
+        <!--  -->
         <div class="row" v-if="this.viewMode === 'Liste'">
             <div class="col-md-6" id="accordion">
                 <div class="card" v-for="(fiche, index) in filtered">
@@ -201,11 +198,23 @@
                             <div class="row my-2">
 
                             </div>
-                            <div class="row">
+                            <div class="row" v-if="! article.editing">
                                 <!-- <button v-if="article.état === 'enregistré' " type="button" class="btn btn-primary btn-sm py-0 px-1" @click="changerEtat(index, fiche, article, 'commandé')">Commander <i class="fas fa-envelope-open-text    "></i></button> -->
                                 <span v-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                 <span v-else-if="article.état === 'demandé' " class="badge badge-success badge-pill py-1"> Demandé <i class="fas fa-sms"></i></span>
                                 <span v-else-if="article.état === 'wished' " class="badge badge-warning badge-pill py-1"> Wished <i class="fas fa-hand-holding"></i></span>
+                                <i class="fas fa-edit text-primary ml-3" v-if="article.état !== 'enregistré'" @click="allowEdits(article)"></i>
+                            </div>
+                            <div v-else>
+                                <select v-model="article.état" class="form-control form-control-sm">
+                                    <option value="enregistré">Enregistré</option>
+                                    <option value="wished">Wished</option>
+                                    <option value="demandé">Demandé</option>
+                                    <option value="commandé">Commandé</option>
+                                    <option value="transit">Transit</option>
+                                    <option value="receptionné">Receptionné</option>
+                                </select>
+                                <i class="fas fa-save text-primary ml-3" @click="updateArticle(article)"></i>
                             </div>
 
 
@@ -427,6 +436,10 @@ export default {
         }
     },
     methods: {
+        allowEdits(article){
+            article.editing = ! article.editing
+            this.$forceUpdate()
+        },
         chercheTypes(){
             setTimeout(() => {
                 console.log( 'The id is ' + this.filtre_marque.id)
@@ -601,7 +614,8 @@ export default {
         updateArticle(article){
             axios.put('/article',article ).then(response => {
                 console.log(response.data);
-
+                article.editing = false
+                this.$forceUpdate()
             }).catch(error => {
                 console.log(error);
             });
@@ -757,6 +771,7 @@ export default {
                 fiche.articles.forEach(article => {
                     // article.star = Math.floor(Math.random() * 4) + 1
                     article.starDup = article.stars
+                    article.editing = false;
                 })
 
             });

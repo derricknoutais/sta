@@ -52335,6 +52335,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -52389,6 +52398,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        allowEdits: function allowEdits(article) {
+            article.editing = !article.editing;
+            this.$forceUpdate();
+        },
         chercheTypes: function chercheTypes() {
             var _this = this;
 
@@ -52575,17 +52588,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         updateArticle: function updateArticle(article) {
+            var _this11 = this;
+
             axios.put('/article', article).then(function (response) {
                 console.log(response.data);
+                article.editing = false;
+                _this11.$forceUpdate();
             }).catch(function (error) {
                 console.log(error);
             });
         },
         test: function test() {
-            var _this11 = this;
+            var _this12 = this;
 
             setTimeout(function () {
-                console.log(_this11.filtre_marque.nom);
+                console.log(_this12.filtre_marque.nom);
             }, 10);
         },
         ficheColor: function ficheColor(fiche) {
@@ -52614,13 +52631,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$forceUpdate();
         },
         storeTheStars: function storeTheStars(article, number) {
-            var _this12 = this;
+            var _this13 = this;
 
             axios.post('/fiche-renseignement/api/articles/' + article.id + '/store-the-stars', { stars: number }).then(function (response) {
                 console.log(response.data);
                 article.starDup = number;
                 article.star = number;
-                _this12.$forceUpdate();
+                _this13.$forceUpdate();
             }).catch(function (error) {
                 console.log(error);
             });
@@ -52632,125 +52649,126 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     watch: {
         filtre_marque: function filtre_marque() {
-            var _this13 = this;
+            var _this14 = this;
 
             console.log('I changed');
             if (this.filtre_marque !== 'marque') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.marque_id === _this13.filtre_marque.id;
+                    return each.marque_id === _this14.filtre_marque.id;
                 });
                 this.filtered_moteurs = this.moteurs.filter(function (each) {
-                    return each.marque_id === _this13.filtre_marque.id;
+                    return each.marque_id === _this14.filtre_marque.id;
                 });
             } else {
                 axios.get('fiche-renseignement/marque/api/all').then(function (response) {
-                    _this13.marques = response.data;
+                    _this14.marques = response.data;
                 });
             }
         },
         filtre_type: function filtre_type() {
-            var _this14 = this;
+            var _this15 = this;
 
             console.log('I changed too');
             if (this.filtre_type !== 'type') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.type_id === _this14.filtre_type.id;
+                    return each.type_id === _this15.filtre_type.id;
                 });
             } else {
                 axios.get('fiche-renseignement/type/api/all').then(function (response) {
-                    _this14.types = response.data;
+                    _this15.types = response.data;
                 });
             }
         },
         filtre_moteur: function filtre_moteur() {
-            var _this15 = this;
+            var _this16 = this;
 
             if (this.filtre_moteur !== 'moteur') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.moteur_id === _this15.filtre_moteur.id;
+                    return each.moteur_id === _this16.filtre_moteur.id;
                 });
             } else {
                 axios.get('fiche-renseignement/moteur/api/all').then(function (response) {
-                    _this15.filtered_moteurs = _this15.moteurs.moteurs = response.data;
+                    _this16.filtered_moteurs = _this16.moteurs.moteurs = response.data;
                 });
             }
         },
         filtre_modele: function filtre_modele() {
-            var _this16 = this;
+            var _this17 = this;
 
             if (this.filtre_modele !== 'modèle') {
                 this.filtered = this.fiches.filter(function (each) {
-                    return each.modèle_id === _this16.filtre_modele.id;
+                    return each.modèle_id === _this17.filtre_modele.id;
                 });
             }
         },
         filtre_archive: function filtre_archive() {
-            var _this17 = this;
+            var _this18 = this;
 
             if (this.filtre_archive === true) {
                 this.filtered = this.fiches.filter(function (each) {
-                    return _this17.ficheColor(each) === 'bg-success';
+                    return _this18.ficheColor(each) === 'bg-success';
                 });
             } else {
                 this.filtered = this.fiches.filter(function (each) {
-                    return _this17.ficheColor(each) !== 'bg-success';
-                });
-            }
-        },
-        filtre_partiel: function filtre_partiel() {
-            var _this18 = this;
-
-            if (this.filtre_partiel === true) {
-                this.filtered = this.fiches.filter(function (each) {
-                    return _this18.ficheColor(each) === 'bg-danger text-white';
-                });
-            } else {
-                this.filtered = this.fiches.filter(function (each) {
-                    return _this18.ficheColor(each) !== 'bg-danger text-white';
-                });
-                this.filtered = this.filtered.filter(function (each) {
                     return _this18.ficheColor(each) !== 'bg-success';
                 });
             }
         },
-        filtre_date_from: function filtre_date_from() {
+        filtre_partiel: function filtre_partiel() {
             var _this19 = this;
 
+            if (this.filtre_partiel === true) {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this19.ficheColor(each) === 'bg-danger text-white';
+                });
+            } else {
+                this.filtered = this.fiches.filter(function (each) {
+                    return _this19.ficheColor(each) !== 'bg-danger text-white';
+                });
+                this.filtered = this.filtered.filter(function (each) {
+                    return _this19.ficheColor(each) !== 'bg-success';
+                });
+            }
+        },
+        filtre_date_from: function filtre_date_from() {
+            var _this20 = this;
+
             this.filtered = this.fiches.filter(function (element) {
-                if (_this19.filtre_date_to === null) {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from);
+                if (_this20.filtre_date_to === null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this20.filtre_date_from);
                 } else {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this19.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this19.filtre_date_to);
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this20.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this20.filtre_date_to);
                 }
             });
         },
         filtre_date_to: function filtre_date_to() {
-            var _this20 = this;
+            var _this21 = this;
 
             this.filtered = this.fiches.filter(function (element) {
-                if (_this20.filtre_date_from === null) {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this20.filtre_date_to);
+                if (_this21.filtre_date_from === null) {
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this21.filtre_date_to);
                 } else {
-                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this20.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this20.filtre_date_to);
+                    return Date.parse(element.created_at.replace('-', '/', 'g')) > Date.parse(_this21.filtre_date_from) && Date.parse(element.created_at.replace('-', '/', 'g')) < Date.parse(_this21.filtre_date_to);
                 }
             });
         }
     },
     computed: {},
     mounted: function mounted() {
-        var _this21 = this;
+        var _this22 = this;
 
         this.init();
         setTimeout(function () {
-            _this21.fiches.forEach(function (fiche) {
+            _this22.fiches.forEach(function (fiche) {
                 // console.log(fiche.id)
-                fiche.color = _this21.ficheColor(fiche);
+                fiche.color = _this22.ficheColor(fiche);
                 fiche.articles.forEach(function (article) {
                     // article.star = Math.floor(Math.random() * 4) + 1
                     article.starDup = article.stars;
+                    article.editing = false;
                 });
             });
-            _this21.$forceUpdate();
+            _this22.$forceUpdate();
         }, 3000);
     },
     created: function created() {}
@@ -53556,45 +53574,133 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "row my-2" }),
                       _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        article.état === "commandé"
-                          ? _c(
-                              "span",
+                      !article.editing
+                        ? _c("div", { staticClass: "row" }, [
+                            article.état === "commandé"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-success badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v(" Commandé "),
+                                    _c("i", { staticClass: "fas fa-clock" })
+                                  ]
+                                )
+                              : article.état === "demandé"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-success badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v(" Demandé "),
+                                    _c("i", { staticClass: "fas fa-sms" })
+                                  ]
+                                )
+                              : article.état === "wished"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-warning badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v(" Wished "),
+                                    _c("i", {
+                                      staticClass: "fas fa-hand-holding"
+                                    })
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            article.état !== "enregistré"
+                              ? _c("i", {
+                                  staticClass: "fas fa-edit text-primary ml-3",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.allowEdits(article)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
+                          ])
+                        : _c("div", [
+                            _c(
+                              "select",
                               {
-                                staticClass:
-                                  "badge badge-success badge-pill py-1"
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: article.état,
+                                    expression: "article.état"
+                                  }
+                                ],
+                                staticClass: "form-control form-control-sm",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      article,
+                                      "état",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
                               },
                               [
-                                _vm._v(" Commandé "),
-                                _c("i", { staticClass: "fas fa-clock" })
+                                _c(
+                                  "option",
+                                  { attrs: { value: "enregistré" } },
+                                  [_vm._v("Enregistré")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "wished" } }, [
+                                  _vm._v("Wished")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "demandé" } }, [
+                                  _vm._v("Demandé")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "commandé" } }, [
+                                  _vm._v("Commandé")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "transit" } }, [
+                                  _vm._v("Transit")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "receptionné" } },
+                                  [_vm._v("Receptionné")]
+                                )
                               ]
-                            )
-                          : article.état === "demandé"
-                          ? _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "badge badge-success badge-pill py-1"
-                              },
-                              [
-                                _vm._v(" Demandé "),
-                                _c("i", { staticClass: "fas fa-sms" })
-                              ]
-                            )
-                          : article.état === "wished"
-                          ? _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "badge badge-warning badge-pill py-1"
-                              },
-                              [
-                                _vm._v(" Wished "),
-                                _c("i", { staticClass: "fas fa-hand-holding" })
-                              ]
-                            )
-                          : _vm._e()
-                      ])
+                            ),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "fas fa-save text-primary ml-3",
+                              on: {
+                                click: function($event) {
+                                  return _vm.updateArticle(article)
+                                }
+                              }
+                            })
+                          ])
                     ])
                   }),
                   0

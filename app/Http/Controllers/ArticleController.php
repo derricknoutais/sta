@@ -25,7 +25,8 @@ class ArticleController extends Controller
     public function update(Request $request){
         // return $request->all();
         $article = Article::find($request['id'])->update([
-            'nom' => $request['nom']
+            'nom' => $request['nom'],
+            'état' => $request['état']
         ]);
         if($article){
             return 'ok';
