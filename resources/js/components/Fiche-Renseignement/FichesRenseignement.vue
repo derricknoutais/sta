@@ -204,7 +204,7 @@
                                 <span v-if="article.état === 'commandé' " class="badge badge-success badge-pill py-1"> Commandé <i class="fas fa-clock"></i></span>
                                 <span v-else-if="article.état === 'demandé' " class="badge badge-success badge-pill py-1"> Demandé <i class="fas fa-sms"></i></span>
                                 <span v-else-if="article.état === 'wished' " class="badge badge-warning badge-pill py-1"> Wished <i class="fas fa-hand-holding"></i></span>
-                                <i class="fas fa-edit text-primary ml-3" @click="allowEdits(article)"></i>
+                                <i class="fas fa-edit text-primary ml-3" v-if="article.état !== 'enregistré'" @click="allowEdits(article)"></i>
                             </div>
                             <div v-else>
                                 <select v-model="article.état" class="form-control form-control-sm">
