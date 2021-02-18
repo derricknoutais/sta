@@ -52345,6 +52345,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53585,7 +53587,7 @@ var render = function() {
                                       "badge badge-primary badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Enregistré "),
+                                    _vm._v("Enregistré"),
                                     _c("i", { staticClass: "fas fa-save" })
                                   ]
                                 )
@@ -53599,7 +53601,7 @@ var render = function() {
                                       "badge badge-success badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Commandé "),
+                                    _vm._v("Commandé"),
                                     _c("i", { staticClass: "fas fa-clock" })
                                   ]
                                 )
@@ -53611,7 +53613,7 @@ var render = function() {
                                       "badge badge-success badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Demandé "),
+                                    _vm._v("Demandé"),
                                     _c("i", { staticClass: "fas fa-sms" })
                                   ]
                                 )
@@ -53623,9 +53625,35 @@ var render = function() {
                                       "badge badge-warning badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Wished "),
+                                    _vm._v("Wished"),
                                     _c("i", {
                                       staticClass: "fas fa-hand-holding"
+                                    })
+                                  ]
+                                )
+                              : article.état === "transit"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-warning badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v("En Transit"),
+                                    _c("i", { staticClass: "fas fa-ship" })
+                                  ]
+                                )
+                              : article.état === "receptionné"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-warning badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v("Receptionné"),
+                                    _c("i", {
+                                      staticClass: "fas fa-dolly-flatbed"
                                     })
                                   ]
                                 )
