@@ -53585,7 +53585,7 @@ var render = function() {
                                       "badge badge-success badge-pill py-1"
                                   },
                                   [
-                                    _vm._v(" Commandé "),
+                                    _vm._v(" Enregistré "),
                                     _c("i", { staticClass: "fas fa-clock" })
                                   ]
                                 )
@@ -53631,16 +53631,14 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            article.état !== "enregistré"
-                              ? _c("i", {
-                                  staticClass: "fas fa-edit text-primary ml-3",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.allowEdits(article)
-                                    }
-                                  }
-                                })
-                              : _vm._e()
+                            _c("i", {
+                              staticClass: "fas fa-edit text-primary ml-3",
+                              on: {
+                                click: function($event) {
+                                  return _vm.allowEdits(article)
+                                }
+                              }
+                            })
                           ])
                         : _c("div", [
                             _c(
