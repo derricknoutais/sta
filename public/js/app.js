@@ -53582,11 +53582,11 @@ var render = function() {
                                   "span",
                                   {
                                     staticClass:
-                                      "badge badge-success badge-pill py-1"
+                                      "badge badge-primary badge-pill py-1"
                                   },
                                   [
                                     _vm._v(" Enregistré "),
-                                    _c("i", { staticClass: "fas fa-clock" })
+                                    _c("i", { staticClass: "fas fa-save" })
                                   ]
                                 )
                               : _vm._e(),
