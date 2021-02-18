@@ -205,7 +205,7 @@
                                 <span v-else-if="article.état === 'demandé' " class="badge badge-success badge-pill py-1">Demandé<i class="fas fa-sms"></i></span>
                                 <span v-else-if="article.état === 'wished' " class="badge badge-warning badge-pill py-1">Wished<i class="fas fa-hand-holding"></i></span>
                                 <span v-else-if="article.état === 'transit' " class="badge badge-warning badge-pill py-1">En Transit<i class="fas fa-ship"></i></span>
-                                <span v-else-if="article.état === 'receptionné' " class="badge badge-warning badge-pill py-1">Receptionné<i class="fas fa-dolly-flatbed"></i></span>
+                                <span v-else-if="article.état === 'reçu' " class="badge badge-warning badge-pill py-1">Receptionné<i class="fas fa-dolly-flatbed"></i></span>
                                 <i class="fas fa-edit text-primary ml-3" @click="allowEdits(article)"></i>
                             </div>
                             <div v-else>
@@ -215,7 +215,7 @@
                                     <option value="demandé">Demandé</option>
                                     <option value="commandé">Commandé</option>
                                     <option value="transit">Transit</option>
-                                    <option value="receptionné">Receptionné</option>
+                                    <option value="reçu">Receptionné</option>
                                 </select>
                                 <i class="fas fa-save text-primary ml-3" @click="updateArticle(article)"></i>
                             </div>

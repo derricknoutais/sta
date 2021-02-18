@@ -53643,7 +53643,7 @@ var render = function() {
                                     _c("i", { staticClass: "fas fa-ship" })
                                   ]
                                 )
-                              : article.état === "receptionné"
+                              : article.état === "reçu"
                               ? _c(
                                   "span",
                                   {
@@ -53725,11 +53725,9 @@ var render = function() {
                                   _vm._v("Transit")
                                 ]),
                                 _vm._v(" "),
-                                _c(
-                                  "option",
-                                  { attrs: { value: "receptionné" } },
-                                  [_vm._v("Receptionné")]
-                                )
+                                _c("option", { attrs: { value: "reçu" } }, [
+                                  _vm._v("Receptionné")
+                                ])
                               ]
                             ),
                             _vm._v(" "),

@@ -108,6 +108,15 @@ header('Access-Control-Allow-Headers:  X-CSRF-TOKEN, X-Requested-With, Content-T
                     return 'ok';
                 }
             });
+            Route::post('changer-etat/{etat}', function(Request $request, $etat){
+                $updated = DB::table('articles')->whereIn('id', $request['ids'])->update([
+                    'état' => $etat
+                ]);
+
+                if($updated){
+                    return 'ok';
+                }
+            });
             Route::get('/search/{query}', 'ArticleController@search');
             Route::post('/search', 'ArticleController@search_ids');
 
