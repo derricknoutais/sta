@@ -52344,6 +52344,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53576,6 +53577,20 @@ var render = function() {
                       _vm._v(" "),
                       !article.editing
                         ? _c("div", { staticClass: "row" }, [
+                            article.état === "enregistré"
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "badge badge-success badge-pill py-1"
+                                  },
+                                  [
+                                    _vm._v(" Commandé "),
+                                    _c("i", { staticClass: "fas fa-clock" })
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
                             article.état === "commandé"
                               ? _c(
                                   "span",
@@ -53616,16 +53631,14 @@ var render = function() {
                                 )
                               : _vm._e(),
                             _vm._v(" "),
-                            article.état !== "enregistré"
-                              ? _c("i", {
-                                  staticClass: "fas fa-edit text-primary ml-3",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.allowEdits(article)
-                                    }
-                                  }
-                                })
-                              : _vm._e()
+                            _c("i", {
+                              staticClass: "fas fa-edit text-primary ml-3",
+                              on: {
+                                click: function($event) {
+                                  return _vm.allowEdits(article)
+                                }
+                              }
+                            })
                           ])
                         : _c("div", [
                             _c(
